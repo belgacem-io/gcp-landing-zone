@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  terraform:
+    build: ./docker
+    image: terraform-gcloud-dev:0.6
+    tty: true
+    volumes:
+      - .:/wks
