@@ -52,7 +52,7 @@
 | <a name="input_org_scc_admins"></a> [org_scc_admins](#input_org_scc_admins) | G Suite or Cloud Identity group that can administer Security Command Center. | `string` | n/a | yes |
 | <a name="input_org_security_reviewers"></a> [org_security_reviewers](#input_org_security_reviewers) | G Suite or Cloud Identity group that members are part of the security team responsible for reviewing cloud security. | `string` | n/a | yes |
 | <a name="input_org_viewers"></a> [org_viewers](#input_org_viewers) | G Suite or Cloud Identity group that have the ability to view resource information across the Google Cloud organization. | `string` | n/a | yes |
-| <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The name of the current organization. | `string` | n/a | yes |
+| <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The ID of the current organization. | `string` | n/a | yes |
 | <a name="input_terraform_sa_email"></a> [terraform_sa_email](#input_terraform_sa_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_audit_logs_table_delete_contents_on_destroy"></a> [audit_logs_table_delete_contents_on_destroy](#input_audit_logs_table_delete_contents_on_destroy) | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | `bool` | `false` | no |
 | <a name="input_audit_logs_table_expiration_days"></a> [audit_logs_table_expiration_days](#input_audit_logs_table_expiration_days) | Period before tables expire for all audit logs in milliseconds. Default is 30 days. | `number` | `30` | no |

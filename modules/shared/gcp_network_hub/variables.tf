@@ -24,11 +24,6 @@ variable "default_region1" {
   description = "Default region 1 for subnets and Cloud Routers"
 }
 
-variable "default_region2" {
-  type        = string
-  description = "Default region 2 for subnets and Cloud Routers"
-}
-
 variable "nat_enabled" {
   type        = bool
   description = "Toggle creation of NAT cloud router."

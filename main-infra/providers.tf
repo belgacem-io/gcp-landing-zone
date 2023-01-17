@@ -1,7 +1,3 @@
-locals {
-  tf_sa = var.gcp_terraform_sa_email
-}
-
 provider "google" {
   alias = "impersonate"
 
@@ -13,7 +9,7 @@ provider "google" {
 
 data "google_service_account_access_token" "default" {
   provider               = google.impersonate
-  target_service_account = local.tf_sa
+  target_service_account = var.gcp_terraform_sa_email
   scopes                 = ["userinfo-email", "cloud-platform"]
   lifetime               = "600s"
 }

@@ -84,24 +84,14 @@ variable "gcp_default_region1_azs" {
   type        = list(string)
 }
 
-variable "gcp_default_region2" {
-  description = "Default region for resources."
-  type        = string
-}
-
-variable "gcp_default_region2_azs" {
-  description = "Default availability zones for region 2."
-  type        = list(string)
-}
-
 variable "gcp_organization_environments" {
   type        = map(object({
     environment_code = string,
     network          = object({
       prefix      = string,
       cidr_blocks = object({
-        region1_primary_ranges = list(string)
-        region2_primary_ranges = list(string)
+        private_subnet_ranges = list(string)
+        data_subnet_ranges = list(string)
         private_service_range  = string
       })
     })
@@ -128,8 +118,8 @@ variable "gcp_business_projects" {
     })
     network          = object({
       cidr_blocks = object({
-        region1_primary_ranges = list(string)
-        region2_primary_ranges = list(string)
+        private_subnet_ranges = list(string)
+        data_subnet_ranges = list(string)
         region1_secondary_ranges = list(string)
         region2_secondary_ranges = list(string)
       })
@@ -176,8 +166,8 @@ variable "gcp_infra_projects" {
       network = object({
         name        = string,
         cidr_blocks = object({
-          region1_primary_ranges    = list(string)
-          region2_primary_ranges    = list(string)
+          private_subnet_ranges    = list(string)
+          data_subnet_ranges    = list(string)
         })
       })
     })

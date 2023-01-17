@@ -31,9 +31,9 @@ locals {
   ## Primary subnets for business projects
   primary_business_project_subnets_region1 = flatten([
         for prj in var.business_project_subnets : [
-          for subnet in prj.region1_primary_ranges:
+          for subnet in prj.private_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-${index(prj.region1_primary_ranges , subnet)}-${var.default_region1}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-${index(prj.private_subnet_ranges , subnet)}-${var.default_region1}"
             subnet_ip             = subnet
             subnet_region         = var.default_region1
             subnet_private_access = "true"
@@ -44,9 +44,9 @@ locals {
       ])
   primary_business_project_subnets_region2 = flatten([
         for prj in var.business_project_subnets : [
-          for subnet in prj.region2_primary_ranges:
+          for subnet in prj.data_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-${index(prj.region2_primary_ranges , subnet)}-${var.default_region2}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-${index(prj.data_subnet_ranges , subnet)}-${var.default_region2}"
             subnet_ip             = subnet
             subnet_region         = var.default_region2
             subnet_private_access = "true"

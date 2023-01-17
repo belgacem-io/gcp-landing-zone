@@ -7,12 +7,6 @@ gcp_default_region1_azs = [
   "europe-west4-b",
   "europe-west4-c"
 ]
-gcp_default_region2     = "europe-north1"
-gcp_default_region2_azs = [
-  "europe-north1-b",
-  "europe-north1-c",
-  "europe-north1-d"
-]
 
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
@@ -32,8 +26,8 @@ gcp_organization_environments    = {
     network          = {
       prefix      = "vpc-exp-network-hub",
       cidr_blocks = {
-        region1_primary_ranges = ["172.16.0.32/27"]
-        region2_primary_ranges = ["172.17.0.32/27"]
+        private_subnet_ranges = ["172.16.0.32/27"]
+        data_subnet_ranges = ["172.17.0.32/27"]
       }
     }
     children         = [
@@ -52,8 +46,8 @@ gcp_organization_environments    = {
     network          = {
       prefix      = "vpc-dev-network-hub",
       cidr_blocks = {
-        region1_primary_ranges = ["172.16.0.64/27"]
-        region2_primary_ranges = ["172.17.0.64/27"]
+        private_subnet_ranges = ["172.16.0.64/27"]
+        data_subnet_ranges = ["172.17.0.64/27"]
       }
     }
     children         = [
@@ -81,8 +75,8 @@ gcp_business_projects            = [
     }
     network          = {
       cidr_blocks = {
-        region1_primary_ranges = ["10.0.0.0/27"]
-        region2_primary_ranges = ["10.1.0.0/27"]
+        private_subnet_ranges = ["10.0.0.0/27"]
+        data_subnet_ranges = ["10.1.0.0/27"]
       }
     }
   },
@@ -97,8 +91,8 @@ gcp_business_projects            = [
     }
     network          = {
       cidr_blocks = {
-        region1_primary_ranges = ["10.0.0.32/27"]
-        region2_primary_ranges = ["10.1.0.32/27"]
+        private_subnet_ranges = ["10.0.0.32/27"]
+        data_subnet_ranges = ["10.1.0.32/27"]
       }
     }
   },
@@ -113,8 +107,8 @@ gcp_business_projects            = [
     }
     network          = {
       cidr_blocks = {
-        region1_primary_ranges = ["10.0.0.64/27"]
-        region2_primary_ranges = ["10.1.0.64/27"]
+        private_subnet_ranges = ["10.0.0.64/27"]
+        data_subnet_ranges = ["10.1.0.64/27"]
       }
     }
   }
@@ -157,8 +151,8 @@ gcp_infra_projects = {
     network = {
       name        = "vpc-org-shared-hub",
       cidr_blocks = {
-        region1_primary_ranges = ["172.16.0.0/16"]
-        region2_primary_ranges = ["172.17.0.0/16"]
+        private_subnet_ranges = ["172.16.0.0/16"]
+        data_subnet_ranges = ["172.17.0.0/16"]
       }
     }
   }

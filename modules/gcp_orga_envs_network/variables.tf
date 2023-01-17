@@ -143,8 +143,8 @@ variable "business_project_subnets" {
   type        = list(object({
     project_name = string
     environment_code = string
-    region1_primary_ranges  = list(string)
-    region2_primary_ranges =  list(string)
+    private_subnet_ranges  = list(string)
+    data_subnet_ranges =  list(string)
     region1_secondary_ranges = list(string)
     region2_secondary_ranges = list(string)
   }))

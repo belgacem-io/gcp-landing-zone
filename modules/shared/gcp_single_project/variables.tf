@@ -11,6 +11,7 @@ variable "folder_id" {
 variable "billing_account" {
   description = "The ID of the billing account to associated this project with"
   type        = string
+  default = null
 }
 
 variable "activate_apis" {

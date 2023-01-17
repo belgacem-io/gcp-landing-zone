@@ -62,8 +62,8 @@ locals {
   for project in var.gcp_business_projects : merge(project, {
     environment_key          = key
     project_name             = project.name
-    region1_primary_ranges   = project.network.cidr_blocks.region1_primary_ranges
-    region2_primary_ranges   = project.network.cidr_blocks.region2_primary_ranges
+    private_subnet_ranges   = project.network.cidr_blocks.private_subnet_ranges
+    data_subnet_ranges   = project.network.cidr_blocks.data_subnet_ranges
     region1_secondary_ranges = project.network.cidr_blocks.region1_secondary_ranges
     region2_secondary_ranges = project.network.cidr_blocks.region2_secondary_ranges
   }) if project.environment_code == env.environment_code
@@ -77,7 +77,6 @@ module "env_networks" {
   for_each = var.gcp_organization_environments
 
   default_region1                       = var.gcp_default_region1
-  default_region2                       = var.gcp_default_region2
   domain                                = "${ each.value.environment_code }.${var.gcp_organization_name}"
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
@@ -86,8 +85,8 @@ module "env_networks" {
   org_network_hub_project_id            = data.google_projects.org_network_hub.projects[0].project_id
   org_network_hub_vpc_name              = data.google_compute_network.org_network_hub.name
   business_project_subnets              = [for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key]
-  common_services_subnet_region1_ranges = each.value.network.cidr_blocks.region1_primary_ranges
-  common_services_subnet_region2_ranges = each.value.network.cidr_blocks.region2_primary_ranges
+  common_services_subnet_region1_ranges = each.value.network.cidr_blocks.private_subnet_ranges
+  common_services_subnet_region2_ranges = each.value.network.cidr_blocks.data_subnet_ranges
   private_service_cidr                  = each.value.network.cidr_blocks.private_service_range
 }
 
@@ -130,7 +129,7 @@ module "env_bastions" {
   instance_name     = "${each.value.environment_code}-bastion"
   project_id        = module.shared_services_projects[each.key].project_id
   host_project      = module.network_hub_projects[each.key].project_id
-  members           = ["group:${each.value.environment_code}-environment-devops@company.cloud"]
+  members           = ["group:${each.value.environment_code}-environment-devops@belgacem.io"]
   region            = var.gcp_default_region1
   zone              = var.gcp_default_region1_azs[0]
   network_self_link = module.env_networks[each.key].vpc_network_self_links

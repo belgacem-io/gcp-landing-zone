@@ -3,9 +3,9 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 3.77 |
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | >= 3.77 |
-| <a name="provider_google-beta"></a> [google-beta](#provider_google-beta) | >= 3.77 |
+| <a name="provider_google"></a> [google](#provider_google) | 3.90.1 |
+| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 3.90.1 |
+| <a name="provider_google-beta"></a> [google-beta](#provider_google-beta) | 3.90.1 |
 
 #### Modules
 

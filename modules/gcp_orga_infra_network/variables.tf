@@ -1,3 +1,8 @@
+variable "parent_id" {
+  type = string
+  description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
+}
+
 variable "organization_id" {
   type = string
   description = "The name of the current organization."
@@ -27,11 +32,6 @@ variable "network_hub_project_name" {
 variable "default_region1" {
   type        = string
   description = "First subnet region for DNS Hub network."
-}
-
-variable "default_region2" {
-  type        = string
-  description = "Second subnet region for DNS Hub network."
 }
 
 variable "dns_enable_logging" {
@@ -130,7 +130,8 @@ variable "gcp_labels" {
 variable "orga_network_hub_subnets" {
   description = "Default subnets for Organization network hub."
   type        = object({
-    region1_primary_ranges  = list(string)
-    region2_primary_ranges =  list(string)
+    public_subnet_ranges = list(string)
+    private_subnet_ranges  = list(string)
+    data_subnet_ranges =  list(string)
   })
 }

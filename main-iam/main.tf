@@ -55,7 +55,7 @@ module "gcp_iam" {
   domain                  = var.gcp_organization_name
   organization_id         = var.gcp_organization_id
   default_super_admins    = [
-    "hassene.belgacem@company.cloud",
+    "hassene.belgacem@belgacem.io",
     var.gcp_terraform_sa_email
   ]
   iam_users               = {

@@ -311,7 +311,7 @@ resource "keycloak_saml_client" "GCP_saml_client" {
   force_post_binding        = true
   front_channel_logout      = true
 
-  base_url = "https://www.google.com/a/company.cloud/ServiceLogin?continue=https://console.cloud.google.com"
+  base_url = "https://www.google.com/a/belgacem.io/ServiceLogin?continue=https://console.cloud.google.com"
 
   force_name_id_format = true
 

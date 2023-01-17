@@ -1,6 +1,11 @@
+variable "parent_id" {
+  type = string
+  description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
+}
+
 variable "organization_id" {
   type = string
-  description = "The name of the current organization."
+  description = "The ID of the current organization."
 }
 
 variable "terraform_sa_email" {
@@ -28,7 +33,6 @@ variable "infra_folder_name" {
 variable "infra_security_project" {
   type = object({
     name = string
-    folder = string
     budget = object({
       amount = number,
       time_unit = string,
@@ -40,7 +44,6 @@ variable "infra_security_project" {
 variable "infra_observability_project" {
   type = object({
     name = string
-    folder = string
     budget = object({
       amount = number,
       time_unit = string,
@@ -53,7 +56,6 @@ variable "infra_observability_project" {
 variable "infra_networking_hub_project" {
   type = object({
     name = string
-    folder = string
     budget = object({
       amount = number,
       time_unit = string,
@@ -72,30 +74,6 @@ variable "scc_notification_filter" {
   description = "Filter used to create the Security Command Center Notification, you can see more details on how to create filters in https://cloud.google.com/security-command-center/docs/how-to-api-filter-notifications#create-filter"
   type        = string
   default     = "state = \"ACTIVE\""
-}
-
-variable "enable_sa_key_creation_deny_policy" {
-  description = "Deny service account key creation at the organization level."
-  type        = bool
-  default     = false
-}
-
-variable "enable_os_login_policy" {
-  description = "Enable OS Login Organization Policy."
-  type        = bool
-  default     = false
-}
-
-variable "enable_domains_sharing_restriction_policy" {
-  description = "Enable domains sharing restriction Organization Policy."
-  type        = bool
-  default     = false
-}
-
-variable "create_access_context_manager_access_policy" {
-  description = "Whether to create access context manager access policy"
-  type        = bool
-  default     = false
 }
 
 variable "domains_to_allow" {

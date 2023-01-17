@@ -70,35 +70,3 @@ module "dns_hub_region1_router2" {
     advertised_ip_ranges = [{ range = "35.199.192.0/19" }]
   }
 }
-
-module "dns_hub_region2_router1" {
-  source  = "terraform-google-modules/cloud-router/google"
-  version = "~> 1.3"
-
-  count   = var.mode == "hub" ? 1 : 0
-
-  name    = "cr-c-dns-hub-${var.default_region2}-cr3"
-  project = var.project_id
-  network = module.main.network_name
-  region  = var.default_region2
-  bgp = {
-    asn                  = var.bgp_asn_dns
-    advertised_ip_ranges = [{ range = "35.199.192.0/19" }]
-  }
-}
-
-module "dns_hub_region2_router2" {
-  source  = "terraform-google-modules/cloud-router/google"
-  version = "~> 1.3"
-
-  count   = var.mode == "hub" ? 1 : 0
-
-  name    = "cr-c-dns-hub-${var.default_region2}-cr4"
-  project = var.project_id
-  network = module.main.network_name
-  region  = var.default_region2
-  bgp = {
-    asn                  = var.bgp_asn_dns
-    advertised_ip_ranges = [{ range = "35.199.192.0/19" }]
-  }
-}

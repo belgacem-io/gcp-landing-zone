@@ -10,7 +10,7 @@ module "organization_security" {
   name                        = var.infra_security_project.name
   org_id                      = var.organization_id
   billing_account             = var.billing_account
-  folder_id                   = google_folder.infra.id
+  folder_id                   = google_folder.infra.folder_id
   activate_apis               = ["logging.googleapis.com", "bigquery.googleapis.com", "billingbudgets.googleapis.com"]
   budget_alert_pubsub_topic   = var.budget_alert_pubsub_topic
   budget_alert_spent_percents = var.budget_alert_spent_percents

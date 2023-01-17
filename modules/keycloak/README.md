@@ -104,6 +104,7 @@ No modules.
 | <a name="input_keycloak_ldap_users_dn"></a> [keycloak_ldap_users_dn](#input_keycloak_ldap_users_dn) | Ldap users DN | `string` | n/a | yes |
 | <a name="input_keycloak_realm"></a> [keycloak_realm](#input_keycloak_realm) | keycloak realm name | `string` | n/a | yes |
 | <a name="input_keycloak_url"></a> [keycloak_url](#input_keycloak_url) | keycloak instance url | `string` | n/a | yes |
+| <a name="input_ldap_server_name"></a> [ldap_server_name](#input_ldap_server_name) | LDAP server name | `string` | n/a | yes |
 | <a name="input_keycloak_account_groups"></a> [keycloak_account_groups](#input_keycloak_account_groups) | The map of groups to create. Defaults to an empty map. | <pre>map(object({<br>    name = string,<br>    parent = string<br>  }))</pre> | `{}` | no |
 | <a name="input_keycloak_ou_groups"></a> [keycloak_ou_groups](#input_keycloak_ou_groups) | The map of groups to create. Defaults to an empty map. | <pre>map(object({<br>    name = string,<br>    parent = string<br>  }))</pre> | `{}` | no |
 | <a name="input_keycloak_roles"></a> [keycloak_roles](#input_keycloak_roles) | The map of roles to create. Defaults to an empty dict. | <pre>map(object({<br>    name = string,<br>    group = string,<br>    account_id = string<br>    account_name = string<br>  }))</pre> | `{}` | no |

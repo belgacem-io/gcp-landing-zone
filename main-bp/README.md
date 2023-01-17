@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | >= 4.10 |
+| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.48.0 |
 
 #### Modules
 

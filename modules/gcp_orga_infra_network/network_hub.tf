@@ -1,8 +1,19 @@
 locals {
   network_hub_project_id = try(data.google_projects.org_network_hub.projects[0].project_id, null)
-  org_subnets_region1            = [
-    for subnet in var.orga_network_hub_subnets.region1_primary_ranges : {
-      subnet_name           = "org-network-hub-${index(var.orga_network_hub_subnets.region1_primary_ranges,subnet )}-${var.default_region1}"
+  org_public_subnets            = [
+    for subnet in var.orga_network_hub_subnets.public_subnet_ranges : {
+      subnet_name           = "org-network-hub-public-${index(var.orga_network_hub_subnets.public_subnet_ranges,subnet )}-${var.default_region1}"
+      subnet_ip             = subnet
+      subnet_region         = var.default_region1
+      subnet_private_access = "false"
+      subnet_flow_logs      = var.subnetworks_enable_logging
+      description           = "prod/org-network-hub/${var.default_region1}"
+    }
+  ]
+
+  org_private_subnets            = [
+    for subnet in var.orga_network_hub_subnets.private_subnet_ranges : {
+      subnet_name           = "org-network-hub-private-${index(var.orga_network_hub_subnets.private_subnet_ranges,subnet )}-${var.default_region1}"
       subnet_ip             = subnet
       subnet_region         = var.default_region1
       subnet_private_access = "true"
@@ -10,18 +21,18 @@ locals {
       description           = "prod/org-network-hub/${var.default_region1}"
     }
   ]
-  org_subnets_region2            = [
-    for subnet in var.orga_network_hub_subnets.region2_primary_ranges : {
-      subnet_name           = "org-network-hub-${index(var.orga_network_hub_subnets.region2_primary_ranges,subnet )}-${var.default_region2}"
+  org_data_subnets            = [
+    for subnet in var.orga_network_hub_subnets.data_subnet_ranges : {
+      subnet_name           = "org-network-hub-data-${index(var.orga_network_hub_subnets.data_subnet_ranges,subnet )}-${var.default_region1}"
       subnet_ip             = subnet
-      subnet_region         = var.default_region2
+      subnet_region         = var.default_region1
       subnet_private_access = "true"
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "prod/org-network-hub/${var.default_region2}"
+      description           = "prod/org-network-hub/${var.default_region1}"
     }
   ]
 
-  org_subnets = concat(local.org_subnets_region1,local.org_subnets_region2)
+  org_subnets = concat(local.org_public_subnets,local.org_private_subnets,local.org_data_subnets)
 }
 
 /******************************************
@@ -36,7 +47,6 @@ module "network_hub" {
   org_id                        = var.organization_id
   bgp_asn_subnet                = var.enable_partner_interconnect ? "16550" : "64514"
   default_region1               = var.default_region1
-  default_region2               = var.default_region2
   domain                        = var.domain
   windows_activation_enabled    = var.enable_orga_network_hub_windows_activation
   dns_enable_inbound_forwarding = var.enable_orga_network_hub_dns_inbound_forwarding

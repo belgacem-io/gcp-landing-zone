@@ -7,6 +7,8 @@ module "infra_projects" {
 
   terraform_sa_email           = var.gcp_terraform_sa_email
   billing_account              = var.gcp_billing_account
+  parent_id                    = var.gcp_parent_resource_id
+  infra_folder_name            = var.gcp_infra_projects.folder
   organization_id              = var.gcp_organization_id
   infra_security_project       = var.gcp_infra_projects.security
   infra_observability_project  = var.gcp_infra_projects.observability
@@ -15,7 +17,6 @@ module "infra_projects" {
     var.gcp_organization_name
   ]
   enable_scc_notification      = true
-  infra_folder_name            = var.gcp_infra_folder_name
   org_audit_data_admins        = var.gcp_group_org_security_admins
   org_audit_viewers            = var.gcp_group_org_security_reviewers
   org_billing_admins           = var.gcp_group_org_billing_admins
@@ -31,17 +32,21 @@ module "infra_projects" {
   gcp_labels = var.gcp_labels
 }
 
-module "infra_networks" {
+module "infra_hub_networks" {
   source = "../modules/gcp_orga_infra_network"
 
   domain                   = var.gcp_organization_name
   organization_id          = var.gcp_organization_id
+  parent_id                = var.gcp_parent_resource_id
   terraform_sa_email       = var.gcp_terraform_sa_email
   billing_account          = var.gcp_billing_account
   network_hub_project_name = var.gcp_infra_projects.networking_hub.name
   default_region1          = var.gcp_default_region1
-  default_region2          = var.gcp_default_region2
   orga_network_hub_subnets = var.gcp_infra_projects.networking_hub.network.cidr_blocks
 
   gcp_labels = var.gcp_labels
+
+  depends_on = [
+    module.infra_projects
+  ]
 }

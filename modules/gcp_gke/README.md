@@ -33,7 +33,7 @@
 | <a name="input_ingress_service_port"></a> [ingress_service_port](#input_ingress_service_port) | n/a | `string` | `"30000"` | no |
 | <a name="input_ingress_service_port_name"></a> [ingress_service_port_name](#input_ingress_service_port_name) | n/a | `string` | `"http"` | no |
 | <a name="input_initial_node_count"></a> [initial_node_count](#input_initial_node_count) | Initial node count | `number` | `1` | no |
-| <a name="input_k8s_dashboard_namespace"></a> [k8s_dashboard_namespace](#input_k8s_dashboard_namespace) | Kubernetes Dashboard namespace. | `string` | `"eclair-dashboard"` | no |
+| <a name="input_k8s_dashboard_namespace"></a> [k8s_dashboard_namespace](#input_k8s_dashboard_namespace) | Kubernetes Dashboard namespace. | `string` | `"k8s-dashboard"` | no |
 | <a name="input_k8s_ingress_helm_chart_repo"></a> [k8s_ingress_helm_chart_repo](#input_k8s_ingress_helm_chart_repo) | HAPROXY ingress repository name. | `string` | `"https://haproxytech.github.io/helm-charts"` | no |
 | <a name="input_kubernetes_version"></a> [kubernetes_version](#input_kubernetes_version) | The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region. The module enforces certain minimum versions to ensure that specific features are available. | `string` | `null` | no |
 | <a name="input_max_node_count"></a> [max_node_count](#input_max_node_count) | Max nodes count | `number` | `3` | no |
