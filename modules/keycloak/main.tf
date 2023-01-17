@@ -286,7 +286,7 @@ resource "keycloak_ldap_role_mapper" "intra_cert_role_mapper" {
 }
 
 ###################################
-##  Generating AWS SAMLv2 Client ##
+##  Generating GCP SAMLv2 Client ##
 ###################################
 
 resource "keycloak_saml_client" "GCP_saml_client" {

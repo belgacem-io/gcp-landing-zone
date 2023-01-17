@@ -7,3 +7,4 @@ terraform.tfstate.*
 .tls/*
 .gcloud/*
 .env
+terraform.tfvars

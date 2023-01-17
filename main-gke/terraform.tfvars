@@ -24,7 +24,7 @@ gcp_group_org_billing_admins     = "gcp-billing-admins@company.cloud"
 gcp_group_org_viewers            = "gcp-organization-viewers@company.cloud"
 gcp_group_org_network_admins     = "gcp-network-admins@company.cloud"
 gcp_group_org_network_viewers    = "gcp-organization-viewers@company.cloud"
-##################################### AWS Organization ###################
+##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
   experiment  = {
@@ -38,11 +38,11 @@ gcp_organization_environments    = {
     }
     children         = [
       {
-        name     = "Department_DDSA",
+        name     = "Department_Marketing",
         children = []
       },
       {
-        name     = "Department_DISCO",
+        name     = "Department_HR",
         children = []
       }
     ]
@@ -58,11 +58,11 @@ gcp_organization_environments    = {
     }
     children         = [
       {
-        name     = "Department_DISCO",
+        name     = "Department_HR",
         children = []
       },
       {
-        name     = "Department_DDSA",
+        name     = "Department_Marketing",
         children = []
       }
     ]
@@ -72,7 +72,7 @@ gcp_organization_environments    = {
 gcp_business_projects            = [
   {
     name             = "uc1-kube"
-    department       = "Department_DISCO"
+    department       = "Department_HR"
     environment_code = "exp"
     budget           = {
       amount                    = 100,
@@ -88,7 +88,7 @@ gcp_business_projects            = [
   },
   {
     name             = "uc2-ml-ia"
-    department       = "Department_DDSA"
+    department       = "Department_Marketing"
     environment_code = "exp"
     budget           = {
       amount                    = 100,
@@ -104,7 +104,7 @@ gcp_business_projects            = [
   },
   {
     name             = "uc3-catalyse"
-    department       = "Department_DISCO"
+    department       = "Department_HR"
     environment_code = "dev"
     budget           = {
       amount                    = 100,

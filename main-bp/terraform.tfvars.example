@@ -1,6 +1,6 @@
-gcp_organization_id     = "983256491121"
+gcp_organization_id     = "12345678910"
 gcp_organization_name   = "company.cloud"
-gcp_billing_account     = "01A47A-F9BAF1-1EE048"
+gcp_billing_account     = "012345-AB01CD02-EF03GH04"
 gcp_default_region1     = "europe-west4"
 gcp_default_region1_azs = [
   "europe-west4-a",
@@ -15,16 +15,16 @@ gcp_default_region2_azs = [
 ]
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/shared-services-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
 gcp_group_org_admins             = "gcp-organization-admins@company.cloud"
 gcp_group_org_security_admins    = "gcp-security-admins@company.cloud"
-gcp_group_org_security_reviewers = "gcp-security-admins@company.cloud"
+gcp_group_org_security_reviewers = "gcp-security-reviewers@company.cloud"
 gcp_group_org_billing_admins     = "gcp-billing-admins@company.cloud"
 gcp_group_org_viewers            = "gcp-organization-viewers@company.cloud"
 gcp_group_org_network_admins     = "gcp-network-admins@company.cloud"
-gcp_group_org_network_viewers    = "gcp-organization-viewers@company.cloud"
-##################################### AWS Organization ###################
+gcp_group_org_network_viewers    = "gcp-network-viewers@company.cloud"
+##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
   experiment  = {
@@ -38,11 +38,11 @@ gcp_organization_environments    = {
     }
     children         = [
       {
-        name     = "Department_DDSA",
+        name     = "Department_Marketing",
         children = []
       },
       {
-        name     = "Department_DISCO",
+        name     = "Department_HR",
         children = []
       }
     ]
@@ -58,11 +58,11 @@ gcp_organization_environments    = {
     }
     children         = [
       {
-        name     = "Department_DISCO",
+        name     = "Department_HR",
         children = []
       },
       {
-        name     = "Department_DDSA",
+        name     = "Department_Marketing",
         children = []
       }
     ]
@@ -72,7 +72,7 @@ gcp_organization_environments    = {
 gcp_business_projects            = [
   {
     name             = "uc1-kube"
-    department       = "Department_DISCO"
+    department       = "Department_HR"
     environment_code = "exp"
     budget           = {
       amount                    = 100,
@@ -88,7 +88,7 @@ gcp_business_projects            = [
   },
   {
     name             = "uc2-ml-ia"
-    department       = "Department_DDSA"
+    department       = "Department_Marketing"
     environment_code = "exp"
     budget           = {
       amount                    = 100,
@@ -104,7 +104,7 @@ gcp_business_projects            = [
   },
   {
     name             = "uc3-catalyse"
-    department       = "Department_DISCO"
+    department       = "Department_HR"
     environment_code = "dev"
     budget           = {
       amount                    = 100,
