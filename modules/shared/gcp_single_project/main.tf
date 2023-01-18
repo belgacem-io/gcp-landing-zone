@@ -1,7 +1,7 @@
 
 module "project" {
   source                      = "terraform-google-modules/project-factory/google"
-  version                     = "~> 14.1"
+  version                     = "~> 11.1"
 
   random_project_id           = true
   create_project_sa           = false

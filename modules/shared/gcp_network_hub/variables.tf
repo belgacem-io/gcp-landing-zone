@@ -42,12 +42,6 @@ variable "nat_num_addresses_region1" {
   default     = 2
 }
 
-variable "nat_num_addresses_region2" {
-  type        = number
-  description = "Number of external IPs to reserve for second Cloud NAT."
-  default     = 2
-}
-
 variable "bgp_asn_subnet" {
   type        = number
   description = "BGP ASN for Subnets cloud routers."

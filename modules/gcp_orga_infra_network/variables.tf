@@ -110,12 +110,6 @@ variable "orga_network_hub_nat_num_addresses_region1" {
   default     = 2
 }
 
-variable "orga_network_hub_nat_num_addresses_region2" {
-  type        = number
-  description = "Number of external IPs to reserve for first Cloud NAT in Base Hub."
-  default     = 2
-}
-
 variable "enable_partner_interconnect" {
   description = "Enable Partner Interconnect in the environment."
   type        = bool

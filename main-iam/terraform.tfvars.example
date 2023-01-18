@@ -16,8 +16,8 @@ gcp_organization_domain            = "company.cloud"
 gcp_billing_account              = "01A47A-F9BAF1-1EE048"
 gcp_workspace_customer_id        = "C03sciyt9"
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/shared-services-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_email           = "landing-zone-automation@shared-scv-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_id              = "projects/shared-svc-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
 gcp_group_org_admins             = "gcp-organization-admins@company.cloud"
 gcp_group_org_security_admins    = "gcp-security-admins@company.cloud"
 gcp_group_org_security_reviewers = "gcp-security-reviewers@company.cloud"
@@ -99,7 +99,7 @@ gcp_iam_groups = {
   exp-environment-devops = {
     name     = "exp-environment-devops"
     folders  = null
-    projects = ["exp-shared-services"]
+    projects = ["exp-shared-svc"]
     roles    = ["roles/viewer","roles/compute.osAdminLogin"]
     members  = [
       "i2118m1", "i21186e", "i21188e", "t821093", "i21189y", "i21189z", "i2118j8","s822794","i21390c"
@@ -110,7 +110,7 @@ gcp_iam_groups = {
   dev-environment-devops = {
     name     = "dev-environment-devops"
     folders  = null
-    projects = ["dev-shared-services"]
+    projects = ["dev-shared-svc"]
     roles    = ["roles/viewer","roles/compute.osAdminLogin"]
     members  = [
       "d824277", "i2118j8", "i21189z","i2118br", "u814378"

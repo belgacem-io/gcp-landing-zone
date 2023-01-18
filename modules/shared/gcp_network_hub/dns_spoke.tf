@@ -20,7 +20,7 @@ resource "google_dns_policy" "default_spoke_policy" {
 
 module "private_googleapis" {
   source      = "terraform-google-modules/cloud-dns/google"
-  version     = ">= 4.2"
+  version     = "~> 4.2"
 
   count   = var.mode == "spoke" ? 1 : 0
 
@@ -56,7 +56,7 @@ module "private_googleapis" {
 
 module "base_gcr" {
   source      = "terraform-google-modules/cloud-dns/google"
-  version     = ">= 4.2"
+  version     = "~> 4.2"
 
   count   = var.mode == "spoke" ? 1 : 0
 
@@ -92,7 +92,7 @@ module "base_gcr" {
 
 module "base_pkg_dev" {
   source      = "terraform-google-modules/cloud-dns/google"
-  version     = ">= 4.2"
+  version     = "~> 4.2"
 
   count   = var.mode == "spoke" ? 1 : 0
 
@@ -151,7 +151,7 @@ resource "google_dns_record_set" "spoke_ns_record" {
 
 module "public_zone" {
   source      = "terraform-google-modules/cloud-dns/google"
-  version     = ">= 4.2"
+  version     = "~> 4.2"
 
   count   = var.mode == "spoke" ? 1 : 0
 

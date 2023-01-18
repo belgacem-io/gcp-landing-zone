@@ -20,7 +20,7 @@ resource "google_dns_policy" "default_policy" {
 
 module "dns-forwarding-zone" {
   source  = "terraform-google-modules/cloud-dns/google"
-  version = ">= 4.2"
+  version = "~> 4.2"
 
   count   = ( var.mode == "hub" && var.target_name_server_addresses != null ) ? 1 : 0
 
@@ -41,7 +41,7 @@ module "dns-forwarding-zone" {
 
 module "dns_hub_region1_router1" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = ">= 4.0"
+  version = "~> 4.0"
 
   count   = var.mode == "hub" ? 1 : 0
 
@@ -57,7 +57,7 @@ module "dns_hub_region1_router1" {
 
 module "dns_hub_region1_router2" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = ">= 4.0"
+  version = "~> 4.0"
 
   count   = var.mode == "hub" ? 1 : 0
 

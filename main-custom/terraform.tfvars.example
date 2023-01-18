@@ -9,8 +9,8 @@ gcp_default_region1_azs = [
 ]
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/shared-services-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_email           = "landing-zone-automation@shared-svc-340608.iam.gserviceaccount.com"
+gcp_terraform_sa_id              = "projects/shared-svc-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
 gcp_group_org_admins             = "gcp-organization-admins@company.cloud"
 gcp_group_org_security_admins    = "gcp-security-admins@company.cloud"
 gcp_group_org_security_reviewers = "gcp-security-admins@company.cloud"

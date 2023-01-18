@@ -12,6 +12,7 @@ locals {
 
 data "google_compute_network" "org_network_hub_vpc" {
   count   = var.mode == "spoke" ? 1 : 0
+
   name    = var.org_network_hub_vpc_name
   project = var.org_network_hub_project_id
 }
@@ -22,7 +23,7 @@ data "google_compute_network" "org_network_hub_vpc" {
 
 module "main" {
   source                                 = "terraform-google-modules/network/google"
-  version                                = ">= 6.0"
+  version                                = "~> 5.2"
 
   project_id                             = var.project_id
   network_name                           = local.network_name
@@ -73,7 +74,7 @@ module "main" {
 
 module "region1_router1" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = ">= 4.0"
+  version = "~> 4.0"
 
   count   = var.mode != "spoke" ? 1 : 0
 
@@ -90,7 +91,7 @@ module "region1_router1" {
 
 module "region1_router2" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = ">= 4.0"
+  version = "~> 4.0"
 
   count   = var.mode != "spoke" ? 1 : 0
 
