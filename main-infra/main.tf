@@ -52,7 +52,7 @@ module "infra_hub_networks" {
 }
 
 
-module "infra_hub_networks_proxy" {
+module "infra_hub_networks_http_proxy" {
   source = "../modules/shared/squid_proxy"
 
   environment_code             = "prod"
