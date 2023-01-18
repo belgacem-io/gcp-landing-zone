@@ -16,7 +16,7 @@ module "infra_projects" {
   domains_to_allow             = [
     var.gcp_organization_name
   ]
-  enable_scc_notification      = true
+  enable_scc_notification      = false
   org_audit_data_admins        = var.gcp_group_org_security_admins
   org_audit_viewers            = var.gcp_group_org_security_reviewers
   org_billing_admins           = var.gcp_group_org_billing_admins

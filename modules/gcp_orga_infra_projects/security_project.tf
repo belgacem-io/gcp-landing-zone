@@ -4,9 +4,10 @@
 
 module "organization_security" {
   source                      = "terraform-google-modules/project-factory/google"
-  version                     = "~> 11.1"
-  random_project_id           = "true"
-  default_service_account     = "deprivilege"
+  version                     = "~> 14.1"
+  random_project_id           = true
+  create_project_sa           = false
+  default_service_account     = "delete"
   name                        = var.infra_security_project.name
   org_id                      = var.organization_id
   billing_account             = var.billing_account

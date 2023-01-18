@@ -9,8 +9,8 @@ module "org_disable_nested_virtualization" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -23,8 +23,8 @@ module "org_disable_serial_port_access" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -37,8 +37,8 @@ module "org_compute_disable_guest_attributes_access" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -51,8 +51,8 @@ module "org_vm_external_ip_access" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "list"
   enforce         = "true"
@@ -60,13 +60,13 @@ module "org_vm_external_ip_access" {
 }
 
 module "org_skip_default_network" {
-  count =  var.skip_default_network_policy ? 1 : 0
+  count = var.skip_default_network_policy ? 1 : 0
 
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -79,8 +79,8 @@ module "org_shared_vpc_lien_removal" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -94,8 +94,8 @@ module "org_require_os_login" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -113,8 +113,8 @@ module "org_cloudsql_external_ip_access" {
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -130,21 +130,21 @@ module "org_domain_restricted_sharing" {
 
   source           = "terraform-google-modules/org-policy/google//modules/domain_restricted_sharing"
   version          = "~> 5.0"
-  organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
-  policy_for      = var.resource_type
+  organization_id  = var.resource_type == "organization" ? var.resource_id : null
+  folder_id        = var.resource_type == "folder" ? var.resource_id : null
+  project_id       = var.resource_type == "project" ? var.resource_id : null
+  policy_for       = var.resource_type
   domains_to_allow = var.domains_to_allow
 }
 
 module "org_disable_sa_key_creation" {
-  count  = var.enable_sa_key_creation_deny_policy ? 1 : 0
+  count = var.enable_sa_key_creation_deny_policy ? 1 : 0
 
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -152,13 +152,13 @@ module "org_disable_sa_key_creation" {
 }
 
 module "org_disable_automatic_iam_grants_on_default_service_accounts" {
-  count  = var.disable_automatic_iam_grants_on_default_service_accounts_policy ? 1 : 0
+  count = var.disable_automatic_iam_grants_on_default_service_accounts_policy ? 1 : 0
 
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"
@@ -170,13 +170,13 @@ module "org_disable_automatic_iam_grants_on_default_service_accounts" {
 *******************************************/
 
 module "org_enforce_bucket_level_access" {
-  count  = var.enforce_bucket_level_access_policy ? 1 : 0
+  count = var.enforce_bucket_level_access_policy ? 1 : 0
 
   source          = "terraform-google-modules/org-policy/google"
   version         = "~> 5.0"
   organization_id = var.resource_type == "organization" ? var.resource_id : null
-  folder_id = var.resource_type == "organization" ? var.resource_id : null
-  project_id = var.resource_type == "organization" ? var.resource_id : null
+  folder_id       = var.resource_type == "folder" ? var.resource_id : null
+  project_id      = var.resource_type == "project" ? var.resource_id : null
   policy_for      = var.resource_type
   policy_type     = "boolean"
   enforce         = "true"

@@ -147,6 +147,18 @@ variable "org_network_viewers" {
   type        = string
 }
 
+variable "enable_log_export_to_biqquery" {
+  description = "Enable log export to bigquery"
+  type = bool
+  default = false
+}
+
+variable "enable_log_export_to_cs" {
+  description = "Enable log export to bigquery"
+  type = bool
+  default = true
+}
+
 variable "log_export_storage_lifecycle_rules" {
   description = "Bucket lifecycle rules"
   type        = any

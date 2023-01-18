@@ -4,9 +4,10 @@
 
 module "organization_observability" {
   source                  = "terraform-google-modules/project-factory/google"
-  version                 = "~> 11.1"
-  random_project_id       = "true"
-  default_service_account = "deprivilege"
+  version                 = "~> 14.1"
+  random_project_id           = true
+  create_project_sa           = false
+  default_service_account     = "delete"
   name                    = var.infra_observability_project.name
   org_id                  = var.organization_id
   billing_account         = var.billing_account
@@ -50,13 +51,15 @@ resource "random_string" "suffix" {
 *****************************************/
 
 module "log_export_to_biqquery" {
+  count = var.enable_log_export_to_biqquery ? 1 : 0
+
   source                 = "terraform-google-modules/log-export/google"
   version                = "~> 7.3.0"
-  destination_uri        = module.bigquery_destination.destination_uri
+  destination_uri        = module.bigquery_destination.0.destination_uri
   filter                 = local.main_logs_filter
   log_sink_name          = "sk-c-logging-bq"
-  parent_resource_id     = var.parent_id
-  parent_resource_type   = "organization"
+  parent_resource_id     = split("/",var.parent_id )[1]
+  parent_resource_type   = startswith("organisations",var.parent_id) ? "organisation" : "folder"
   include_children       = true
   unique_writer_identity = true
   bigquery_options = {
@@ -65,11 +68,13 @@ module "log_export_to_biqquery" {
 }
 
 module "bigquery_destination" {
+  count = var.enable_log_export_to_biqquery ? 1 : 0
+
   source                     = "terraform-google-modules/log-export/google//modules/bigquery"
   version                    = "~> 7.3.0"
   project_id                 = module.organization_observability.project_id
   dataset_name               = "audit_logs"
-  log_sink_writer_identity   = module.log_export_to_biqquery.writer_identity
+  log_sink_writer_identity   = module.log_export_to_biqquery.0.writer_identity
   expiration_days            = var.audit_logs_table_expiration_days
   delete_contents_on_destroy = var.audit_logs_table_delete_contents_on_destroy
 }
@@ -80,11 +85,13 @@ module "bigquery_destination" {
 *****************************************/
 
 module "storage_destination" {
+  count = var.enable_log_export_to_cs ? 1 : 0
+
   source                      = "terraform-google-modules/log-export/google//modules/storage"
   version                     = "~> 7.3"
   project_id                  = module.organization_observability.project_id
   storage_bucket_name         = "bkt-${module.organization_observability.project_id}-org-logs-${random_string.suffix.result}"
-  log_sink_writer_identity    = module.log_export_to_storage.writer_identity
+  log_sink_writer_identity    = module.log_export_to_storage.0.writer_identity
   uniform_bucket_level_access = true
   location                    = var.log_export_storage_location
   retention_policy            = var.log_export_storage_retention_policy
@@ -94,13 +101,15 @@ module "storage_destination" {
 }
 
 module "log_export_to_storage" {
+  count = var.enable_log_export_to_cs ? 1 : 0
+
   source                 = "terraform-google-modules/log-export/google"
   version                = "~> 7.3"
-  destination_uri        = module.storage_destination.destination_uri
+  destination_uri        = module.storage_destination.0.destination_uri
   filter                 = ""
   log_sink_name          = "sk-c-logging-bkt"
-  parent_resource_id     = var.parent_id
-  parent_resource_type   = "organization"
+  parent_resource_id     = split("/",var.parent_id )[1]
+  parent_resource_type   = startswith("organizations",var.parent_id) ? "organization" : "folder"
   include_children       = true
   unique_writer_identity = true
 }
@@ -110,6 +119,8 @@ module "log_export_to_storage" {
 *****************************************/
 
 resource "google_bigquery_dataset" "billing_dataset" {
+  count = var.enable_log_export_to_biqquery ? 1 : 0
+
   dataset_id    = "billing_data"
   project       = module.organization_observability.project_id
   friendly_name = "GCP Billing Data"
