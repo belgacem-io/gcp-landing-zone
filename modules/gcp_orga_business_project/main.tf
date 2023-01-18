@@ -8,8 +8,8 @@ module "business_project" {
   alert_pubsub_topic                       = var.alert_pubsub_topic
   budget_amount                            = var.budget_amount
   activate_apis                            = var.activate_apis
-  env_network_hub_project_id               = var.env_network_hub_project_id
-  env_network_hub_vpc_subnetwork_self_link = var.env_network_hub_vpc_subnetwork_self_link
+  env_nethub_project_id               = var.env_nethub_project_id
+  env_nethub_vpc_subnetwork_self_link = var.env_nethub_vpc_subnetwork_self_link
   project_name                             = var.project_name
   monitoring_project_id                    = var.monitoring_project_id
 }

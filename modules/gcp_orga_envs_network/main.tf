@@ -77,7 +77,7 @@ locals {
  Env Network hub shared VPC
 *****************************************/
 
-module "env_network_hub" {
+module "env_nethub" {
   source                        = "../shared/gcp_network_hub"
   project_id                    = var.env_net_hub_project_id
   environment_code              = var.environment_code
@@ -95,8 +95,6 @@ module "env_network_hub" {
   nat_num_addresses_region1     = var.nat_num_addresses_region1
   nat_num_addresses             = var.nat_num_addresses
   mode                          = "spoke"
-  org_network_hub_vpc_name      = var.org_network_hub_vpc_name
-  org_network_hub_project_id    = var.org_network_hub_project_id
 
   subnets                  = concat(local.primary_business_project_subnets,local.primary_env_net_hub_subnets)
 
@@ -117,19 +115,19 @@ module "env_network_hub" {
 resource "google_compute_global_address" "private_service_access_address" {
   for_each = toset(var.env_net_hub_private_svc_subnet_ranges)
 
-  name          = "${var.org_network_hub_vpc_name}-private-access"
+  name          = "${var.org_nethub_vpc_name}-private-access"
   project       = var.env_net_hub_project_id
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   address       = element(split("/", each.value), 0)
   prefix_length = element(split("/", each.value), 1)
-  network       = module.env_network_hub.network_self_link
+  network       = module.env_nethub.network_self_link
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
   for_each = toset(var.env_net_hub_private_svc_subnet_ranges)
 
-  network                 = module.env_network_hub.network_self_link
+  network                 = module.env_nethub.network_self_link
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_service_access_address[each.key].name]
 

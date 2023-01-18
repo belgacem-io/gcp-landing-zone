@@ -10,11 +10,11 @@ locals {
 *****************************************/
 
 
-data "google_compute_network" "org_network_hub_vpc" {
+data "google_compute_network" "org_nethub_vpc" {
   count   = var.mode == "spoke" ? 1 : 0
 
-  name    = var.org_network_hub_vpc_name
-  project = var.org_network_hub_project_id
+  name    = var.org_nethub_vpc_name
+  project = var.org_nethub_project_id
 }
 
 /******************************************

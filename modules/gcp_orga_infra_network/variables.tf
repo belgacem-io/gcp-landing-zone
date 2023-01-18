@@ -23,7 +23,7 @@ variable "infra_folder_name" {
   description = "Folder witch will contains all infra projects"
 }
 
-variable "network_hub_project_name" {
+variable "nethub_project_name" {
   type = string
   description = "Project witch will contains all dns configs"
 }
@@ -63,48 +63,48 @@ variable "enable_dns_proxy_advertising" {
   default = false
 }
 
-variable "enable_orga_network_hub_windows_activation" {
+variable "enable_orga_nethub_windows_activation" {
   type        = bool
   description = "Enable Windows license activation for Windows workloads in Base Hub"
   default     = false
 }
 
-variable "enable_orga_network_hub_dns_inbound_forwarding" {
+variable "enable_orga_nethub_dns_inbound_forwarding" {
   type        = bool
   description = "Toggle inbound query forwarding for Base Hub VPC DNS."
   default     = true
 }
 
-variable "enable_orga_network_hub_dns_logging" {
+variable "enable_orga_nethub_dns_logging" {
   type        = bool
   description = "Toggle DNS logging for Base Hub VPC DNS."
   default     = true
 }
-variable "enable_orga_network_hub_firewall_logging" {
+variable "enable_orga_nethub_firewall_logging" {
   type        = bool
   description = "Toggle firewall logging for VPC Firewalls in Base Hub VPC."
   default     = true
 }
 
-variable "enable_orga_network_hub_optional_fw_rules" {
+variable "enable_orga_nethub_optional_fw_rules" {
   type        = bool
   description = "Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges in Hub VPC."
   default     = true
 }
 
-variable "enable_orga_network_hub_nat" {
+variable "enable_orga_nethub_nat" {
   type        = bool
   description = "Toggle creation of NAT cloud router in Hub."
   default     = true
 }
 
-variable "orga_network_hub_nat_bgp_asn" {
+variable "orga_nethub_nat_bgp_asn" {
   type        = number
   description = "BGP ASN for first NAT cloud routes in Base Hub."
   default     = 64514
 }
 
-variable "orga_network_hub_nat_num_addresses_region1" {
+variable "orga_nethub_nat_num_addresses_region1" {
   type        = number
   description = "Number of external IPs to reserve for first Cloud NAT in Base Hub."
   default     = 2
@@ -121,7 +121,7 @@ variable "gcp_labels" {
   description = "Map of tags"
 }
 
-variable "orga_network_hub_subnets" {
+variable "orga_nethub_subnets" {
   description = "Default subnets for Organization network hub."
   type        = object({
     public_subnet_ranges = list(string)

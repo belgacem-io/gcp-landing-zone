@@ -133,13 +133,13 @@ data "google_dns_managed_zone" "org_dns_zone" {
   count   = var.mode == "spoke" ? 1 : 0
 
   name    = "fz-dns-hub"
-  project = var.org_network_hub_project_id
+  project = var.org_nethub_project_id
 }
 
 resource "google_dns_record_set" "spoke_ns_record" {
   count   = var.mode == "spoke" ? 1 : 0
 
-  project = var.org_network_hub_project_id
+  project = var.org_nethub_project_id
   name = var.domain
   type = "NS"
   ttl  = 300
@@ -164,5 +164,5 @@ module "public_zone" {
   private_visibility_config_networks = [
     module.main.network_self_link
   ]
-  target_network = data.google_compute_network.org_network_hub_vpc[0].self_link
+  target_network = data.google_compute_network.org_nethub_vpc[0].self_link
 }

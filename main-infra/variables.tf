@@ -167,7 +167,7 @@ variable "gcp_infra_projects" {
         email_addresses_to_notify = list(string)
       })
     })
-    networking_hub = object({
+    nethub = object({
       name    = string
       budget  = object({
         amount                    = number,

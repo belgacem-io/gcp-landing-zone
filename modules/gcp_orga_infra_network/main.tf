@@ -1,6 +1,6 @@
 
 locals {
-  org_network_hub_project_id = data.google_projects.org_network_hub.projects[0].project_id
+  org_nethub_project_id = data.google_projects.org_nethub.projects[0].project_id
 }
 
 /******************************************
@@ -11,8 +11,8 @@ data "google_active_folder" "infra" {
   parent       = var.parent_id
 }
 
-data "google_projects" "org_network_hub" {
-  filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.network_hub_project_name} lifecycleState=ACTIVE"
+data "google_projects" "org_nethub" {
+  filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.nethub_project_name} lifecycleState=ACTIVE"
 }
 
 

@@ -9,7 +9,7 @@ module "peering" {
   count                     = var.mode == "spoke" ? 1 : 0
   prefix                    = "np"
   local_network             = module.main.network_self_link
-  peer_network              = data.google_compute_network.org_network_hub_vpc[0].self_link
+  peer_network              = data.google_compute_network.org_nethub_vpc[0].self_link
   export_peer_custom_routes = true
 }
 

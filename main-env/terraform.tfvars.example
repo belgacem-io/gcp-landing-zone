@@ -136,7 +136,7 @@ gcp_infra_projects = {
     }
   }
 
-  networking_hub = {
+  nethub = {
     name    = "orga-network-hub"
     folder  = "Infrastructure"
     budget  = {

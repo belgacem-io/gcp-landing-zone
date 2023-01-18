@@ -22,9 +22,9 @@ module "business_project" {
   org_id                                   = var.gcp_organization_id
   project_name                             = "${each.value.environment_code}-${each.value.name}"
   terraform_service_account                = var.gcp_terraform_sa_email
-  env_network_hub_project_id               = module.fetch.network_hubs_by_env_code[each.value.environment_code].project_id
-  env_network_hub_vpc_subnetwork_self_link = [
-  for self_link in module.fetch.network_hubs_shared_vpc_by_env_code[each.value.environment_code].subnetworks_self_links :
+  env_nethub_project_id               = module.fetch.nethubs_by_env_code[each.value.environment_code].project_id
+  env_nethub_vpc_subnetwork_self_link = [
+  for self_link in module.fetch.nethubs_shared_vpc_by_env_code[each.value.environment_code].subnetworks_self_links :
   self_link if length(regexall("${each.value.environment_code}-${each.value.name}-.*", self_link)) > 0
   ]
   parent_folder_id                         = module.fetch.folders_by_env_code[each.value.environment_code][each.value.department].name

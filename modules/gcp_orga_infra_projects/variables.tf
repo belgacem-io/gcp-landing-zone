@@ -53,7 +53,7 @@ variable "infra_observability_project" {
   })
 }
 
-variable "infra_networking_hub_project" {
+variable "infra_nethub_project" {
   type = object({
     name = string
     budget = object({

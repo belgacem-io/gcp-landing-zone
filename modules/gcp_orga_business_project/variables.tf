@@ -74,12 +74,12 @@ variable "project_name" {
   description = "project name"
 }
 
-variable "env_network_hub_project_id" {
+variable "env_nethub_project_id" {
   type = string
   description = "Environment hub network project id"
 }
 
-variable "env_network_hub_vpc_subnetwork_self_link" {
+variable "env_nethub_vpc_subnetwork_self_link" {
   type = list(string)
 }
 

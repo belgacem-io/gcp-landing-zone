@@ -27,19 +27,19 @@ output "folders_by_env_code" {
   value = local.folders_by_env_code
 }
 
-output "org_network_hub_project" {
+output "org_nethub_project" {
   value = local.projects_by_name["orga-network-hub"]
 }
 
-output "network_hubs_by_env_code" {
-  value = local.network_hubs_by_env_code
+output "nethubs_by_env_code" {
+  value = local.nethubs_by_env_code
 }
 
-output "network_hubs_shared_vpc_by_env_code" {
-  value = data.google_compute_network.network_hub_vpc
+output "nethubs_shared_vpc_by_env_code" {
+  value = data.google_compute_network.nethub_vpc
 }
-output "network_hubs_subnets_by_env_code" {
-  value = local.network_hubs_subnets_by_env_code
+output "nethubs_subnets_by_env_code" {
+  value = local.nethubs_subnets_by_env_code
 }
 
 output "shared_subnets_by_project_and_region" {

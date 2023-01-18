@@ -2,12 +2,12 @@ variable "environment_code" {
   type = string
 }
 
-variable "org_network_hub_vpc_name" {
+variable "org_nethub_vpc_name" {
   type = string
   description = "Organization hub network VPC name"
 }
 
-variable "org_network_hub_project_id" {
+variable "org_nethub_project_id" {
   type = string
   description = "Organization hub network project id"
 }

@@ -35,19 +35,19 @@ locals {
 
   }
   projects_by_name = {for k, v in data.google_project.projects : v.name => v}
-  network_hubs_by_env_code = {for k, v in data.google_project.projects :
+  nethubs_by_env_code = {for k, v in data.google_project.projects :
         v.labels.environment_code => v if can(v.labels["environment_code"])
                                         && can(v.labels["application_name"])
                                         && try(v.labels.application_name, "") == "network-hub"
   }
 
-  network_hubs_subnets_by_env_code = {for k, v in data.google_compute_network.network_hub_vpc :
-        k => [for subnet in v.subnetworks_self_links: data.google_compute_subnetwork.network_hub_subnetwork[subnet] ]
+  nethubs_subnets_by_env_code = {for k, v in data.google_compute_network.nethub_vpc :
+        k => [for subnet in v.subnetworks_self_links: data.google_compute_subnetwork.nethub_subnetwork[subnet] ]
   }
 
   //Subnet descriptions are structure : {environment code} / {project name} / { region }
-  shared_subnets_regions  = distinct( [ for description in values(data.google_compute_subnetwork.network_hub_subnetwork).*.description: split("/",description)[2]] )
-  shared_subnets_peered_projects = distinct( [ for description in values(data.google_compute_subnetwork.network_hub_subnetwork).*.description:
+  shared_subnets_regions  = distinct( [ for description in values(data.google_compute_subnetwork.nethub_subnetwork).*.description: split("/",description)[2]] )
+  shared_subnets_peered_projects = distinct( [ for description in values(data.google_compute_subnetwork.nethub_subnetwork).*.description:
         {
           environment_code = split("/",description)[0]
           project_name = split("/",description)[1]
@@ -56,7 +56,7 @@ locals {
   shared_subnets_by_project_and_region = { for prj in local.shared_subnets_peered_projects:
       "${prj.environment_code}-${prj.project_name}" => {
             for region in local.shared_subnets_regions:
-                  region => [ for subnet in data.google_compute_subnetwork.network_hub_subnetwork :
+                  region => [ for subnet in data.google_compute_subnetwork.nethub_subnetwork :
                             subnet if split("/",subnet.description)[0]  == prj.environment_code
                             && split("/",subnet.description)[1]  == prj.project_name
                             && split("/",subnet.description)[2]  == region
@@ -68,8 +68,8 @@ locals {
   Network
 *****************************************/
 
-data "google_compute_network" "network_hub_vpc" {
-  for_each = local.network_hubs_by_env_code
+data "google_compute_network" "nethub_vpc" {
+  for_each = local.nethubs_by_env_code
 
   name    = "vpc-${each.key}-shared-spoke"
   project = each.value.project_id
@@ -79,8 +79,8 @@ data "google_compute_network" "network_hub_vpc" {
   ]
 }
 
-data "google_compute_subnetwork" "network_hub_subnetwork" {
-  for_each = toset(flatten(values(data.google_compute_network.network_hub_vpc).*.subnetworks_self_links))
+data "google_compute_subnetwork" "nethub_subnetwork" {
+  for_each = toset(flatten(values(data.google_compute_network.nethub_vpc).*.subnetworks_self_links))
 
   self_link = each.value
 }

@@ -24,9 +24,9 @@ module "gke" {
   project_id                       = module.fetch.projects_by_name["exp-uc1-kube"].project_id
   region                           = var.gcp_default_region1
   region_azs                       = var.gcp_default_region1_azs
-  network_name                     = module.fetch.network_hubs_shared_vpc_by_env_code["exp"].name
-  network_self_link                = module.fetch.network_hubs_shared_vpc_by_env_code["exp"].self_link
-  network_project_id               = module.fetch.network_hubs_by_env_code["exp"].project_id
+  network_name                     = module.fetch.nethubs_shared_vpc_by_env_code["exp"].name
+  network_self_link                = module.fetch.nethubs_shared_vpc_by_env_code["exp"].self_link
+  network_project_id               = module.fetch.nethubs_by_env_code["exp"].project_id
   subnetwork_name                  = module.fetch.shared_subnets_by_project_and_region["exp-uc1-kube"]["europe-west4"][0].name
   pods_secondary_ip_range_name     = module.fetch.shared_subnets_by_project_and_region["exp-uc1-kube"]["europe-west4"][0].secondary_ip_range[0].range_name
   services_secondary_ip_range_name = module.fetch.shared_subnets_by_project_and_region["exp-uc1-kube"]["europe-west4"][0].secondary_ip_range[1].range_name

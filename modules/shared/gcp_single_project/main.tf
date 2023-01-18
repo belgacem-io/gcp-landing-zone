@@ -12,8 +12,8 @@ module "project" {
   billing_account             = var.billing_account
   folder_id                   = var.folder_id
 
-  svpc_host_project_id = var.env_network_hub_project_id
-  shared_vpc_subnets   = var.env_network_hub_vpc_subnetwork_self_link
+  svpc_host_project_id = var.env_nethub_project_id
+  shared_vpc_subnets   = var.env_nethub_vpc_subnetwork_self_link
 
   vpc_service_control_attach_enabled = var.vpc_service_control_attach_enabled
   vpc_service_control_perimeter_name = var.vpc_service_control_perimeter_name
