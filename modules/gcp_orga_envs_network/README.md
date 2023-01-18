@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 3.77 |
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.5 |
 
 #### Modules
 
@@ -15,7 +15,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_business_project_subnets"></a> [business_project_subnets](#input_business_project_subnets) | Default subnets for Organization network hub. | <pre>list(object({<br>    project_name = string<br>    environment_code = string<br>    region1_primary_ranges  = list(string)<br>    region2_primary_ranges =  list(string)<br>    region1_secondary_ranges = list(string)<br>    region2_secondary_ranges = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_business_project_subnets"></a> [business_project_subnets](#input_business_project_subnets) | Default subnets for Organization network hub. | <pre>list(object({<br>    project_name = string<br>    environment_code = string<br>    private_subnet_ranges  = list(string)<br>    data_subnet_ranges =  list(string)<br>    region1_secondary_ranges = list(string)<br>    region2_secondary_ranges = list(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_common_services_subnet_region1_ranges"></a> [common_services_subnet_region1_ranges](#input_common_services_subnet_region1_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_common_services_subnet_region2_ranges"></a> [common_services_subnet_region2_ranges](#input_common_services_subnet_region2_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_default_region1"></a> [default_region1](#input_default_region1) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |

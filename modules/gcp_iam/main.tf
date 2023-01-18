@@ -26,7 +26,7 @@ resource "googleworkspace_user" "users" {
 #Create default groups
 module "organization_iam_groups" {
   source  = "terraform-google-modules/group/google"
-  version = "~> 0.1"
+  version = "~> 0.4"
 
   for_each = var.iam_groups
 
@@ -43,6 +43,8 @@ module "organization_iam_groups" {
 
 module "organization_iam_groups_bindings" {
   source        = "terraform-google-modules/iam/google//modules/organizations_iam"
+  version = "~> 7.4"
+
   organizations = [var.organization_id]
   mode          = "authoritative"
 
@@ -51,7 +53,7 @@ module "organization_iam_groups_bindings" {
 
 module "folders_iam_bindings" {
   source  = "terraform-google-modules/iam/google//modules/folders_iam"
-  version = "~> 6.4"
+  version = "~> 7.4"
 
   for_each = local.folder_iam_groups_bindings
 
@@ -61,7 +63,7 @@ module "folders_iam_bindings" {
 
 module "projects_iam_bindings" {
   source  = "terraform-google-modules/iam/google//modules/projects_iam"
-  version = "~> 6.4"
+  version = "~> 7.4"
 
   for_each = local.project_iam_groups_bindings
 

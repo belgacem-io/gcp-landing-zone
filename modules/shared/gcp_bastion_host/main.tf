@@ -7,7 +7,7 @@ resource "google_service_account" "vm_sa" {
 # A testing VM to allow OS Login + IAP tunneling.
 module "instance_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
-  version = "~> 7.3"
+  version = ">= 7.9"
 
   project_id      = var.project_id
   machine_type    = "n1-standard-1"
@@ -48,7 +48,7 @@ resource "google_project_iam_member" "os_login_bindings" {
 
 module "iap_tunneling" {
   source  = "terraform-google-modules/bastion-host/google//modules/iap-tunneling"
-  version = "~> 4.1"
+  version = ">= 5.1"
 
   fw_name_allow_ssh_from_iap = "test-allow-ssh-from-iap-to-tunnel"
   project                    = var.project_id

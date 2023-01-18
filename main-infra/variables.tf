@@ -8,9 +8,9 @@ variable "gcp_parent_resource_id" {
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
-variable "gcp_organization_name" {
+variable "gcp_organization_domain" {
   type        = string
-  description = "The name of the current organization."
+  description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
 
@@ -132,6 +132,7 @@ variable "gcp_business_projects" {
     network          = object({
       cidr_blocks = object({
         private_subnet_ranges = list(string)
+        private_subnet_k8s_2nd_ranges = list(string)
         data_subnet_ranges = list(string)
       })
     })
@@ -178,6 +179,7 @@ variable "gcp_infra_projects" {
           public_subnet_ranges = list(string)
           private_subnet_ranges = list(string)
           data_subnet_ranges = list(string)
+          private_svc_subnet_ranges = list(string)
         })
       })
     })

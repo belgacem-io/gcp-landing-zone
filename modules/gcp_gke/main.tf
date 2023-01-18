@@ -16,7 +16,7 @@ provider "helm" {
 
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
-  version = "~> 19.0"
+  version = "~> 24.0"
 
   project_id                        = var.project_id
   name                              = var.cluster_name

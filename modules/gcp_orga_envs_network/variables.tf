@@ -31,11 +31,6 @@ variable "default_region1" {
   description = "First subnet region. The shared vpc modules only configures two regions."
 }
 
-variable "default_region2" {
-  type        = string
-  description = "Second subnet region. The shared vpc modules only configures two regions."
-}
-
 variable "domain" {
   type        = string
   description = "The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period."
@@ -125,11 +120,11 @@ variable "enable_hub_and_spoke_transitivity" {
   default     = false
 }
 
-variable "common_services_subnet_region1_ranges" {
+variable "csvc_private_subnet_ranges" {
   type = list(string)
 }
 
-variable "common_services_subnet_region2_ranges" {
+variable "csvc_data_subnet_ranges" {
   type = list(string)
 }
 
@@ -145,7 +140,6 @@ variable "business_project_subnets" {
     environment_code = string
     private_subnet_ranges  = list(string)
     data_subnet_ranges =  list(string)
-    region1_secondary_ranges = list(string)
-    region2_secondary_ranges = list(string)
+    k8s_secondary_ranges = list(string)
   }))
 }

@@ -4,7 +4,7 @@
 
 module "dns-public-zone" {
   source  = "terraform-google-modules/cloud-dns/google"
-  version = "~> 4.0"
+  version = "~> 4.2"
 
   project_id = local.org_network_hub_project_id
   type       = "public"

@@ -54,7 +54,7 @@ module "log_export_to_biqquery" {
   count = var.enable_log_export_to_biqquery ? 1 : 0
 
   source                 = "terraform-google-modules/log-export/google"
-  version                = "~> 7.3.0"
+  version                = "~> 7.4"
   destination_uri        = module.bigquery_destination.0.destination_uri
   filter                 = local.main_logs_filter
   log_sink_name          = "sk-c-logging-bq"
@@ -71,7 +71,7 @@ module "bigquery_destination" {
   count = var.enable_log_export_to_biqquery ? 1 : 0
 
   source                     = "terraform-google-modules/log-export/google//modules/bigquery"
-  version                    = "~> 7.3.0"
+  version                    = "~> 7.4"
   project_id                 = module.organization_observability.project_id
   dataset_name               = "audit_logs"
   log_sink_writer_identity   = module.log_export_to_biqquery.0.writer_identity
@@ -88,7 +88,7 @@ module "storage_destination" {
   count = var.enable_log_export_to_cs ? 1 : 0
 
   source                      = "terraform-google-modules/log-export/google//modules/storage"
-  version                     = "~> 7.3"
+  version                     = "~> 7.4"
   project_id                  = module.organization_observability.project_id
   storage_bucket_name         = "bkt-${module.organization_observability.project_id}-org-logs-${random_string.suffix.result}"
   log_sink_writer_identity    = module.log_export_to_storage.0.writer_identity
@@ -104,7 +104,7 @@ module "log_export_to_storage" {
   count = var.enable_log_export_to_cs ? 1 : 0
 
   source                 = "terraform-google-modules/log-export/google"
-  version                = "~> 7.3"
+  version                = "~> 7.4"
   destination_uri        = module.storage_destination.0.destination_uri
   filter                 = ""
   log_sink_name          = "sk-c-logging-bkt"

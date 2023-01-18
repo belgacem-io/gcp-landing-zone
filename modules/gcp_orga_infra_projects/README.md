@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 3.77 |
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.5 |
 | <a name="provider_random"></a> [random](#provider_random) | n/a |
 
 #### Modules
@@ -13,21 +13,10 @@
 | <a name="module_bigquery_destination"></a> [bigquery_destination](#module_bigquery_destination) | terraform-google-modules/log-export/google//modules/bigquery | ~> 7.3.0 |
 | <a name="module_log_export_to_biqquery"></a> [log_export_to_biqquery](#module_log_export_to_biqquery) | terraform-google-modules/log-export/google | ~> 7.3.0 |
 | <a name="module_log_export_to_storage"></a> [log_export_to_storage](#module_log_export_to_storage) | terraform-google-modules/log-export/google | ~> 7.3 |
-| <a name="module_org_cloudsql_external_ip_access"></a> [org_cloudsql_external_ip_access](#module_org_cloudsql_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_compute_disable_guest_attributes_access"></a> [org_compute_disable_guest_attributes_access](#module_org_compute_disable_guest_attributes_access) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_disable_automatic_iam_grants_on_default_service_accounts"></a> [org_disable_automatic_iam_grants_on_default_service_accounts](#module_org_disable_automatic_iam_grants_on_default_service_accounts) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_disable_nested_virtualization"></a> [org_disable_nested_virtualization](#module_org_disable_nested_virtualization) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_disable_sa_key_creation"></a> [org_disable_sa_key_creation](#module_org_disable_sa_key_creation) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_disable_serial_port_access"></a> [org_disable_serial_port_access](#module_org_disable_serial_port_access) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_domain_restricted_sharing"></a> [org_domain_restricted_sharing](#module_org_domain_restricted_sharing) | terraform-google-modules/org-policy/google//modules/domain_restricted_sharing | ~> 5.0 |
-| <a name="module_org_enforce_bucket_level_access"></a> [org_enforce_bucket_level_access](#module_org_enforce_bucket_level_access) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_shared_require_os_login"></a> [org_shared_require_os_login](#module_org_shared_require_os_login) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_shared_vpc_lien_removal"></a> [org_shared_vpc_lien_removal](#module_org_shared_vpc_lien_removal) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_skip_default_network"></a> [org_skip_default_network](#module_org_skip_default_network) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_org_vm_external_ip_access"></a> [org_vm_external_ip_access](#module_org_vm_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.0 |
-| <a name="module_organization_networking_hub"></a> [organization_networking_hub](#module_organization_networking_hub) | terraform-google-modules/project-factory/google | ~> 11.1 |
-| <a name="module_organization_observability"></a> [organization_observability](#module_organization_observability) | terraform-google-modules/project-factory/google | ~> 11.1 |
-| <a name="module_organization_security"></a> [organization_security](#module_organization_security) | terraform-google-modules/project-factory/google | ~> 11.1 |
+| <a name="module_orga_policies"></a> [orga_policies](#module_orga_policies) | ../shared/gcp_orga_policies | n/a |
+| <a name="module_organization_networking_hub"></a> [organization_networking_hub](#module_organization_networking_hub) | terraform-google-modules/project-factory/google | ~> 14.1 |
+| <a name="module_organization_observability"></a> [organization_observability](#module_organization_observability) | terraform-google-modules/project-factory/google | ~> 14.1 |
+| <a name="module_organization_security"></a> [organization_security](#module_organization_security) | terraform-google-modules/project-factory/google | ~> 14.1 |
 | <a name="module_storage_destination"></a> [storage_destination](#module_storage_destination) | terraform-google-modules/log-export/google//modules/storage | ~> 7.3 |
 
 #### Inputs
@@ -40,9 +29,9 @@
 | <a name="input_domains_to_allow"></a> [domains_to_allow](#input_domains_to_allow) | The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy. | `list(string)` | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
 | <a name="input_infra_folder_name"></a> [infra_folder_name](#input_infra_folder_name) | Folder witch will contains all infra projects | `string` | n/a | yes |
-| <a name="input_infra_networking_hub_project"></a> [infra_networking_hub_project](#input_infra_networking_hub_project) | n/a | <pre>object({<br>    name = string<br>    folder = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
-| <a name="input_infra_observability_project"></a> [infra_observability_project](#input_infra_observability_project) | n/a | <pre>object({<br>    name = string<br>    folder = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      alert_pubsub_topic = string<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
-| <a name="input_infra_security_project"></a> [infra_security_project](#input_infra_security_project) | n/a | <pre>object({<br>    name = string<br>    folder = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
+| <a name="input_infra_networking_hub_project"></a> [infra_networking_hub_project](#input_infra_networking_hub_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
+| <a name="input_infra_observability_project"></a> [infra_observability_project](#input_infra_observability_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      alert_pubsub_topic = string<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
+| <a name="input_infra_security_project"></a> [infra_security_project](#input_infra_security_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
 | <a name="input_org_audit_data_admins"></a> [org_audit_data_admins](#input_org_audit_data_admins) | Google Workspace or Cloud Identity group that have access to audit logs. | `string` | n/a | yes |
 | <a name="input_org_audit_viewers"></a> [org_audit_viewers](#input_org_audit_viewers) | Members are part of an audit team and view audit logs in the logging project. | `string` | n/a | yes |
 | <a name="input_org_billing_admins"></a> [org_billing_admins](#input_org_billing_admins) | Identity that has billing administrator permissions | `string` | n/a | yes |
@@ -53,14 +42,13 @@
 | <a name="input_org_security_reviewers"></a> [org_security_reviewers](#input_org_security_reviewers) | G Suite or Cloud Identity group that members are part of the security team responsible for reviewing cloud security. | `string` | n/a | yes |
 | <a name="input_org_viewers"></a> [org_viewers](#input_org_viewers) | G Suite or Cloud Identity group that have the ability to view resource information across the Google Cloud organization. | `string` | n/a | yes |
 | <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The ID of the current organization. | `string` | n/a | yes |
+| <a name="input_parent_id"></a> [parent_id](#input_parent_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 | <a name="input_terraform_sa_email"></a> [terraform_sa_email](#input_terraform_sa_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_audit_logs_table_delete_contents_on_destroy"></a> [audit_logs_table_delete_contents_on_destroy](#input_audit_logs_table_delete_contents_on_destroy) | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | `bool` | `false` | no |
 | <a name="input_audit_logs_table_expiration_days"></a> [audit_logs_table_expiration_days](#input_audit_logs_table_expiration_days) | Period before tables expire for all audit logs in milliseconds. Default is 30 days. | `number` | `30` | no |
 | <a name="input_budget_alert_spent_percents"></a> [budget_alert_spent_percents](#input_budget_alert_spent_percents) | A list of percentages of the budget to alert on when threshold is exceeded | `list(number)` | <pre>[<br>  0.5,<br>  0.75,<br>  0.9,<br>  0.95<br>]</pre> | no |
-| <a name="input_create_access_context_manager_access_policy"></a> [create_access_context_manager_access_policy](#input_create_access_context_manager_access_policy) | Whether to create access context manager access policy | `bool` | `false` | no |
-| <a name="input_enable_domains_sharing_restriction_policy"></a> [enable_domains_sharing_restriction_policy](#input_enable_domains_sharing_restriction_policy) | Enable domains sharing restriction Organization Policy. | `bool` | `false` | no |
-| <a name="input_enable_os_login_policy"></a> [enable_os_login_policy](#input_enable_os_login_policy) | Enable OS Login Organization Policy. | `bool` | `false` | no |
-| <a name="input_enable_sa_key_creation_deny_policy"></a> [enable_sa_key_creation_deny_policy](#input_enable_sa_key_creation_deny_policy) | Deny service account key creation at the organization level. | `bool` | `false` | no |
+| <a name="input_enable_log_export_to_biqquery"></a> [enable_log_export_to_biqquery](#input_enable_log_export_to_biqquery) | Enable log export to bigquery | `bool` | `false` | no |
+| <a name="input_enable_log_export_to_cs"></a> [enable_log_export_to_cs](#input_enable_log_export_to_cs) | Enable log export to bigquery | `bool` | `true` | no |
 | <a name="input_enable_scc_notification"></a> [enable_scc_notification](#input_enable_scc_notification) | Enable Security Control Center notifications. | `bool` | `false` | no |
 | <a name="input_log_export_storage_force_destroy"></a> [log_export_storage_force_destroy](#input_log_export_storage_force_destroy) | (Optional) If set to true, delete all contents when destroying the resource; otherwise, destroying the resource will fail if contents are present. | `bool` | `false` | no |
 | <a name="input_log_export_storage_lifecycle_rules"></a> [log_export_storage_lifecycle_rules](#input_log_export_storage_lifecycle_rules) | Bucket lifecycle rules | `any` | <pre>[<br>  {<br>    "action": {<br>      "type": "Delete"<br>    },<br>    "condition": {<br>      "age": 365,<br>      "with_state": "ANY"<br>    }<br>  },<br>  {<br>    "action": {<br>      "storage_class": "ARCHIVE",<br>      "type": "SetStorageClass"<br>    },<br>    "condition": {<br>      "age": 30,<br>      "with_state": "ANY"<br>    }<br>  }<br>]</pre> | no |

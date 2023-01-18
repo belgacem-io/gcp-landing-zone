@@ -4,7 +4,8 @@
 
 module "peering" {
   source                    = "terraform-google-modules/network/google//modules/network-peering"
-  version                   = "~> 4.1"
+  version                   = ">= 6.0"
+
   count                     = var.mode == "spoke" ? 1 : 0
   prefix                    = "np"
   local_network             = module.main.network_self_link

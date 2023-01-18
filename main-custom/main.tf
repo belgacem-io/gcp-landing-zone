@@ -13,14 +13,14 @@ module "fetch" {
 *****************************************/
 locals {
   authorized_internal_ip_ranges = flatten(concat(values(module.fetch.shared_subnets_by_project_and_region["exp-uc1-kube"]),
-  values(module.fetch.shared_subnets_by_project_and_region["exp-common-services"]))).*.ip_cidr_range
+  values(module.fetch.shared_subnets_by_project_and_region["exp-csvc"]))).*.ip_cidr_range
 }
 module "gke" {
   source = "../modules/gcp_gke"
 
   cluster_name                     = "gke-cluster"
   dns_zone_name                    = "exp-company-cloud"
-  dns_zone                         = "exp.${var.gcp_organization_name}"
+  dns_zone                         = "exp.${var.gcp_organization_domain}"
   project_id                       = module.fetch.projects_by_name["exp-uc1-kube"].project_id
   region                           = var.gcp_default_region1
   region_azs                       = var.gcp_default_region1_azs

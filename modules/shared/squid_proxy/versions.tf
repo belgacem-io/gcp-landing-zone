@@ -26,12 +26,4 @@ terraform {
       version = ">= 4.5"
     }
   }
-
-  provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-example-foundation:single_project/v2.3.1"
-  }
-
-  provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-example-foundation:single_project/v2.3.1"
-  }
 }

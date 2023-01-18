@@ -1,5 +1,5 @@
 gcp_organization_id     = "12345678910"
-gcp_organization_name   = "company.cloud"
+gcp_organization_domain   = "company.cloud"
 gcp_billing_account     = "012345-AB01CD02-EF03GH04"
 gcp_default_region1     = "europe-west4"
 gcp_default_region1_azs = [
@@ -11,13 +11,7 @@ gcp_default_region1_azs = [
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
 gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
-gcp_group_org_admins             = "gcp-organization-admins@company.cloud"
-gcp_group_org_security_admins    = "gcp-security-admins@company.cloud"
-gcp_group_org_security_reviewers = "gcp-security-reviewers@company.cloud"
-gcp_group_org_billing_admins     = "gcp-billing-admins@company.cloud"
-gcp_group_org_viewers            = "gcp-organization-viewers@company.cloud"
-gcp_group_org_network_admins     = "gcp-network-admins@company.cloud"
-gcp_group_org_network_viewers    = "gcp-network-viewers@company.cloud"
+
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
@@ -79,8 +73,6 @@ gcp_business_projects            = [
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.0/27"]
         data_subnet_ranges = ["10.1.0.0/27"]
-        region1_secondary_ranges = ["100.71.0.0/22","100.71.4.0/22"]
-        region2_secondary_ranges = []
       }
     }
   },
@@ -97,8 +89,6 @@ gcp_business_projects            = [
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.32/27"]
         data_subnet_ranges = ["10.1.0.32/27"]
-        region1_secondary_ranges = []
-        region2_secondary_ranges = []
       }
     }
   },
@@ -115,8 +105,6 @@ gcp_business_projects            = [
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.64/27"]
         data_subnet_ranges = ["10.1.0.64/27"]
-        region1_secondary_ranges = []
-        region2_secondary_ranges = []
       }
     }
   }

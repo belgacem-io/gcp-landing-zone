@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | >= 3.77 |
+| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | >= 4.5 |
 | <a name="provider_keycloak"></a> [keycloak](#provider_keycloak) | >= 2.0.0 |
 
 #### Modules
@@ -26,8 +26,8 @@
 | <a name="input_gcp_group_org_security_reviewers"></a> [gcp_group_org_security_reviewers](#input_gcp_group_org_security_reviewers) | Google Group for GCP Organization Security reviewer | `string` | n/a | yes |
 | <a name="input_gcp_group_org_viewers"></a> [gcp_group_org_viewers](#input_gcp_group_org_viewers) | Google Group for GCP Organization read only users | `string` | n/a | yes |
 | <a name="input_gcp_iam_groups"></a> [gcp_iam_groups](#input_gcp_iam_groups) | Organization groups at the organization level | <pre>map(object({<br>    folders    = list(string)<br>    projects   = list(string)<br>    name       = string<br>    roles      = list(string)<br>    members    = list(string)<br>    managers   = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_gcp_organization_domain"></a> [gcp_organization_domain](#input_gcp_organization_domain) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_gcp_organization_id"></a> [gcp_organization_id](#input_gcp_organization_id) | The organization id for the associated services | `string` | n/a | yes |
-| <a name="input_gcp_organization_name"></a> [gcp_organization_name](#input_gcp_organization_name) | The name of the current organization. | `string` | n/a | yes |
 | <a name="input_gcp_terraform_sa_email"></a> [gcp_terraform_sa_email](#input_gcp_terraform_sa_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_gcp_terraform_sa_id"></a> [gcp_terraform_sa_id](#input_gcp_terraform_sa_id) | Service account id of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_gcp_workspace_customer_id"></a> [gcp_workspace_customer_id](#input_gcp_workspace_customer_id) | The ID of the customer account associated with your organization | `string` | n/a | yes |

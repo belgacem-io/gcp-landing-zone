@@ -1,5 +1,5 @@
 gcp_organization_id     = "12345678910"
-gcp_organization_name   = "company.cloud"
+gcp_organization_domain   = "company.cloud"
 gcp_billing_account     = "012345-AB01CD02-EF03GH04"
 gcp_default_region1     = "europe-west4"
 gcp_default_region1_azs = [

@@ -42,9 +42,9 @@ data "keycloak_user" "users" {
 
 locals {
   gcp_iam_groups = {for key,group in var.gcp_iam_groups : key => merge(group,{
-    email       = "${ group.name }@${var.gcp_organization_name}"
-    members    = formatlist("%s@${var.gcp_organization_name}", group.members)
-    managers   = formatlist("%s@${var.gcp_organization_name}", group.managers)
+    email       = "${ group.name }@${var.gcp_organization_domain}"
+    members    = formatlist("%s@${var.gcp_organization_domain}", group.members)
+    managers   = formatlist("%s@${var.gcp_organization_domain}", group.managers)
   })
   }
 
@@ -52,7 +52,7 @@ locals {
 module "gcp_iam" {
   source = "../modules/gcp_iam"
 
-  domain                  = var.gcp_organization_name
+  domain                  = var.gcp_organization_domain
   organization_id         = var.gcp_organization_id
   default_super_admins    = [
     "hassene.belgacem@belgacem.io",
@@ -62,7 +62,7 @@ module "gcp_iam" {
   for user in local.users : user =>{
     given_name  = data.keycloak_user.users[user].first_name
     family_name = data.keycloak_user.users[user].last_name
-    email       = "${user}@${var.gcp_organization_name}"
+    email       = "${user}@${var.gcp_organization_domain}"
   }
   }
   iam_groups              = local.gcp_iam_groups

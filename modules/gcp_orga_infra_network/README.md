@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 3.77 |
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.5 |
 
 #### Modules
 
@@ -18,12 +18,12 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_billing_account"></a> [billing_account](#input_billing_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
 | <a name="input_default_region1"></a> [default_region1](#input_default_region1) | First subnet region for DNS Hub network. | `string` | n/a | yes |
-| <a name="input_default_region2"></a> [default_region2](#input_default_region2) | Second subnet region for DNS Hub network. | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of forwarding managed zone, for instance 'example.com'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
 | <a name="input_network_hub_project_name"></a> [network_hub_project_name](#input_network_hub_project_name) | Project witch will contains all dns configs | `string` | n/a | yes |
-| <a name="input_orga_network_hub_subnets"></a> [orga_network_hub_subnets](#input_orga_network_hub_subnets) | Default subnets for Organization network hub. | <pre>object({<br>    region1_primary_ranges  = list(string)<br>    region2_primary_ranges =  list(string)<br>  })</pre> | n/a | yes |
-| <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The name of the current organization. | `string` | n/a | yes |
+| <a name="input_orga_network_hub_subnets"></a> [orga_network_hub_subnets](#input_orga_network_hub_subnets) | Default subnets for Organization network hub. | <pre>object({<br>    public_subnet_ranges = list(string)<br>    private_subnet_ranges  = list(string)<br>    data_subnet_ranges =  list(string)<br>  })</pre> | n/a | yes |
+| <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
+| <a name="input_parent_id"></a> [parent_id](#input_parent_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 | <a name="input_terraform_sa_email"></a> [terraform_sa_email](#input_terraform_sa_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_bgp_asn_dns"></a> [bgp_asn_dns](#input_bgp_asn_dns) | BGP Autonomous System Number (ASN). | `number` | `64667` | no |
 | <a name="input_dns_enable_logging"></a> [dns_enable_logging](#input_dns_enable_logging) | Toggle DNS logging for VPC DNS. | `bool` | `true` | no |

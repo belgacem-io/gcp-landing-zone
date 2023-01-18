@@ -2,7 +2,10 @@
 module "project" {
   source                      = "terraform-google-modules/project-factory/google"
   version                     = "~> 14.1"
-  random_project_id           = "true"
+
+  random_project_id           = true
+  create_project_sa           = false
+  default_service_account     = "delete"
   activate_apis               = distinct(concat(var.activate_apis, ["billingbudgets.googleapis.com"]))
   name                        = var.project_name
   org_id                      = var.org_id

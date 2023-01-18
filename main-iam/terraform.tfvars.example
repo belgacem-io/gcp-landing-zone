@@ -12,7 +12,7 @@ keycloak_ldap_roles_mapper_filter = "(CN=FU_UA2146_CERT_BT)"
 #DO NOT DELETE : This file must end with a new line
 
 gcp_organization_id              = "983256491121"
-gcp_organization_name            = "company.cloud"
+gcp_organization_domain            = "company.cloud"
 gcp_billing_account              = "01A47A-F9BAF1-1EE048"
 gcp_workspace_customer_id        = "C03sciyt9"
 ##################################### Terraform SA ###################

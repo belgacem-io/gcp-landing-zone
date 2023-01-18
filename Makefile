@@ -9,7 +9,7 @@ gen:
 	docker compose exec terraform bash -c 'for f in $$(find /wks/main-$(filter-out $@,$(MAKECMDGOALS)) -maxdepth 3 -type f -name "*.j2"); do j2 -f json $${f} /tmp/tf.output > $${f/.j2/} ; done'
 
 init:
-	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) init'
+	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) init -upgrade'
 
 plan:
 	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) plan'

@@ -3,9 +3,14 @@ variable "gcp_organization_id" {
   type        = string
 }
 
-variable "gcp_organization_name" {
+variable "gcp_parent_resource_id" {
+  type = string
+  description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
+}
+
+variable "gcp_organization_domain" {
   type        = string
-  description = "The name of the current organization."
+  description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
 
@@ -25,55 +30,6 @@ variable "gcp_terraform_sa_id" {
   type        = string
 }
 
-variable "gcp_group_org_admins" {
-  description = "Google Group for GCP Organization Administrators"
-  type        = string
-}
-variable "gcp_group_org_viewers" {
-  description = "Google Group for GCP Organization read only users"
-  type        = string
-}
-variable "gcp_group_org_security_admins" {
-  description = "Google Group for GCP Organization Security Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_security_reviewers" {
-  description = "Google Group for GCP Organization Security reviewer"
-  type        = string
-}
-
-variable "gcp_group_org_billing_admins" {
-  description = "Google Group for GCP Organization Billing Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_network_admins" {
-  description = "Google Group for GCP Organization Network Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_network_viewers" {
-  description = "Google Group for GCP Organization Network Read only users"
-  type        = string
-}
-
-variable "gcp_terraform_sa_org_iam_permissions" {
-  description = "List of permissions granted to Terraform service account across the GCP organization."
-  type        = list(string)
-  default     = [
-    "roles/billing.user",
-    "roles/compute.networkAdmin",
-    "roles/compute.xpnAdmin",
-    "roles/iam.securityAdmin",
-    "roles/iam.serviceAccountAdmin",
-    "roles/logging.configWriter",
-    "roles/orgpolicy.policyAdmin",
-    "roles/resourcemanager.folderAdmin",
-    "roles/resourcemanager.organizationViewer",
-  ]
-}
-
 variable "gcp_default_region1" {
   description = "Default region for resources."
   type        = string
@@ -90,8 +46,8 @@ variable "gcp_organization_environments" {
     network          = object({
       prefix      = string,
       cidr_blocks = object({
-        private_subnet_ranges = list(string)
-        data_subnet_ranges = list(string)
+        private_subnet_ranges  = list(string)
+        data_subnet_ranges     = list(string)
         private_service_range  = string
       })
     })
@@ -119,9 +75,8 @@ variable "gcp_business_projects" {
     network          = object({
       cidr_blocks = object({
         private_subnet_ranges = list(string)
+        private_subnet_k8s_2nd_ranges = list(string)
         data_subnet_ranges = list(string)
-        region1_secondary_ranges = list(string)
-        region2_secondary_ranges = list(string)
       })
     })
   }))
@@ -136,9 +91,9 @@ variable "gcp_labels" {
 
 variable "gcp_infra_projects" {
   type = object({
+    folder = string
     security       = object({
       name   = string
-      folder = string
       budget = object({
         amount                    = number,
         time_unit                 = string,
@@ -147,7 +102,6 @@ variable "gcp_infra_projects" {
     })
     observability  = object({
       name   = string
-      folder = string
       budget = object({
         amount                    = number,
         time_unit                 = string,
@@ -157,7 +111,6 @@ variable "gcp_infra_projects" {
     })
     networking_hub = object({
       name    = string
-      folder  = string
       budget  = object({
         amount                    = number,
         time_unit                 = string,
@@ -166,8 +119,9 @@ variable "gcp_infra_projects" {
       network = object({
         name        = string,
         cidr_blocks = object({
-          private_subnet_ranges    = list(string)
-          data_subnet_ranges    = list(string)
+          public_subnet_ranges = list(string)
+          private_subnet_ranges = list(string)
+          data_subnet_ranges = list(string)
         })
       })
     })

@@ -4,7 +4,8 @@
 
 module "service_account" {
   source     = "terraform-google-modules/service-accounts/google"
-  version    = "~> 4.0"
+  version    = "~> 4.2"
+
   project_id = var.project_id
   names      = ["transitivity-gw"]
   project_roles = [
@@ -15,7 +16,7 @@ module "service_account" {
 
 module "templates" {
   source         = "terraform-google-modules/vm/google//modules/instance_template"
-  version        = "7.3.0"
+  version        = ">= 7.3.0"
   for_each       = toset(var.regions)
 
   can_ip_forward = true
@@ -54,7 +55,7 @@ module "templates" {
 
 module "migs" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "6.0.0"
+  version           = ">= 7.3.0"
   for_each          = toset(var.regions)
   project_id        = var.project_id
   region            = each.key

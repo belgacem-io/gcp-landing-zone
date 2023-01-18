@@ -3,9 +3,9 @@ variable "gcp_organization_id" {
   type        = string
 }
 
-variable "gcp_organization_name" {
+variable "gcp_organization_domain" {
   type        = string
-  description = "The name of the current organization."
+  description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
 variable "gcp_workspace_customer_id" {

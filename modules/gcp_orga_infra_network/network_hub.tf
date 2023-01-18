@@ -58,7 +58,6 @@ module "network_hub" {
   nat_enabled                   = var.enable_orga_network_hub_nat
   nat_bgp_asn                   = var.orga_network_hub_nat_bgp_asn
   nat_num_addresses_region1     = var.orga_network_hub_nat_num_addresses_region1
-  nat_num_addresses_region2     = var.orga_network_hub_nat_num_addresses_region2
   mode                          = "hub"
 
   subnets          = local.org_subnets

@@ -5,7 +5,7 @@ variable "parent_id" {
 
 variable "organization_id" {
   type = string
-  description = "The name of the current organization."
+  description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
 variable "terraform_sa_email" {

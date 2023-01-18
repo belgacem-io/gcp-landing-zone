@@ -22,7 +22,8 @@ data "google_compute_network" "org_network_hub_vpc" {
 
 module "main" {
   source                                 = "terraform-google-modules/network/google"
-  version                                = "~> 4.1"
+  version                                = ">= 6.0"
+
   project_id                             = var.project_id
   network_name                           = local.network_name
   shared_vpc_host                        = "true"
@@ -72,7 +73,7 @@ module "main" {
 
 module "region1_router1" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = "~> 1.3"
+  version = ">= 4.0"
 
   count   = var.mode != "spoke" ? 1 : 0
 
@@ -89,7 +90,7 @@ module "region1_router1" {
 
 module "region1_router2" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = "~> 1.3"
+  version = ">= 4.0"
 
   count   = var.mode != "spoke" ? 1 : 0
 

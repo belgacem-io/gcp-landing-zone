@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 3.77 |
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.5 |
 | <a name="provider_googleworkspace"></a> [googleworkspace](#provider_googleworkspace) | n/a |
 
 #### Modules

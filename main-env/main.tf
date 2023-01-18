@@ -26,7 +26,7 @@ data "google_active_folder" "infra" {
 
 module "network_hub_projects" {
   source                      = "terraform-google-modules/project-factory/google"
-  version                     = "~> 10.1"
+  version                     = "~> 14.1"
 
   for_each = var.gcp_organization_environments
 
@@ -64,8 +64,6 @@ locals {
     project_name             = project.name
     private_subnet_ranges   = project.network.cidr_blocks.private_subnet_ranges
     data_subnet_ranges   = project.network.cidr_blocks.data_subnet_ranges
-    region1_secondary_ranges = project.network.cidr_blocks.region1_secondary_ranges
-    region2_secondary_ranges = project.network.cidr_blocks.region2_secondary_ranges
   }) if project.environment_code == env.environment_code
   ]
   ])
@@ -77,7 +75,7 @@ module "env_networks" {
   for_each = var.gcp_organization_environments
 
   default_region1                       = var.gcp_default_region1
-  domain                                = "${ each.value.environment_code }.${var.gcp_organization_name}"
+  domain                                = "${ each.value.environment_code }.${var.gcp_organization_domain}"
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
   terraform_service_account             = var.gcp_terraform_sa_email
@@ -85,8 +83,8 @@ module "env_networks" {
   org_network_hub_project_id            = data.google_projects.org_network_hub.projects[0].project_id
   org_network_hub_vpc_name              = data.google_compute_network.org_network_hub.name
   business_project_subnets              = [for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key]
-  common_services_subnet_region1_ranges = each.value.network.cidr_blocks.private_subnet_ranges
-  common_services_subnet_region2_ranges = each.value.network.cidr_blocks.data_subnet_ranges
+  csvc_private_subnet_ranges = each.value.network.cidr_blocks.private_subnet_ranges
+  csvc_data_subnet_ranges = each.value.network.cidr_blocks.data_subnet_ranges
   private_service_cidr                  = each.value.network.cidr_blocks.private_service_range
 }
 
@@ -115,7 +113,7 @@ module "shared_services_projects" {
   ]
 
   env_network_hub_project_id               = module.network_hub_projects[each.key].project_id
-  env_network_hub_vpc_subnetwork_self_link = module.env_networks[each.key].vpc_common_services_subnetwork_self_links
+  env_network_hub_vpc_subnetwork_self_link = module.env_networks[each.key].vpc_svc_private_subnetwork_self_links
   project_name                             = format("%s-shared-services", each.value.environment_code)
   monitoring_project_id                    = data.google_projects.org_monitoring.projects[0].project_id
 
@@ -133,5 +131,5 @@ module "env_bastions" {
   region            = var.gcp_default_region1
   zone              = var.gcp_default_region1_azs[0]
   network_self_link = module.env_networks[each.key].vpc_network_self_links
-  subnet_self_link  = module.env_networks[each.key].vpc_common_services_subnetwork_self_links_by_region[var.gcp_default_region1][0]
+  subnet_self_link  = module.env_networks[each.key].vpc_svc_private_subnetwork_self_links[0]
 }
