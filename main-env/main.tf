@@ -17,7 +17,7 @@ data "google_compute_network" "org_network_hub" {
 
 data "google_active_folder" "infra" {
   display_name = var.gcp_infra_folder_name
-  parent       = "organizations/${var.gcp_organization_id}"
+  parent       = var.gcp_parent_resource_id
 }
 
 /******************************************
@@ -60,10 +60,11 @@ locals {
   business_project_subnets = flatten([
   for key, env in var.gcp_organization_environments : [
   for project in var.gcp_business_projects : merge(project, {
-    environment_key          = key
-    project_name             = project.name
-    private_subnet_ranges   = project.network.cidr_blocks.private_subnet_ranges
-    data_subnet_ranges   = project.network.cidr_blocks.data_subnet_ranges
+    environment_key                     = key
+    project_name                        = project.name
+    private_subnet_ranges               =  project.network.cidr_blocks.private_subnet_ranges
+    data_subnet_ranges                  = project.network.cidr_blocks.data_subnet_ranges
+    private_subnet_k8s_2nd_ranges       = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
   }) if project.environment_code == env.environment_code
   ]
   ])
@@ -79,17 +80,24 @@ module "env_networks" {
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
   terraform_service_account             = var.gcp_terraform_sa_email
-  env_network_hub_project_id            = module.network_hub_projects[each.key].project_id
+  env_net_hub_project_id                = module.network_hub_projects[each.key].project_id
+  env_net_hub_private_subnet_ranges     = each.value.network.cidr_blocks.private_subnet_ranges
+  env_net_hub_data_subnet_ranges        = each.value.network.cidr_blocks.data_subnet_ranges
+  env_net_hub_private_svc_subnet_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
   org_network_hub_project_id            = data.google_projects.org_network_hub.projects[0].project_id
   org_network_hub_vpc_name              = data.google_compute_network.org_network_hub.name
   business_project_subnets              = [for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key]
-  csvc_private_subnet_ranges = each.value.network.cidr_blocks.private_subnet_ranges
-  csvc_data_subnet_ranges = each.value.network.cidr_blocks.data_subnet_ranges
-  private_service_cidr                  = each.value.network.cidr_blocks.private_service_range
+
+
+  depends_on = [
+    data.google_projects.org_monitoring,
+    data.google_projects.org_network_hub,
+    module.network_hub_projects
+  ]
 }
 
 
-module "shared_services_projects" {
+module "shared_svc_projects" {
   source = "../modules/shared/gcp_single_project"
 
   for_each = var.gcp_organization_environments
@@ -114,9 +122,12 @@ module "shared_services_projects" {
 
   env_network_hub_project_id               = module.network_hub_projects[each.key].project_id
   env_network_hub_vpc_subnetwork_self_link = module.env_networks[each.key].vpc_svc_private_subnetwork_self_links
-  project_name                             = format("%s-shared-services", each.value.environment_code)
+  project_name                             = format("%s-shared-svc", each.value.environment_code)
   monitoring_project_id                    = data.google_projects.org_monitoring.projects[0].project_id
 
+  depends_on = [
+    module.network_hub_projects
+  ]
 }
 
 module "env_bastions" {
@@ -125,11 +136,16 @@ module "env_bastions" {
   for_each = var.gcp_organization_environments
 
   instance_name     = "${each.value.environment_code}-bastion"
-  project_id        = module.shared_services_projects[each.key].project_id
+  project_id        = module.shared_svc_projects[each.key].project_id
   host_project      = module.network_hub_projects[each.key].project_id
   members           = ["group:${each.value.environment_code}-environment-devops@belgacem.io"]
   region            = var.gcp_default_region1
   zone              = var.gcp_default_region1_azs[0]
   network_self_link = module.env_networks[each.key].vpc_network_self_links
   subnet_self_link  = module.env_networks[each.key].vpc_svc_private_subnetwork_self_links[0]
+
+  depends_on = [
+    module.network_hub_projects,
+    module.shared_svc_projects
+  ]
 }

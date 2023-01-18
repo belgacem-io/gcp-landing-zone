@@ -11,7 +11,7 @@ variable "org_network_hub_project_id" {
   type = string
   description = "Organization hub network project id"
 }
-variable "env_network_hub_project_id" {
+variable "env_net_hub_project_id" {
   type = string
   description = "Environment hub network project id"
 }
@@ -84,12 +84,6 @@ variable "nat_num_addresses_region1" {
   default     = 2
 }
 
-variable "nat_num_addresses_region2" {
-  type        = number
-  description = "Number of external IPs to reserve for second Cloud NAT."
-  default     = 2
-}
-
 variable "nat_num_addresses" {
   type        = number
   description = "Number of external IPs to reserve for Cloud NAT."
@@ -120,16 +114,16 @@ variable "enable_hub_and_spoke_transitivity" {
   default     = false
 }
 
-variable "csvc_private_subnet_ranges" {
+variable "env_net_hub_private_subnet_ranges" {
   type = list(string)
 }
 
-variable "csvc_data_subnet_ranges" {
+variable "env_net_hub_data_subnet_ranges" {
   type = list(string)
 }
 
-variable "private_service_cidr" {
-  type        = string
+variable "env_net_hub_private_svc_subnet_ranges" {
+  type        = list(string)
   description = "CIDR range for private service networking. Used for Cloud SQL and other managed services."
 }
 
@@ -140,6 +134,6 @@ variable "business_project_subnets" {
     environment_code = string
     private_subnet_ranges  = list(string)
     data_subnet_ranges =  list(string)
-    k8s_secondary_ranges = list(string)
+    private_subnet_k8s_2nd_ranges = list(string)
   }))
 }
