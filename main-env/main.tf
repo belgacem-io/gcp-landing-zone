@@ -20,6 +20,19 @@ data "google_active_folder" "infra" {
   parent       = var.gcp_parent_resource_id
 }
 
+locals {
+  business_project_subnets = flatten([
+    for key, env in var.gcp_organization_environments : [
+      for project in var.gcp_business_projects : merge(project, {
+        environment_key                     = key
+        project_name                        = project.name
+        private_subnet_ranges               =  project.network.cidr_blocks.private_subnet_ranges
+        data_subnet_ranges                  = project.network.cidr_blocks.data_subnet_ranges
+        private_subnet_k8s_2nd_ranges       = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
+      }) if project.environment_code == env.environment_code
+    ]
+  ])
+}
 /******************************************
   Create projects
 *****************************************/
@@ -56,22 +69,6 @@ module "env_nethub_projects" {
   budget_amount               = 100
 }
 
-
-
-locals {
-  business_project_subnets = flatten([
-  for key, env in var.gcp_organization_environments : [
-  for project in var.gcp_business_projects : merge(project, {
-    environment_key                     = key
-    project_name                        = project.name
-    private_subnet_ranges               =  project.network.cidr_blocks.private_subnet_ranges
-    data_subnet_ranges                  = project.network.cidr_blocks.data_subnet_ranges
-    private_subnet_k8s_2nd_ranges       = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
-  }) if project.environment_code == env.environment_code
-  ]
-  ])
-}
-
 module "env_nethub_networks" {
   source = "../modules/gcp_orga_envs_network"
 
@@ -98,7 +95,6 @@ module "env_nethub_networks" {
   ]
 }
 
-
 module "env_nethub_bastions" {
   source = "../modules/shared/gcp_bastion_host"
 
@@ -107,7 +103,7 @@ module "env_nethub_bastions" {
   instance_name     = "${each.value.environment_code}-bastion"
   project_id        = module.env_nethub_projects[each.key].project_id
   host_project      = module.env_nethub_projects[each.key].project_id
-  members           = ["group:${each.value.environment_code}-environment-devops@belgacem.io"]
+  members           = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
   region            = var.gcp_default_region1
   zone              = var.gcp_default_region1_azs[0]
   network_self_link = module.env_nethub_networks[each.key].vpc_network_self_links

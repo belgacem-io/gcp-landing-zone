@@ -34,7 +34,7 @@ resource "google_folder" "environments" {
   for_each = var.gcp_organization_environments
 
   display_name = "${title( each.value.environment_code )}_Environment"
-  parent       = "organizations/${var.gcp_organization_id}"
+  parent       = var.gcp_parent_resource_id
 }
 
 resource "google_folder" "department" {
