@@ -15,8 +15,8 @@ No providers.
 |------|-------------|------|---------|:--------:|
 | <a name="input_activate_apis"></a> [activate_apis](#input_activate_apis) | List of API to be enabled | `list(string)` | n/a | yes |
 | <a name="input_billing_account"></a> [billing_account](#input_billing_account) | The ID of the billing account to associated this project with | `string` | n/a | yes |
-| <a name="input_env_network_hub_project_id"></a> [env_network_hub_project_id](#input_env_network_hub_project_id) | Environment hub network project id | `string` | n/a | yes |
-| <a name="input_env_network_hub_vpc_subnetwork_self_link"></a> [env_network_hub_vpc_subnetwork_self_link](#input_env_network_hub_vpc_subnetwork_self_link) | n/a | `list(string)` | n/a | yes |
+| <a name="input_env_nethub_project_id"></a> [env_nethub_project_id](#input_env_nethub_project_id) | Environment hub network project id | `string` | n/a | yes |
+| <a name="input_env_nethub_vpc_subnetwork_self_link"></a> [env_nethub_vpc_subnetwork_self_link](#input_env_nethub_vpc_subnetwork_self_link) | n/a | `list(string)` | n/a | yes |
 | <a name="input_environment_code"></a> [environment_code](#input_environment_code) | A short form of the folder level resources (environment) within the Google Cloud organization (ex. d). | `string` | n/a | yes |
 | <a name="input_monitoring_project_id"></a> [monitoring_project_id](#input_monitoring_project_id) | Monitoring project id | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org_id](#input_org_id) | The organization id for the associated services | `string` | n/a | yes |

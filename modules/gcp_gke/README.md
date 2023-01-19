@@ -9,7 +9,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_gke"></a> [gke](#module_gke) | terraform-google-modules/kubernetes-engine/google//modules/private-cluster | ~> 19.0 |
+| <a name="module_gke"></a> [gke](#module_gke) | terraform-google-modules/kubernetes-engine/google//modules/private-cluster | ~> 24.0 |
 
 #### Inputs
 

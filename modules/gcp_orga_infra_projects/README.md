@@ -10,14 +10,14 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bigquery_destination"></a> [bigquery_destination](#module_bigquery_destination) | terraform-google-modules/log-export/google//modules/bigquery | ~> 7.3.0 |
-| <a name="module_log_export_to_biqquery"></a> [log_export_to_biqquery](#module_log_export_to_biqquery) | terraform-google-modules/log-export/google | ~> 7.3.0 |
-| <a name="module_log_export_to_storage"></a> [log_export_to_storage](#module_log_export_to_storage) | terraform-google-modules/log-export/google | ~> 7.3 |
+| <a name="module_bigquery_destination"></a> [bigquery_destination](#module_bigquery_destination) | terraform-google-modules/log-export/google//modules/bigquery | ~> 7.4 |
+| <a name="module_log_export_to_biqquery"></a> [log_export_to_biqquery](#module_log_export_to_biqquery) | terraform-google-modules/log-export/google | ~> 7.4 |
+| <a name="module_log_export_to_storage"></a> [log_export_to_storage](#module_log_export_to_storage) | terraform-google-modules/log-export/google | ~> 7.4 |
 | <a name="module_orga_policies"></a> [orga_policies](#module_orga_policies) | ../shared/gcp_orga_policies | n/a |
-| <a name="module_organization_networking_hub"></a> [organization_networking_hub](#module_organization_networking_hub) | terraform-google-modules/project-factory/google | ~> 14.1 |
+| <a name="module_organization_nethub"></a> [organization_nethub](#module_organization_nethub) | terraform-google-modules/project-factory/google | ~> 14.1 |
 | <a name="module_organization_observability"></a> [organization_observability](#module_organization_observability) | terraform-google-modules/project-factory/google | ~> 14.1 |
 | <a name="module_organization_security"></a> [organization_security](#module_organization_security) | terraform-google-modules/project-factory/google | ~> 14.1 |
-| <a name="module_storage_destination"></a> [storage_destination](#module_storage_destination) | terraform-google-modules/log-export/google//modules/storage | ~> 7.3 |
+| <a name="module_storage_destination"></a> [storage_destination](#module_storage_destination) | terraform-google-modules/log-export/google//modules/storage | ~> 7.4 |
 
 #### Inputs
 
@@ -29,7 +29,7 @@
 | <a name="input_domains_to_allow"></a> [domains_to_allow](#input_domains_to_allow) | The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy. | `list(string)` | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
 | <a name="input_infra_folder_name"></a> [infra_folder_name](#input_infra_folder_name) | Folder witch will contains all infra projects | `string` | n/a | yes |
-| <a name="input_infra_networking_hub_project"></a> [infra_networking_hub_project](#input_infra_networking_hub_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
+| <a name="input_infra_nethub_project"></a> [infra_nethub_project](#input_infra_nethub_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
 | <a name="input_infra_observability_project"></a> [infra_observability_project](#input_infra_observability_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      alert_pubsub_topic = string<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
 | <a name="input_infra_security_project"></a> [infra_security_project](#input_infra_security_project) | n/a | <pre>object({<br>    name = string<br>    budget = object({<br>      amount = number,<br>      time_unit = string,<br>      email_addresses_to_notify = list(string)<br>    })<br>  })</pre> | n/a | yes |
 | <a name="input_org_audit_data_admins"></a> [org_audit_data_admins](#input_org_audit_data_admins) | Google Workspace or Cloud Identity group that have access to audit logs. | `string` | n/a | yes |
@@ -62,5 +62,5 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_org_network_hub_project_id"></a> [org_network_hub_project_id](#output_org_network_hub_project_id) | n/a |
+| <a name="output_org_nethub_project_id"></a> [org_nethub_project_id](#output_org_nethub_project_id) | n/a |
 <!-- END_TF_DOCS -->

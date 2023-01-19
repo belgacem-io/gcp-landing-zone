@@ -10,10 +10,10 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_folders_iam_bindings"></a> [folders_iam_bindings](#module_folders_iam_bindings) | terraform-google-modules/iam/google//modules/folders_iam | ~> 6.4 |
-| <a name="module_organization_iam_groups"></a> [organization_iam_groups](#module_organization_iam_groups) | terraform-google-modules/group/google | ~> 0.1 |
-| <a name="module_organization_iam_groups_bindings"></a> [organization_iam_groups_bindings](#module_organization_iam_groups_bindings) | terraform-google-modules/iam/google//modules/organizations_iam | n/a |
-| <a name="module_projects_iam_bindings"></a> [projects_iam_bindings](#module_projects_iam_bindings) | terraform-google-modules/iam/google//modules/projects_iam | ~> 6.4 |
+| <a name="module_folders_iam_bindings"></a> [folders_iam_bindings](#module_folders_iam_bindings) | terraform-google-modules/iam/google//modules/folders_iam | ~> 7.4 |
+| <a name="module_organization_iam_groups"></a> [organization_iam_groups](#module_organization_iam_groups) | terraform-google-modules/group/google | ~> 0.4 |
+| <a name="module_organization_iam_groups_bindings"></a> [organization_iam_groups_bindings](#module_organization_iam_groups_bindings) | terraform-google-modules/iam/google//modules/organizations_iam | ~> 7.4 |
+| <a name="module_projects_iam_bindings"></a> [projects_iam_bindings](#module_projects_iam_bindings) | terraform-google-modules/iam/google//modules/projects_iam | ~> 7.4 |
 
 #### Inputs
 
