@@ -43,6 +43,7 @@ variable "gcp_default_region1_azs" {
 variable "gcp_organization_environments" {
   type        = map(object({
     environment_code = string,
+    name             = string
     network          = object({
       prefix      = string,
       cidr_blocks = object({
@@ -126,12 +127,6 @@ variable "gcp_infra_projects" {
       })
     })
   })
-}
-
-variable "gcp_infra_folder_name" {
-  default     = "Infrastructure"
-  type        = string
-  description = "Folder witch will contains all infra projects"
 }
 
 variable "gcp_alert_spent_percents" {

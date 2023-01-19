@@ -21,6 +21,11 @@ variable "org_id" {
   description = "Organization ID"
 }
 
+variable "env_nethub_project_name" {
+  type        = string
+  description = "Subnet prefix for env nethub project"
+}
+
 variable "terraform_service_account" {
   type        = string
   description = "Service account email of the account to impersonate to run Terraform."

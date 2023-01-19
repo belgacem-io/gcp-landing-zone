@@ -129,6 +129,7 @@ module "base_pkg_dev" {
 locals {
   zone_name = replace(substr(var.domain,0,length(var.domain) - 1 ),".","-")
 }
+
 data "google_dns_managed_zone" "org_dns_zone" {
   count   = var.mode == "spoke" ? 1 : 0
 

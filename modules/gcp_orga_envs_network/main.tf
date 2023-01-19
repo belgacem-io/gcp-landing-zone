@@ -5,23 +5,23 @@ locals {
   # Primary subnets for common services
   primary_env_net_hub_private_subnets = [
     for subnet in var.env_net_hub_private_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-env-nethub-private-${index(var.env_net_hub_private_subnet_ranges , subnet)}-${var.default_region1}"
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-private-${index(var.env_net_hub_private_subnet_ranges , subnet)}-${var.default_region1}"
       subnet_ip             = subnet
       subnet_region         = var.default_region1
       subnet_private_access = "true"
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/env-nethub/${var.default_region1}"
+      description           = "${ var.environment_code }/${var.env_nethub_project_name}/${var.default_region1}"
     }
   ]
 
   primary_env_net_hub_data_subnets = [
     for subnet in var.env_net_hub_data_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-env-nethub-data-${index(var.env_net_hub_data_subnet_ranges , subnet)}-${var.default_region1}"
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-data-${index(var.env_net_hub_data_subnet_ranges , subnet)}-${var.default_region1}"
       subnet_ip             = subnet
       subnet_region         = var.default_region1
       subnet_private_access = "true"
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/env-nethub/${var.default_region1}"
+      description           = "${ var.environment_code }/${var.env_nethub_project_name}/${var.default_region1}"
     }
   ]
 
@@ -32,26 +32,26 @@ locals {
         for prj in var.business_project_subnets : [
           for subnet in prj.private_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-bp-private-${ prj.project_name }-${index(prj.private_subnet_ranges , subnet)}-${var.default_region1}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-private-${index(prj.private_subnet_ranges , subnet)}-${var.default_region1}"
             subnet_ip             = subnet
             subnet_region         = var.default_region1
             subnet_private_access = "true"
             subnet_flow_logs      = var.subnetworks_enable_logging
             description           = "${ prj.environment_code }/${ prj.project_name }/${var.default_region1}"
-          }
+          } if var.environment_code == prj.environment_code
         ]
       ])
   primary_business_project_data_subnets = flatten([
         for prj in var.business_project_subnets : [
           for subnet in prj.data_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-bp-data-${ prj.project_name }-${index(prj.data_subnet_ranges , subnet)}-${var.default_region1}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-data-${index(prj.data_subnet_ranges , subnet)}-${var.default_region1}"
             subnet_ip             = subnet
             subnet_region         = var.default_region1
             subnet_private_access = "true"
             subnet_flow_logs      = var.subnetworks_enable_logging
             description           = "${ prj.environment_code }/${ prj.project_name }/${var.default_region1}"
-          }
+          } if var.environment_code == prj.environment_code
         ]
       ])
   primary_business_project_subnets = concat(local.primary_business_project_private_subnets,local.primary_business_project_data_subnets)
@@ -63,10 +63,10 @@ locals {
         for subnet in prj.private_subnet_k8s_2nd_ranges:
         {
           # All secondary ranges are associated with the first subnet
-          subnet_name           = "${ prj.environment_code }-pb-k8s-2nd-${ prj.project_name }-0-${var.default_region1}"
-          range_name            = "${ prj.environment_code }-pb-k8s-2nd-${ prj.project_name }-0-${var.default_region1}-${index(prj.private_subnet_k8s_2nd_ranges , subnet)}"
+          subnet_name           = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region1}"
+          range_name            = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region1}-${index(prj.private_subnet_k8s_2nd_ranges , subnet)}"
           ip_cidr_range         = subnet
-        }
+        }if var.environment_code == prj.environment_code
       ]
       ])
 
@@ -94,7 +94,7 @@ module "env_nethub" {
   nat_bgp_asn                   = var.nat_bgp_asn
   nat_num_addresses_region1     = var.nat_num_addresses_region1
   nat_num_addresses             = var.nat_num_addresses
-  mode                          = "spoke"
+  mode                          = "hub"
 
   subnets                  = concat(local.primary_business_project_subnets,local.primary_env_net_hub_subnets)
 

@@ -4,13 +4,14 @@ resource "google_service_account" "vm_sa" {
   display_name = "Service Account for Bastion host"
 }
 
-# A testing VM to allow OS Login + IAP tunneling.
+# A bastion VM template to allow OS Login + IAP tunneling.
 module "instance_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
   version = "~> 7.9"
 
+  name_prefix     = "${var.environment_code}-${var.instance_name}"
   project_id      = var.project_id
-  machine_type    = "n1-standard-1"
+  machine_type    = var.instance_type
   subnetwork      = var.subnet_self_link
   service_account = {
     email  = google_service_account.vm_sa.email
@@ -21,15 +22,30 @@ module "instance_template" {
   }
 }
 
-resource "google_compute_instance_from_template" "vm" {
-  name                     = var.instance_name
-  project                  = var.project_id
-  zone                     = var.zone
-  network_interface {
-    subnetwork = var.subnet_self_link
-  }
-  source_instance_template = module.instance_template.self_link
+module "mig" {
+  source  = "terraform-google-modules/vm/google//modules/mig"
+  version = "~> 7.9"
+
+  project_id      = var.project_id
+  region            = var.region
+  hostname          = "mig-${var.instance_name}"
+  instance_template = module.instance_template.self_link
+
+  /* autoscaler */
+  autoscaling_enabled          = var.autoscaling_enabled
+  max_replicas                 = var.max_replicas
+  min_replicas                 = var.min_replicas
+  cooldown_period              = var.cooldown_period
+  autoscaling_cpu              = var.autoscaling_cpu
+  autoscaling_metric           = var.autoscaling_metric
+  autoscaling_lb               = var.autoscaling_lb
+  autoscaling_scale_in_control = var.autoscaling_scale_in_control
+
+  depends_on = [
+    module.instance_template
+  ]
 }
+
 
 # Additional OS login IAM bindings.
 # https://cloud.google.com/compute/docs/instances/managing-instance-access#granting_os_login_iam_roles
@@ -50,16 +66,10 @@ module "iap_tunneling" {
   source  = "terraform-google-modules/bastion-host/google//modules/iap-tunneling"
   version = "~> 5.1"
 
-  fw_name_allow_ssh_from_iap = "test-allow-ssh-from-iap-to-tunnel"
+  fw_name_allow_ssh_from_iap = "allow-ssh-from-iap-to-tunnel"
   project                    = var.project_id
-  host_project               = var.host_project
   network                    = var.network_self_link
   service_accounts           = [google_service_account.vm_sa.email]
-  instances                  = [
-    {
-      name = google_compute_instance_from_template.vm.name
-      zone = var.zone
-    }
-  ]
+  instances                  = []
   members                    = var.members
 }

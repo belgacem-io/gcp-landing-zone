@@ -16,7 +16,7 @@ data "google_compute_network" "org_nethub" {
 }
 
 data "google_active_folder" "infra" {
-  display_name = var.gcp_infra_folder_name
+  display_name = var.gcp_infra_projects.folder
   parent       = var.gcp_parent_resource_id
 }
 
@@ -24,11 +24,11 @@ locals {
   business_project_subnets = flatten([
     for key, env in var.gcp_organization_environments : [
       for project in var.gcp_business_projects : merge(project, {
-        environment_key                     = key
-        project_name                        = project.name
-        private_subnet_ranges               =  project.network.cidr_blocks.private_subnet_ranges
-        data_subnet_ranges                  = project.network.cidr_blocks.data_subnet_ranges
-        private_subnet_k8s_2nd_ranges       = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
+        environment_key               = key
+        project_name                  = project.name
+        private_subnet_ranges         = project.network.cidr_blocks.private_subnet_ranges
+        data_subnet_ranges            = project.network.cidr_blocks.data_subnet_ranges
+        private_subnet_k8s_2nd_ranges = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
       }) if project.environment_code == env.environment_code
     ]
   ])
@@ -38,20 +38,20 @@ locals {
 *****************************************/
 
 module "env_nethub_projects" {
-  source                      = "terraform-google-modules/project-factory/google"
-  version                     = "~> 14.1"
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 14.1"
 
   for_each = var.gcp_organization_environments
 
-  random_project_id           = true
-  create_project_sa           = false
-  default_service_account     = "delete"
+  random_project_id       = true
+  create_project_sa       = false
+  default_service_account = "delete"
 
-  name                        = format("%s-network-hub", each.value.environment_code)
-  org_id                      = var.gcp_organization_id
-  billing_account             = var.gcp_billing_account
-  folder_id                   = google_folder.environments[each.key].id
-  activate_apis = [
+  name            = format("%s-${each.value.name}", each.value.environment_code)
+  org_id          = var.gcp_organization_id
+  billing_account = var.gcp_billing_account
+  folder_id       = google_folder.environments[each.key].id
+  activate_apis   = [
     "compute.googleapis.com",
     "dns.googleapis.com",
     "servicenetworking.googleapis.com",
@@ -61,8 +61,8 @@ module "env_nethub_projects" {
   ]
 
   labels = {
-    environment_code       = each.value.environment_code
-    application_name  = "network-hub"
+    environment_code = each.value.environment_code
+    application_name = each.value.name
   }
   budget_alert_pubsub_topic   = var.gcp_infra_projects.observability.budget.alert_pubsub_topic
   budget_alert_spent_percents = var.gcp_alert_spent_percents
@@ -83,9 +83,12 @@ module "env_nethub_networks" {
   env_net_hub_private_subnet_ranges     = each.value.network.cidr_blocks.private_subnet_ranges
   env_net_hub_data_subnet_ranges        = each.value.network.cidr_blocks.data_subnet_ranges
   env_net_hub_private_svc_subnet_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
+  env_nethub_project_name               = each.value.name
   org_nethub_project_id                 = data.google_projects.org_nethub.projects[0].project_id
   org_nethub_vpc_name                   = data.google_compute_network.org_nethub.name
-  business_project_subnets              = [for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key]
+  business_project_subnets              = [
+    for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
+  ]
 
 
   depends_on = [
@@ -100,14 +103,13 @@ module "env_nethub_bastions" {
 
   for_each = var.gcp_organization_environments
 
+  environment_code  = each.value.environment_code
   instance_name     = "${each.value.environment_code}-bastion"
   project_id        = module.env_nethub_projects[each.key].project_id
-  host_project      = module.env_nethub_projects[each.key].project_id
-  members           = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
+  authorized_members= ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
   region            = var.gcp_default_region1
-  zone              = var.gcp_default_region1_azs[0]
   network_self_link = module.env_nethub_networks[each.key].vpc_network_self_links
-  subnet_self_link  = module.env_nethub_networks[each.key].vpc_svc_private_subnetwork_self_links[0]
+  subnet_self_link  = module.env_nethub_networks[each.key].vpc_subnetwork_self_links[0]
 
   depends_on = [
     module.env_nethub_projects

@@ -101,6 +101,7 @@ variable "gcp_default_region1_azs" {
 variable "gcp_organization_environments" {
   type        = map(object({
     environment_code = string,
+    name             = string
     network          = object({
       prefix      = string,
       cidr_blocks = object({
