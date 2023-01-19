@@ -22,7 +22,7 @@ module "dns-forwarding-zone" {
   source  = "terraform-google-modules/cloud-dns/google"
   version = "~> 4.2"
 
-  count   = ( var.mode == "hub" && var.target_name_server_addresses != null ) ? 1 : 0
+  count   = ( var.mode == "hub"  && var.target_name_server_addresses != null ) ? 1 : 0
 
   project_id = var.project_id
   type       = "forwarding"

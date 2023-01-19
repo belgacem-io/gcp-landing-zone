@@ -12,7 +12,7 @@ module "infra_projects" {
   organization_id              = var.gcp_organization_id
   infra_security_project       = var.gcp_infra_projects.security
   infra_observability_project  = var.gcp_infra_projects.observability
-  infra_nethub_project = var.gcp_infra_projects.nethub
+  infra_nethub_project         = var.gcp_infra_projects.nethub
   domains_to_allow             = [
     var.gcp_organization_domain
   ]
@@ -40,9 +40,9 @@ module "infra_hub_networks" {
   parent_id                = var.gcp_parent_resource_id
   terraform_sa_email       = var.gcp_terraform_sa_email
   billing_account          = var.gcp_billing_account
-  nethub_project_name = var.gcp_infra_projects.nethub.name
+  nethub_project_name      = var.gcp_infra_projects.nethub.name
   default_region1          = var.gcp_default_region1
-  orga_nethub_subnets = var.gcp_infra_projects.nethub.network.cidr_blocks
+  orga_nethub_subnets      = var.gcp_infra_projects.nethub.network.cidr_blocks
 
   gcp_labels = var.gcp_labels
 
@@ -56,7 +56,8 @@ module "infra_hub_networks_http_proxy" {
   source = "../modules/shared/squid_proxy"
 
   environment_code             = "prod"
-  project_name                 = var.gcp_infra_projects.nethub.network.name
+  project_id                   = module.infra_projects.org_nethub_project_id
+  default_region1              = var.gcp_default_region1
   internal_trusted_cidr_ranges = []
   service_root_name            = "squid-proxy"
   subnet_name                  = module.infra_hub_networks.org_nethub_private_subnets_names [0]

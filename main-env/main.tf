@@ -78,7 +78,6 @@ module "env_nethub_networks" {
   domain                                = "${ each.value.environment_code }.${var.gcp_organization_domain}"
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
-  terraform_service_account             = var.gcp_terraform_sa_email
   env_net_hub_project_id                = module.env_nethub_projects[each.key].project_id
   env_net_hub_private_subnet_ranges     = each.value.network.cidr_blocks.private_subnet_ranges
   env_net_hub_data_subnet_ranges        = each.value.network.cidr_blocks.data_subnet_ranges

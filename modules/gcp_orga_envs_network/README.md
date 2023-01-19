@@ -27,20 +27,7 @@
 | <a name="input_org_id"></a> [org_id](#input_org_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project id | `string` | n/a | yes |
 | <a name="input_org_nethub_vpc_name"></a> [org_nethub_vpc_name](#input_org_nethub_vpc_name) | Organization hub network VPC name | `string` | n/a | yes |
-| <a name="input_terraform_service_account"></a> [terraform_service_account](#input_terraform_service_account) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
-| <a name="input_dns_enable_inbound_forwarding"></a> [dns_enable_inbound_forwarding](#input_dns_enable_inbound_forwarding) | Toggle inbound query forwarding for VPC DNS. | `bool` | `true` | no |
-| <a name="input_dns_enable_logging"></a> [dns_enable_logging](#input_dns_enable_logging) | Toggle DNS logging for VPC DNS. | `bool` | `true` | no |
-| <a name="input_enable_hub_and_spoke_transitivity"></a> [enable_hub_and_spoke_transitivity](#input_enable_hub_and_spoke_transitivity) | Enable transitivity via gateway VMs on Hub-and-Spoke architecture. | `bool` | `false` | no |
-| <a name="input_enable_partner_interconnect"></a> [enable_partner_interconnect](#input_enable_partner_interconnect) | Enable Partner Interconnect in the environment. | `bool` | `false` | no |
-| <a name="input_firewall_enable_logging"></a> [firewall_enable_logging](#input_firewall_enable_logging) | Toggle firewall logging for VPC Firewalls. | `bool` | `true` | no |
-| <a name="input_nat_bgp_asn"></a> [nat_bgp_asn](#input_nat_bgp_asn) | BGP ASN for first NAT cloud routes. | `number` | `64514` | no |
-| <a name="input_nat_enabled"></a> [nat_enabled](#input_nat_enabled) | Toggle creation of NAT cloud router. | `bool` | `true` | no |
-| <a name="input_nat_num_addresses"></a> [nat_num_addresses](#input_nat_num_addresses) | Number of external IPs to reserve for Cloud NAT. | `number` | `2` | no |
-| <a name="input_nat_num_addresses_region1"></a> [nat_num_addresses_region1](#input_nat_num_addresses_region1) | Number of external IPs to reserve for first Cloud NAT. | `number` | `2` | no |
-| <a name="input_optional_fw_rules_enabled"></a> [optional_fw_rules_enabled](#input_optional_fw_rules_enabled) | Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges. | `bool` | `true` | no |
-| <a name="input_preactivate_partner_interconnect"></a> [preactivate_partner_interconnect](#input_preactivate_partner_interconnect) | Preactivate Partner Interconnect VLAN attachment in the environment. | `bool` | `false` | no |
-| <a name="input_subnetworks_enable_logging"></a> [subnetworks_enable_logging](#input_subnetworks_enable_logging) | Toggle subnetworks flow logging for VPC Subnetworks. | `bool` | `true` | no |
-| <a name="input_windows_activation_enabled"></a> [windows_activation_enabled](#input_windows_activation_enabled) | Enable Windows license activation for Windows workloads. | `bool` | `false` | no |
+| <a name="input_subnetworks_enable_logging"></a> [subnetworks_enable_logging](#input_subnetworks_enable_logging) | Toggle subnetworks flow logging for VPC Subnetworks. | `bool` | `false` | no |
 
 #### Outputs
 

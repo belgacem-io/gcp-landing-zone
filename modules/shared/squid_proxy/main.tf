@@ -4,6 +4,7 @@
 
 resource "google_compute_firewall" "default_allow" {
   name          = "allow-${var.service_root_name}"
+  project       = var.project_id
   network       = var.vpc_name
   #130.211.0.0/22 and 35.191.0.0/16 are CIDR ranges for GCP IAP services.
   source_ranges = flatten(["130.211.0.0/22", "35.191.0.0/16", var.internal_trusted_cidr_ranges])
@@ -22,15 +23,18 @@ resource "google_compute_firewall" "default_allow" {
 *****************************************/
 
 resource "google_service_account" "default" {
+  project      = var.project_id
   account_id   = "${var.service_root_name}-svc"
   display_name = "Squid Proxy Service Account"
 }
 
 resource "google_compute_instance_template" "squid_server_templ" {
-  name        = "${var.service_root_name}-template"
-  description = "This template is used to create squid proxy instances."
-  tags        = ["squid-proxy"]
-  labels      = {
+  name               = "${var.service_root_name}-template"
+  project            = var.project_id
+  region = var.default_region1
+  description        = "This template is used to create squid proxy instances."
+  tags               = [var.service_root_name]
+  labels             = {
     environment = var.environment_code
   }
   instance_description = "Squid proxy instance."
@@ -58,6 +62,7 @@ resource "google_compute_instance_template" "squid_server_templ" {
   network_interface {
     network    = var.vpc_name
     subnetwork = var.subnet_name
+    subnetwork_project = var.project_id
     #Uncomment the line below to allow a public IP address on each VM.
     #access_config {}
   }
@@ -68,8 +73,8 @@ resource "google_compute_instance_template" "squid_server_templ" {
 *****************************************/
 
 resource "google_compute_health_check" "tcp-health-check" {
-  name = "${var.service_root_name}-health-check"
-
+  name               = "${var.service_root_name}-health-check"
+  project            = var.project_id
   timeout_sec        = 1
   check_interval_sec = 5
 
@@ -77,51 +82,41 @@ resource "google_compute_health_check" "tcp-health-check" {
     port = "3128"
   }
 }
-resource "google_compute_instance_group_manager" "squid_igm" {
-  name = "${var.service_root_name}-igm"
 
-  base_instance_name = var.service_root_name
+module "mig" {
+  source  = "terraform-google-modules/vm/google//modules/mig"
+  version = "~> 7.9"
 
-  named_port {
-    name = "proxy-port"
-    port = "3128"
-  }
+  project_id      = var.project_id
+  region            = var.default_region1
+  hostname          = "mig-${var.service_root_name}"
+  instance_template = google_compute_instance_template.squid_server_templ.self_link
 
-  version {
-    instance_template = google_compute_instance_template.squid_server_templ.id
-  }
+  /* autoscaler */
+  autoscaling_enabled          = var.autoscaling_enabled
+  max_replicas                 = var.max_replicas
+  min_replicas                 = var.min_replicas
+  cooldown_period              = var.cooldown_period
+  autoscaling_cpu              = var.autoscaling_cpu
+  autoscaling_metric           = var.autoscaling_metric
+  autoscaling_lb               = var.autoscaling_lb
+  autoscaling_scale_in_control = var.autoscaling_scale_in_control
 
-  target_size = 2
-
-  auto_healing_policies {
-    health_check      = google_compute_health_check.tcp-health-check.id
-    initial_delay_sec = 200
-  }
-
-}
-resource "google_compute_autoscaler" "autoscaler" {
-  name   = "${var.service_root_name}-autoscaler"
-  target = google_compute_instance_group_manager.squid_igm.id
-
-  autoscaling_policy {
-    max_replicas    = var.autoscaling_max
-    min_replicas    = var.autoscaling_min
-    cooldown_period = 60
-
-    cpu_utilization {
-      target = var.autoscaling_cpu_target
-    }
-  }
+  depends_on = [
+    google_compute_instance_template.squid_server_templ
+  ]
 }
 
 /******************************************
   Create Backend Service and Internal Load Balancer
 *****************************************/
 resource "google_compute_region_backend_service" "default" {
+  project               = var.project_id
+  region          = var.default_region1
   load_balancing_scheme = "INTERNAL"
 
   backend {
-    group = google_compute_instance_group_manager.squid_igm.instance_group
+    group = module.mig.instance_group
   }
 
   name          = "${var.service_root_name}-backend"
@@ -131,6 +126,8 @@ resource "google_compute_region_backend_service" "default" {
 }
 resource "google_compute_forwarding_rule" "main_fr" {
   name                  = "${var.service_root_name}-frontend"
+  project               = var.project_id
+  region          = var.default_region1
   network               = var.vpc_name
   subnetwork            = var.subnet_name
   backend_service       = google_compute_region_backend_service.default.self_link

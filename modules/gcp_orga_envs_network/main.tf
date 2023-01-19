@@ -1,7 +1,5 @@
 locals {
 
-  bgp_asn_number                          = var.enable_partner_interconnect ? "16550" : "64514"
-
   # Primary subnets for common services
   primary_env_net_hub_private_subnets = [
     for subnet in var.env_net_hub_private_subnet_ranges : {
@@ -84,16 +82,14 @@ module "env_nethub" {
   org_id                        = var.org_id
   default_region1               = var.default_region1
   domain                        = "${var.domain}."
-  bgp_asn_subnet                = local.bgp_asn_number
-  windows_activation_enabled    = var.windows_activation_enabled
-  dns_enable_inbound_forwarding = var.dns_enable_inbound_forwarding
-  dns_enable_logging            = var.dns_enable_logging
-  firewall_enable_logging       = var.firewall_enable_logging
-  optional_fw_rules_enabled     = var.optional_fw_rules_enabled
-  nat_enabled                   = var.nat_enabled
-  nat_bgp_asn                   = var.nat_bgp_asn
-  nat_num_addresses_region1     = var.nat_num_addresses_region1
-  nat_num_addresses             = var.nat_num_addresses
+  bgp_asn_subnet                = "64514"
+  windows_activation_enabled    = false
+  dns_enable_inbound_forwarding = false
+  dns_enable_logging            = false
+  firewall_enable_logging       = false
+  optional_fw_rules_enabled     = false
+  nat_enabled                   = false
+
   mode                          = "hub"
 
   subnets                  = concat(local.primary_business_project_subnets,local.primary_env_net_hub_subnets)

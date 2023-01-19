@@ -52,11 +52,11 @@ module "mig" {
 resource "google_service_account_iam_binding" "sa_user" {
   service_account_id = google_service_account.vm_sa.id
   role               = "roles/iam.serviceAccountUser"
-  members            = var.members
+  members            = var.authorized_members
 }
 
 resource "google_project_iam_member" "os_login_bindings" {
-  for_each = toset(var.members)
+  for_each = toset(var.authorized_members)
   project  = var.project_id
   role     = "roles/compute.osLogin"
   member   = each.key
@@ -71,5 +71,5 @@ module "iap_tunneling" {
   network                    = var.network_self_link
   service_accounts           = [google_service_account.vm_sa.email]
   instances                  = []
-  members                    = var.members
+  members                    = var.authorized_members
 }

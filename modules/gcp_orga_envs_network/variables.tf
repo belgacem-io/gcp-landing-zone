@@ -26,11 +26,6 @@ variable "env_nethub_project_name" {
   description = "Subnet prefix for env nethub project"
 }
 
-variable "terraform_service_account" {
-  type        = string
-  description = "Service account email of the account to impersonate to run Terraform."
-}
-
 variable "default_region1" {
   type        = string
   description = "First subnet region. The shared vpc modules only configures two regions."
@@ -39,84 +34,6 @@ variable "default_region1" {
 variable "domain" {
   type        = string
   description = "The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period."
-}
-
-variable "dns_enable_logging" {
-  type        = bool
-  description = "Toggle DNS logging for VPC DNS."
-  default     = true
-}
-
-variable "subnetworks_enable_logging" {
-  type        = bool
-  description = "Toggle subnetworks flow logging for VPC Subnetworks."
-  default     = true
-}
-
-variable "firewall_enable_logging" {
-  type        = bool
-  description = "Toggle firewall logging for VPC Firewalls."
-  default     = true
-}
-
-variable "dns_enable_inbound_forwarding" {
-  type        = bool
-  description = "Toggle inbound query forwarding for VPC DNS."
-  default     = true
-}
-
-variable "windows_activation_enabled" {
-  type        = bool
-  description = "Enable Windows license activation for Windows workloads."
-  default     = false
-}
-
-variable "nat_enabled" {
-  type        = bool
-  description = "Toggle creation of NAT cloud router."
-  default     = true
-}
-
-variable "nat_bgp_asn" {
-  type        = number
-  description = "BGP ASN for first NAT cloud routes."
-  default     = 64514
-}
-
-variable "nat_num_addresses_region1" {
-  type        = number
-  description = "Number of external IPs to reserve for first Cloud NAT."
-  default     = 2
-}
-
-variable "nat_num_addresses" {
-  type        = number
-  description = "Number of external IPs to reserve for Cloud NAT."
-  default     = 2
-}
-
-variable "optional_fw_rules_enabled" {
-  type        = bool
-  description = "Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges."
-  default     = true
-}
-
-variable "enable_partner_interconnect" {
-  description = "Enable Partner Interconnect in the environment."
-  type        = bool
-  default     = false
-}
-
-variable "preactivate_partner_interconnect" {
-  description = "Preactivate Partner Interconnect VLAN attachment in the environment."
-  type        = bool
-  default     = false
-}
-
-variable "enable_hub_and_spoke_transitivity" {
-  description = "Enable transitivity via gateway VMs on Hub-and-Spoke architecture."
-  type        = bool
-  default     = false
 }
 
 variable "env_net_hub_private_subnet_ranges" {
@@ -130,6 +47,12 @@ variable "env_net_hub_data_subnet_ranges" {
 variable "env_net_hub_private_svc_subnet_ranges" {
   type        = list(string)
   description = "CIDR range for private service networking. Used for Cloud SQL and other managed services."
+}
+
+variable "subnetworks_enable_logging" {
+  type        = bool
+  description = "Toggle subnetworks flow logging for VPC Subnetworks."
+  default     = false
 }
 
 variable "business_project_subnets" {
