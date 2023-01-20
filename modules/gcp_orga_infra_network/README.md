@@ -21,6 +21,7 @@
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of forwarding managed zone, for instance 'example.com'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
 | <a name="input_nethub_project_name"></a> [nethub_project_name](#input_nethub_project_name) | Project witch will contains all dns configs | `string` | n/a | yes |
+| <a name="input_org_nethub_private_svc_connect_ip"></a> [org_nethub_private_svc_connect_ip](#input_org_nethub_private_svc_connect_ip) | The internal IP to be used for the private service connect. | `string` | n/a | yes |
 | <a name="input_orga_nethub_subnets"></a> [orga_nethub_subnets](#input_orga_nethub_subnets) | Default subnets for Organization network hub. | <pre>object({<br>    public_subnet_ranges = list(string)<br>    private_subnet_ranges  = list(string)<br>    data_subnet_ranges =  list(string)<br>  })</pre> | n/a | yes |
 | <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_parent_id"></a> [parent_id](#input_parent_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |

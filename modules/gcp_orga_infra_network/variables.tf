@@ -129,3 +129,8 @@ variable "orga_nethub_subnets" {
     data_subnet_ranges =  list(string)
   })
 }
+
+variable "org_nethub_private_svc_connect_ip" {
+  type        = string
+  description = "The internal IP to be used for the private service connect."
+}

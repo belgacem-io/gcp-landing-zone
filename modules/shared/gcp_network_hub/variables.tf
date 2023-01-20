@@ -47,9 +47,33 @@ variable "bgp_asn_subnet" {
   description = "BGP ASN for Subnets cloud routers."
 }
 
-variable "subnets" {
-  type        = list(map(string))
-  description = "The list of subnets being created"
+variable "public_subnets" {
+  type        = list(object({
+    project_name = string
+    subnet_name  = string
+    subnet_ip    = string
+  }))
+  description = "The list of public subnets being created"
+  default     = []
+}
+
+variable "private_subnets" {
+  type        = list(object({
+    project_name = string
+    subnet_name  = string
+    subnet_ip    = string
+  }))
+  description = "The list of private subnets being created"
+  default     = []
+}
+
+variable "data_subnets" {
+  type        = list(object({
+    project_name = string
+    subnet_name  = string
+    subnet_ip    = string
+  }))
+  description = "The list of data subnets being created"
   default     = []
 }
 
@@ -134,11 +158,29 @@ variable "bgp_asn_dns" {
   description = "BGP Autonomous System Number (ASN)."
   default     = 64667
 }
-variable "target_name_server_addresses" {
+
+variable "dns_enable_outbound_forwarding" {
+  type        = bool
+  description = "Toggle outbound query forwarding for VPC DNS. if true dns_outbound_server_addresses must be set"
+  default     = false
+}
+
+variable "dns_outbound_server_addresses" {
   description = "List of IPv4 address of target name servers for the forwarding zone configuration. See https://cloud.google.com/dns/docs/overview#dns-forwarding-zones for details on target name servers in the context of Cloud DNS forwarding zones."
   type        = list(object({
     ipv4_address    = string,
     forwarding_path = string
   }))
+  default = null
+}
+variable "subnetworks_enable_logging" {
+  type        = bool
+  description = "Toggle subnetworks flow logging for VPC Subnetworks."
+  default     = false
+}
+
+variable "private_service_connect_ip" {
+  description = "The internal IP to be used for the private service connect. Required for hub mode"
+  type        = string
   default = null
 }

@@ -1,38 +1,27 @@
 locals {
   nethub_project_id = try(data.google_projects.org_nethub.projects[0].project_id, null)
   org_public_subnets            = [
-    for subnet in var.orga_nethub_subnets.public_subnet_ranges : {
-      subnet_name           = "org-network-hub-public-${index(var.orga_nethub_subnets.public_subnet_ranges,subnet )}-${var.default_region1}"
-      subnet_ip             = subnet
-      subnet_region         = var.default_region1
-      subnet_private_access = "false"
-      subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "prod/org-network-hub/${var.default_region1}"
+    for subnet_range in var.orga_nethub_subnets.public_subnet_ranges : {
+      subnet_name           = "org-network-hub-public-${index(var.orga_nethub_subnets.public_subnet_ranges,subnet_range )}-${var.default_region1}"
+      subnet_ip             = subnet_range
+      project_name          = "org-network-hub"
     }
   ]
 
   org_private_subnets            = [
-    for subnet in var.orga_nethub_subnets.private_subnet_ranges : {
-      subnet_name           = "org-network-hub-private-${index(var.orga_nethub_subnets.private_subnet_ranges,subnet )}-${var.default_region1}"
-      subnet_ip             = subnet
-      subnet_region         = var.default_region1
-      subnet_private_access = "true"
-      subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "prod/org-network-hub/${var.default_region1}"
+    for subnet_range in var.orga_nethub_subnets.private_subnet_ranges : {
+      subnet_name           = "org-network-hub-private-${index(var.orga_nethub_subnets.private_subnet_ranges,subnet_range )}-${var.default_region1}"
+      subnet_ip             = subnet_range
+      project_name          = "org-network-hub"
     }
   ]
   org_data_subnets            = [
-    for subnet in var.orga_nethub_subnets.data_subnet_ranges : {
-      subnet_name           = "org-network-hub-data-${index(var.orga_nethub_subnets.data_subnet_ranges,subnet )}-${var.default_region1}"
-      subnet_ip             = subnet
-      subnet_region         = var.default_region1
-      subnet_private_access = "true"
-      subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "prod/org-network-hub/${var.default_region1}"
+    for subnet_range in var.orga_nethub_subnets.data_subnet_ranges : {
+      subnet_name           = "org-network-hub-data-${index(var.orga_nethub_subnets.data_subnet_ranges,subnet_range )}-${var.default_region1}"
+      subnet_ip             = subnet_range
+      project_name          = "org-network-hub"
     }
   ]
-
-  org_subnets = concat(local.org_public_subnets,local.org_private_subnets,local.org_data_subnets)
 }
 
 /******************************************
@@ -60,6 +49,10 @@ module "nethub" {
   nat_num_addresses_region1     = var.orga_nethub_nat_num_addresses_region1
   mode                          = "hub"
 
-  subnets          = local.org_subnets
+  public_subnets          = local.org_public_subnets
+  private_subnets         = local.org_private_subnets
+  data_subnets            = local.org_data_subnets
+  private_service_connect_ip    = var.org_nethub_private_svc_connect_ip
+
   secondary_ranges = {}
 }

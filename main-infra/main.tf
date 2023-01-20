@@ -35,14 +35,15 @@ module "infra_projects" {
 module "infra_hub_networks" {
   source = "../modules/gcp_orga_infra_network"
 
-  domain                   = var.gcp_organization_domain
-  organization_id          = var.gcp_organization_id
-  parent_id                = var.gcp_parent_resource_id
-  terraform_sa_email       = var.gcp_terraform_sa_email
-  billing_account          = var.gcp_billing_account
-  nethub_project_name      = var.gcp_infra_projects.nethub.name
-  default_region1          = var.gcp_default_region1
-  orga_nethub_subnets      = var.gcp_infra_projects.nethub.network.cidr_blocks
+  domain                            = var.gcp_organization_domain
+  organization_id                   = var.gcp_organization_id
+  parent_id                         = var.gcp_parent_resource_id
+  terraform_sa_email                = var.gcp_terraform_sa_email
+  billing_account                   = var.gcp_billing_account
+  nethub_project_name               = var.gcp_infra_projects.nethub.name
+  default_region1                   = var.gcp_default_region1
+  orga_nethub_subnets               = var.gcp_infra_projects.nethub.network.cidr_blocks
+  org_nethub_private_svc_connect_ip = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_connect_ip
 
   gcp_labels = var.gcp_labels
 

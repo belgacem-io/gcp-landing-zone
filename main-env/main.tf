@@ -74,18 +74,19 @@ module "env_nethub_networks" {
 
   for_each = var.gcp_organization_environments
 
-  default_region1                       = var.gcp_default_region1
-  domain                                = "${ each.value.environment_code }.${var.gcp_organization_domain}"
-  environment_code                      = each.value.environment_code
-  org_id                                = var.gcp_organization_id
-  env_net_hub_project_id                = module.env_nethub_projects[each.key].project_id
-  env_net_hub_private_subnet_ranges     = each.value.network.cidr_blocks.private_subnet_ranges
-  env_net_hub_data_subnet_ranges        = each.value.network.cidr_blocks.data_subnet_ranges
-  env_net_hub_private_svc_subnet_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
-  env_nethub_project_name               = each.value.name
-  org_nethub_project_id                 = data.google_projects.org_nethub.projects[0].project_id
-  org_nethub_vpc_name                   = data.google_compute_network.org_nethub.name
-  business_project_subnets              = [
+  default_region1                      = var.gcp_default_region1
+  domain                               = "${ each.value.environment_code }.${var.gcp_organization_domain}"
+  environment_code                     = each.value.environment_code
+  org_id                               = var.gcp_organization_id
+  env_nethub_project_id                = module.env_nethub_projects[each.key].project_id
+  env_nethub_private_subnet_ranges     = each.value.network.cidr_blocks.private_subnet_ranges
+  env_nethub_data_subnet_ranges        = each.value.network.cidr_blocks.data_subnet_ranges
+  env_nethub_private_svc_subnet_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
+  env_nethub_project_name              = each.value.name
+  env_nethub_private_svc_connect_ip    = each.value.network.cidr_blocks.private_svc_connect_ip
+  org_nethub_project_id                = data.google_projects.org_nethub.projects[0].project_id
+  org_nethub_vpc_name                  = data.google_compute_network.org_nethub.name
+  business_project_subnets             = [
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
 
@@ -102,13 +103,13 @@ module "env_nethub_bastions" {
 
   for_each = var.gcp_organization_environments
 
-  environment_code  = each.value.environment_code
-  instance_name     = "${each.value.environment_code}-bastion"
-  project_id        = module.env_nethub_projects[each.key].project_id
-  authorized_members= ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
-  region            = var.gcp_default_region1
-  network_self_link = module.env_nethub_networks[each.key].vpc_network_self_links
-  subnet_self_link  = module.env_nethub_networks[each.key].vpc_subnetwork_self_links[0]
+  environment_code   = each.value.environment_code
+  instance_name      = "${each.value.environment_code}-bastion"
+  project_id         = module.env_nethub_projects[each.key].project_id
+  authorized_members = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
+  region             = var.gcp_default_region1
+  network_self_link  = module.env_nethub_networks[each.key].vpc_network_self_links
+  subnet_self_link   = module.env_nethub_networks[each.key].vpc_subnetwork_self_links[0]
 
   depends_on = [
     module.env_nethub_projects

@@ -1,29 +1,22 @@
 locals {
 
   # Primary subnets for common services
-  primary_env_net_hub_private_subnets = [
-    for subnet in var.env_net_hub_private_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-private-${index(var.env_net_hub_private_subnet_ranges , subnet)}-${var.default_region1}"
+  primary_env_nethub_private_subnets = [
+    for subnet in var.env_nethub_private_subnet_ranges : {
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-private-${index(var.env_nethub_private_subnet_ranges , subnet)}-${var.default_region1}"
       subnet_ip             = subnet
-      subnet_region         = var.default_region1
-      subnet_private_access = "true"
-      subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/${var.env_nethub_project_name}/${var.default_region1}"
+      project_name          = var.env_nethub_project_name
     }
   ]
 
-  primary_env_net_hub_data_subnets = [
-    for subnet in var.env_net_hub_data_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-data-${index(var.env_net_hub_data_subnet_ranges , subnet)}-${var.default_region1}"
+  primary_env_nethub_data_subnets = [
+    for subnet in var.env_nethub_data_subnet_ranges : {
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-data-${index(var.env_nethub_data_subnet_ranges , subnet)}-${var.default_region1}"
       subnet_ip             = subnet
-      subnet_region         = var.default_region1
-      subnet_private_access = "true"
-      subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/${var.env_nethub_project_name}/${var.default_region1}"
+      project_name          = var.env_nethub_project_name
     }
   ]
 
-  primary_env_net_hub_subnets = concat(local.primary_env_net_hub_private_subnets,local.primary_env_net_hub_data_subnets)
 
   ## Primary subnets for business projects
   primary_business_project_private_subnets = flatten([
@@ -32,10 +25,7 @@ locals {
           {
             subnet_name           = "${ prj.environment_code }-${ prj.project_name }-private-${index(prj.private_subnet_ranges , subnet)}-${var.default_region1}"
             subnet_ip             = subnet
-            subnet_region         = var.default_region1
-            subnet_private_access = "true"
-            subnet_flow_logs      = var.subnetworks_enable_logging
-            description           = "${ prj.environment_code }/${ prj.project_name }/${var.default_region1}"
+            project_name          = prj.project_name
           } if var.environment_code == prj.environment_code
         ]
       ])
@@ -45,14 +35,10 @@ locals {
           {
             subnet_name           = "${ prj.environment_code }-${ prj.project_name }-data-${index(prj.data_subnet_ranges , subnet)}-${var.default_region1}"
             subnet_ip             = subnet
-            subnet_region         = var.default_region1
-            subnet_private_access = "true"
-            subnet_flow_logs      = var.subnetworks_enable_logging
-            description           = "${ prj.environment_code }/${ prj.project_name }/${var.default_region1}"
+            project_name          = prj.project_name
           } if var.environment_code == prj.environment_code
         ]
       ])
-  primary_business_project_subnets = concat(local.primary_business_project_private_subnets,local.primary_business_project_data_subnets)
 
 
   ## Secondary subnets for business projects
@@ -77,7 +63,7 @@ locals {
 
 module "env_nethub" {
   source                        = "../shared/gcp_network_hub"
-  project_id                    = var.env_net_hub_project_id
+  project_id                    = var.env_nethub_project_id
   environment_code              = var.environment_code
   org_id                        = var.org_id
   default_region1               = var.default_region1
@@ -92,7 +78,10 @@ module "env_nethub" {
 
   mode                          = "hub"
 
-  subnets                  = concat(local.primary_business_project_subnets,local.primary_env_net_hub_subnets)
+  public_subnets                = []
+  private_subnets               = concat(local.primary_env_nethub_private_subnets,local.primary_business_project_private_subnets)
+  data_subnets                  = concat(local.primary_env_nethub_data_subnets,local.primary_business_project_data_subnets)
+  private_service_connect_ip    = var.env_nethub_private_svc_connect_ip
 
   secondary_ranges = {
     for subnet_name in distinct(local.secondary_business_project_subnets.*.subnet_name) :
@@ -109,10 +98,10 @@ module "env_nethub" {
  **************************************************************/
 
 resource "google_compute_global_address" "private_service_access_address" {
-  for_each = toset(var.env_net_hub_private_svc_subnet_ranges)
+  for_each = toset(var.env_nethub_private_svc_subnet_ranges)
 
   name          = "${var.org_nethub_vpc_name}-private-access"
-  project       = var.env_net_hub_project_id
+  project       = var.env_nethub_project_id
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   address       = element(split("/", each.value), 0)
@@ -121,7 +110,7 @@ resource "google_compute_global_address" "private_service_access_address" {
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
-  for_each = toset(var.env_net_hub_private_svc_subnet_ranges)
+  for_each = toset(var.env_nethub_private_svc_subnet_ranges)
 
   network                 = module.env_nethub.network_self_link
   service                 = "servicenetworking.googleapis.com"

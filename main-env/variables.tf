@@ -49,7 +49,8 @@ variable "gcp_organization_environments" {
       cidr_blocks = object({
         private_subnet_ranges  = list(string)
         data_subnet_ranges     = list(string)
-        private_svc_subnet_ranges  = list(string)
+        private_svc_subnet_ranges = list(string)
+        private_svc_connect_ip = string
       })
     })
     children         = list(object({
@@ -123,6 +124,8 @@ variable "gcp_infra_projects" {
           public_subnet_ranges = list(string)
           private_subnet_ranges = list(string)
           data_subnet_ranges = list(string)
+          private_svc_subnet_ranges = list(string)
+          private_svc_connect_ip = string
         })
       })
     })

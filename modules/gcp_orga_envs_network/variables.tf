@@ -11,7 +11,7 @@ variable "org_nethub_project_id" {
   type = string
   description = "Organization hub network project id"
 }
-variable "env_net_hub_project_id" {
+variable "env_nethub_project_id" {
   type = string
   description = "Environment hub network project id"
 }
@@ -36,23 +36,22 @@ variable "domain" {
   description = "The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period."
 }
 
-variable "env_net_hub_private_subnet_ranges" {
+variable "env_nethub_private_subnet_ranges" {
   type = list(string)
 }
 
-variable "env_net_hub_data_subnet_ranges" {
+variable "env_nethub_data_subnet_ranges" {
   type = list(string)
 }
 
-variable "env_net_hub_private_svc_subnet_ranges" {
+variable "env_nethub_private_svc_subnet_ranges" {
   type        = list(string)
   description = "CIDR range for private service networking. Used for Cloud SQL and other managed services."
 }
 
-variable "subnetworks_enable_logging" {
-  type        = bool
-  description = "Toggle subnetworks flow logging for VPC Subnetworks."
-  default     = false
+variable "env_nethub_private_svc_connect_ip" {
+  type        = string
+  description = "The internal IP to be used for the private service connect. Required for hub mode"
 }
 
 variable "business_project_subnets" {
