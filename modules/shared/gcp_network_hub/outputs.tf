@@ -42,3 +42,8 @@ output "subnets_secondary_ranges" {
   value       = module.main.subnets_secondary_ranges
   description = "The secondary ranges associated with these subnets"
 }
+
+output "network_internet_egress_tag" {
+  value       = var.network_internet_egress_tag
+  description = "Network tags for VMs with internet access."
+}

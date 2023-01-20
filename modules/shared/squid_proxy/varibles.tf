@@ -102,3 +102,8 @@ variable "autoscaling_enabled" {
   type        = bool
   default     = false
 }
+
+variable "network_internet_egress_tag" {
+  type = string
+  description = "Network tags for VMs with internet access."
+}

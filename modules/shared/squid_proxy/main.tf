@@ -1,24 +1,4 @@
 /******************************************
-  Firewall Rules
-*****************************************/
-
-resource "google_compute_firewall" "default_allow" {
-  name          = "allow-${var.service_root_name}"
-  project       = var.project_id
-  network       = var.vpc_name
-  #130.211.0.0/22 and 35.191.0.0/16 are CIDR ranges for GCP IAP services.
-  source_ranges = flatten(["130.211.0.0/22", "35.191.0.0/16", var.internal_trusted_cidr_ranges])
-  allow {
-    protocol = "icmp"
-  }
-  allow {
-    protocol = "tcp"
-    ports    = ["3128"]
-  }
-  source_tags = [var.service_root_name]
-}
-
-/******************************************
   Create VM Instance Template
 *****************************************/
 
@@ -29,12 +9,12 @@ resource "google_service_account" "default" {
 }
 
 resource "google_compute_instance_template" "squid_server_templ" {
-  name               = "${var.service_root_name}-template"
-  project            = var.project_id
-  region = var.default_region1
-  description        = "This template is used to create squid proxy instances."
-  tags               = [var.service_root_name]
-  labels             = {
+  name_prefix = "${var.service_root_name}-template"
+  project     = var.project_id
+  region      = var.default_region1
+  description = "This template is used to create squid proxy instances."
+  tags        = [var.service_root_name, var.network_internet_egress_tag]
+  labels      = {
     environment = var.environment_code
   }
   instance_description = "Squid proxy instance."
@@ -51,17 +31,21 @@ resource "google_compute_instance_template" "squid_server_templ" {
     boot         = true
   }
   metadata = {
-    squid-conf = file("${path.module}/files/squid.conf")
+    squid-conf = templatefile("${path.module}/files/squid.conf",{
+      trusted_cidr_ranges = var.internal_trusted_cidr_ranges
+    })
   }
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
-  metadata_startup_script = file("${path.module}/files/startup.sh")
+  metadata_startup_script = templatefile("${path.module}/files/startup.sh",{
+    trusted_cidr_ranges = var.internal_trusted_cidr_ranges
+  })
   network_interface {
-    network    = var.vpc_name
-    subnetwork = var.subnet_name
+    network            = var.vpc_name
+    subnetwork         = var.subnet_name
     subnetwork_project = var.project_id
     #Uncomment the line below to allow a public IP address on each VM.
     #access_config {}
@@ -87,7 +71,7 @@ module "mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
   version = "~> 7.9"
 
-  project_id      = var.project_id
+  project_id        = var.project_id
   region            = var.default_region1
   hostname          = "mig-${var.service_root_name}"
   instance_template = google_compute_instance_template.squid_server_templ.self_link
@@ -112,7 +96,7 @@ module "mig" {
 *****************************************/
 resource "google_compute_region_backend_service" "default" {
   project               = var.project_id
-  region          = var.default_region1
+  region                = var.default_region1
   load_balancing_scheme = "INTERNAL"
 
   backend {
@@ -127,11 +111,30 @@ resource "google_compute_region_backend_service" "default" {
 resource "google_compute_forwarding_rule" "main_fr" {
   name                  = "${var.service_root_name}-frontend"
   project               = var.project_id
-  region          = var.default_region1
+  region                = var.default_region1
   network               = var.vpc_name
   subnetwork            = var.subnet_name
   backend_service       = google_compute_region_backend_service.default.self_link
   load_balancing_scheme = "INTERNAL"
-  ports                 = ["3128"]
+  ports                 = ["3128","80","443"]
 }
 
+/******************************************
+  Routes & Firewall Rules
+*****************************************/
+
+resource "google_compute_firewall" "default_allow" {
+  name          = "allow-${var.service_root_name}"
+  project       = var.project_id
+  network       = var.vpc_name
+  #130.211.0.0/22 and 35.191.0.0/16 are CIDR ranges for GCP IAP services.
+  source_ranges = flatten(["130.211.0.0/22", "35.191.0.0/16", var.internal_trusted_cidr_ranges])
+  allow {
+    protocol = "icmp"
+  }
+  allow {
+    protocol = "tcp"
+    ports    = ["3128","80","443"]
+  }
+  source_tags = [var.service_root_name]
+}

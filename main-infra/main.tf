@@ -59,8 +59,25 @@ module "infra_hub_networks_http_proxy" {
   environment_code             = "prod"
   project_id                   = module.infra_projects.org_nethub_project_id
   default_region1              = var.gcp_default_region1
-  internal_trusted_cidr_ranges = []
+  internal_trusted_cidr_ranges = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
   service_root_name            = "squid-proxy"
-  subnet_name                  = module.infra_hub_networks.org_nethub_private_subnets_names [0]
-  vpc_name                     = module.infra_hub_networks.org_nethub_vpc_name
+  subnet_name                  = module.infra_hub_networks.private_subnets_names [0]
+  vpc_name                     = module.infra_hub_networks.vpc_name
+  network_internet_egress_tag  = module.infra_hub_networks.network_internet_egress_tag
+}
+
+module "infra_nethub_bastions" {
+  source = "../modules/shared/gcp_bastion_host"
+
+  environment_code   = "prod"
+  instance_name      = "prod-bastion"
+  project_id         = module.infra_projects.org_nethub_project_id
+  authorized_members = ["group:org-nethub-devops@belgacem.io"]
+  region             = var.gcp_default_region1
+  network_self_link  = module.infra_hub_networks.vpc_network_self_links
+  subnet_self_link   = module.infra_hub_networks.vpc_subnetwork_self_links[0]
+
+  depends_on = [
+    module.infra_hub_networks
+  ]
 }

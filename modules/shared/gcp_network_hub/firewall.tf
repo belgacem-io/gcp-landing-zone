@@ -173,6 +173,7 @@ resource "google_compute_firewall" "allow_lb" {
 
 resource "google_compute_firewall" "allow_all_egress" {
   count     = var.allow_all_egress_ranges != null ? 1 : 0
+
   name      = "fw-${var.environment_code}-allow-limited-egress"
   network   = module.main.network_name
   project   = var.project_id
@@ -198,6 +199,7 @@ resource "google_compute_firewall" "allow_all_egress" {
 
 resource "google_compute_firewall" "allow_all_ingress" {
   count     = var.allow_all_ingress_ranges != null ? 1 : 0
+
   name      = "fw-${var.environment_code}-allow-limited-ingress"
   network   = module.main.network_name
   project   = var.project_id

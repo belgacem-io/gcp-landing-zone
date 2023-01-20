@@ -66,26 +66,26 @@ module "main" {
   secondary_ranges = var.secondary_ranges
 
   routes = concat(
-    [{
+    var.nat_enabled ? [{
       name              = "rt-${local.vpc_name}-1000-all-default-private-api"
       description       = "Route through IGW to allow private google api access."
       destination_range = "199.36.153.8/30"
       next_hop_internet = "true"
       priority          = "1000"
-    }],
+    }] : [],
     var.nat_enabled ?
     [
       {
         name              = "rt-${local.vpc_name}-1000-egress-internet-default"
         description       = "Tag based route through IGW to access internet"
         destination_range = "0.0.0.0/0"
-        tags              = "egress-internet"
+        tags              = var.network_internet_egress_tag
         next_hop_internet = "true"
         priority          = "1000"
       }
     ]
     : [],
-    var.windows_activation_enabled ?
+    var.nat_enabled && var.windows_activation_enabled ?
     [{
       name              = "rt-${local.vpc_name}-1000-all-default-windows-kms"
       description       = "Route through IGW to allow Windows KMS activation for GCP."
