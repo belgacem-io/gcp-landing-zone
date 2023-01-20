@@ -19,7 +19,7 @@ resource "google_compute_instance_template" "squid_server_templ" {
   }
   instance_description = "Squid proxy instance."
   machine_type         = var.instance_type
-  can_ip_forward       = false
+  can_ip_forward       = true
   scheduling {
     automatic_restart   = true
     on_host_maintenance = "MIGRATE"
@@ -33,6 +33,7 @@ resource "google_compute_instance_template" "squid_server_templ" {
   metadata = {
     squid-conf = templatefile("${path.module}/files/squid.conf",{
       trusted_cidr_ranges = var.internal_trusted_cidr_ranges
+      safe_ports          = var.authorized_ports
     })
   }
   service_account {
@@ -42,6 +43,7 @@ resource "google_compute_instance_template" "squid_server_templ" {
   }
   metadata_startup_script = templatefile("${path.module}/files/startup.sh",{
     trusted_cidr_ranges = var.internal_trusted_cidr_ranges
+    safe_ports          = var.authorized_ports
   })
   network_interface {
     network            = var.vpc_name
@@ -116,7 +118,7 @@ resource "google_compute_forwarding_rule" "main_fr" {
   subnetwork            = var.subnet_name
   backend_service       = google_compute_region_backend_service.default.self_link
   load_balancing_scheme = "INTERNAL"
-  ports                 = ["3128","80","443"]
+  ports                 = var.authorized_ports
 }
 
 /******************************************
@@ -134,7 +136,7 @@ resource "google_compute_firewall" "default_allow" {
   }
   allow {
     protocol = "tcp"
-    ports    = ["3128","80","443"]
+    ports    = var.authorized_ports
   }
   source_tags = [var.service_root_name]
 }

@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "The project id of your GCP project"
-  type = string
+  type        = string
 }
 
 variable "default_region1" {
@@ -10,17 +10,17 @@ variable "default_region1" {
 
 variable "vpc_name" {
   description = "The GCP VPC network name for the cluster to be built in."
-  type = string
+  type        = string
 }
 
 variable "subnet_name" {
   description = "The subnet in the VPC for the proxy cluster to be deployed to."
-  type = string
+  type        = string
 }
 
 variable "service_root_name" {
   description = "Root name that all cloud objects will be named with."
-  type = string
+  type        = string
 }
 
 variable "environment_code" {
@@ -30,19 +30,19 @@ variable "environment_code" {
 
 variable "internal_trusted_cidr_ranges" {
   description = "Your internal CIDR range requiring access to this proxy."
-  type = list(string)
+  type        = list(string)
 }
 
 variable "instance_type" {
   description = "The instance type"
-  type = string
-  default = "e2-micro"
+  type        = string
+  default     = "e2-micro"
 }
 
 variable "instance_image" {
   description = "The instance image. Must be debian base."
-  type = string
-  default = "ubuntu-os-cloud/ubuntu-minimal-1804-lts"
+  type        = string
+  default     = "ubuntu-os-cloud/ubuntu-minimal-1804-lts"
 }
 
 
@@ -69,7 +69,7 @@ variable "autoscaling_cpu" {
 
 variable "autoscaling_metric" {
   description = "Autoscaling, metric policy block as single element array. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#metric"
-  type = list(object({
+  type        = list(object({
     name   = string
     target = number
     type   = string
@@ -85,7 +85,7 @@ variable "autoscaling_lb" {
 
 variable "autoscaling_scale_in_control" {
   description = "Autoscaling, scale-in control block. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#scale_in_control"
-  type = object({
+  type        = object({
     fixed_replicas   = number
     percent_replicas = number
     time_window_sec  = number
@@ -104,6 +104,17 @@ variable "autoscaling_enabled" {
 }
 
 variable "network_internet_egress_tag" {
-  type = string
+  type        = string
   description = "Network tags for VMs with internet access."
 }
+variable "authorized_ports" {
+  type        = list(string)
+  description = "List of safe ports."
+  default     = [
+    "80", # http
+    "443", # https
+    "21", # ftp
+    "3128" # Default proxy port
+  ]
+}
+
