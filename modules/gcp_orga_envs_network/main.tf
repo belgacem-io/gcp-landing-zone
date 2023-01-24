@@ -62,7 +62,7 @@ locals {
 *****************************************/
 
 module "env_nethub" {
-  source                        = "../shared/gcp_network_hub"
+  source                        = "../shared/gcp_network"
   project_id                    = var.env_nethub_project_id
   environment_code              = var.environment_code
   org_id                        = var.org_id
