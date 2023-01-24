@@ -1,3 +1,7 @@
+variable "name" {
+  description = "Root name that all cloud objects will be named with."
+  type        = string
+}
 variable "project_id" {
   description = "The project id of your GCP project"
   type        = string
@@ -15,11 +19,6 @@ variable "vpc_name" {
 
 variable "subnet_name" {
   description = "The subnet in the VPC for the proxy cluster to be deployed to."
-  type        = string
-}
-
-variable "service_root_name" {
-  description = "Root name that all cloud objects will be named with."
   type        = string
 }
 
@@ -107,6 +106,7 @@ variable "network_internet_egress_tag" {
   type        = string
   description = "Network tags for VMs with internet access."
 }
+
 variable "authorized_ports" {
   type        = list(string)
   description = "List of safe ports."
@@ -118,3 +118,35 @@ variable "authorized_ports" {
   ]
 }
 
+variable "update_policy" {
+  type = list(object({
+    max_surge_fixed              = number
+    instance_redistribution_type = string
+    max_surge_percent            = number
+    max_unavailable_fixed        = number
+    max_unavailable_percent      = number
+    min_ready_sec                = number
+    replacement_method           = string
+    minimal_action               = string
+    type                         = string
+  }))
+  description = "The rolling update policy. https://www.terraform.io/docs/providers/google/r/compute_region_instance_group_manager#rolling_update_policy"
+  default = [
+    {
+      max_surge_fixed              = 0
+      max_surge_percent            = null
+      instance_redistribution_type = "NONE"
+      max_unavailable_fixed        = 4
+      max_unavailable_percent      = null
+      min_ready_sec                = 180
+      minimal_action               = "RESTART"
+      type                         = "OPPORTUNISTIC"
+      replacement_method            = "RECREATE"
+    }
+  ]
+}
+variable "firewall_enable_logging" {
+  type        = bool
+  description = "Toggle firewall logging for VPC Firewalls."
+  default     = true
+}

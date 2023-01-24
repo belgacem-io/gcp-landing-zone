@@ -10,7 +10,7 @@ variable "project_id" {
 
 variable "mode" {
   type        = string
-  description = "Network deployment mode, should be set to `hub` or `spoke` when `enable_hub_and_spoke` architecture chosen, keep as `null` otherwise."
+  description = "Network deployment mode, should be set to `hub` or `spoke`."
   default     = null
 }
 

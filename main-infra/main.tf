@@ -53,17 +53,16 @@ module "infra_hub_networks" {
 }
 
 
-module "infra_hub_networks_http_proxy" {
-  source = "../modules/shared/squid_proxy"
+module "infra_hub_networks_transit_gw" {
+  source = "../modules/shared/gcp_network_transitivity"
 
   environment_code             = "prod"
+  mode                         = "hub"
   project_id                   = module.infra_projects.org_nethub_project_id
   default_region1              = var.gcp_default_region1
   internal_trusted_cidr_ranges = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
-  service_root_name            = "squid-proxy"
   subnet_name                  = module.infra_hub_networks.private_subnets_names [0]
   vpc_name                     = module.infra_hub_networks.vpc_name
-  network_internet_egress_tag  = module.infra_hub_networks.network_internet_egress_tag
 }
 
 module "infra_nethub_bastions" {

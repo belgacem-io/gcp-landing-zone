@@ -2,35 +2,34 @@ variable "project_id" {
   type        = string
   description = "VPC Project ID"
 }
-
-variable "regions" {
-  type        = set(string)
-  description = "Regions to deploy the transitivity appliances"
+variable "mode" {
+  type        = string
+  description = "Network deployment mode, should be set to `hub` or `spoke`."
 }
+
+variable "environment_code" {
+  description = "The environment the single project belongs to"
+  type        = string
+}
+
+variable "default_region1" {
+  type        = string
+  description = "Default region 1 for subnets and Cloud Routers"
+}
+
 
 variable "vpc_name" {
+  description = "The GCP VPC network name for the cluster to be built in."
   type        = string
-  description = "Label to identify the VPC associated with shared VPC that will use the Interconnect."
 }
 
-variable "gw_subnets" {
-  description = "Subnets in {REGION => SUBNET} format."
-  type        = map(string)
+variable "subnet_name" {
+  description = "The subnet in the VPC for the proxy cluster to be deployed to."
+  type        = string
+}
+variable "internal_trusted_cidr_ranges" {
+  description = "Internal trusted ip ranges. Must be set to private ip ranges"
+  type = list(string)
+  default = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
 }
 
-variable "regional_aggregates" {
-  description = "Aggregate ranges for each region in {REGION => [AGGREGATE_CIDR,] } format."
-  type        = map(list(string))
-}
-
-variable "firewall_enable_logging" {
-  type        = bool
-  description = "Toggle firewall logging for VPC Firewalls."
-  default     = true
-}
-
-variable "health_check_enable_log" {
-  type        = bool
-  description = "Toggle logging for health checks."
-  default     = false
-}
