@@ -1,23 +1,11 @@
-output "vpc_name" {
+output "network_name" {
   value = module.env_nethub.network_name
 }
 
-output "vpc_subnetwork_self_links" {
+output "subnetwork_self_links" {
   value = module.env_nethub.subnets_self_links
 }
 
-output "vpc_network_self_links" {
+output "network_self_links" {
   value = module.env_nethub.network_self_link
-}
-
-output "vpc_svc_private_subnetwork_self_links" {
-  value = flatten([ for self_link in module.env_nethub.subnets_self_links:
-    self_link if length(regexall(".*/${var.env_nethub_project_name}-[0-9]+-${var.default_region}", self_link)) > 0
-    ])
-}
-
-output "vpc_svc_data_subnetwork_self_links" {
-  value = flatten([ for self_link in module.env_nethub.subnets_self_links:
-    self_link if length(regexall(".*/${var.env_nethub_project_name}-[0-9]+-${var.default_region}", self_link)) > 0
-  ])
 }
