@@ -74,7 +74,7 @@ module "env_nethub_networks" {
 
   for_each = var.gcp_organization_environments
 
-  default_region1                      = var.gcp_default_region1
+  default_region                      = var.gcp_default_region
   domain                               = "${ each.value.environment_code }.${var.gcp_organization_domain}"
   environment_code                     = each.value.environment_code
   org_id                               = var.gcp_organization_id
@@ -107,7 +107,7 @@ module "env_nethub_bastions" {
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.env_nethub_projects[each.key].project_id
   authorized_members = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
-  region             = var.gcp_default_region1
+  region             = var.gcp_default_region
   network_self_link  = module.env_nethub_networks[each.key].vpc_network_self_links
   subnet_self_link   = module.env_nethub_networks[each.key].vpc_subnetwork_self_links[0]
 

@@ -3,7 +3,7 @@ locals {
   # Primary subnets for common services
   primary_env_nethub_private_subnets = [
     for subnet in var.env_nethub_private_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-private-${index(var.env_nethub_private_subnet_ranges , subnet)}-${var.default_region1}"
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-private-${index(var.env_nethub_private_subnet_ranges , subnet)}-${var.default_region}"
       subnet_ip             = subnet
       project_name          = var.env_nethub_project_name
     }
@@ -11,7 +11,7 @@ locals {
 
   primary_env_nethub_data_subnets = [
     for subnet in var.env_nethub_data_subnet_ranges : {
-      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-data-${index(var.env_nethub_data_subnet_ranges , subnet)}-${var.default_region1}"
+      subnet_name           = "${ var.environment_code }-${var.env_nethub_project_name}-data-${index(var.env_nethub_data_subnet_ranges , subnet)}-${var.default_region}"
       subnet_ip             = subnet
       project_name          = var.env_nethub_project_name
     }
@@ -23,7 +23,7 @@ locals {
         for prj in var.business_project_subnets : [
           for subnet in prj.private_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-private-${index(prj.private_subnet_ranges , subnet)}-${var.default_region1}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-private-${index(prj.private_subnet_ranges , subnet)}-${var.default_region}"
             subnet_ip             = subnet
             project_name          = prj.project_name
           } if var.environment_code == prj.environment_code
@@ -33,7 +33,7 @@ locals {
         for prj in var.business_project_subnets : [
           for subnet in prj.data_subnet_ranges:
           {
-            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-data-${index(prj.data_subnet_ranges , subnet)}-${var.default_region1}"
+            subnet_name           = "${ prj.environment_code }-${ prj.project_name }-data-${index(prj.data_subnet_ranges , subnet)}-${var.default_region}"
             subnet_ip             = subnet
             project_name          = prj.project_name
           } if var.environment_code == prj.environment_code
@@ -47,8 +47,8 @@ locals {
         for subnet in prj.private_subnet_k8s_2nd_ranges:
         {
           # All secondary ranges are associated with the first subnet
-          subnet_name           = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region1}"
-          range_name            = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region1}-${index(prj.private_subnet_k8s_2nd_ranges , subnet)}"
+          subnet_name           = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region}"
+          range_name            = "${ prj.environment_code }-${ prj.project_name }-k8s-0-${var.default_region}-${index(prj.private_subnet_k8s_2nd_ranges , subnet)}"
           ip_cidr_range         = subnet
         }if var.environment_code == prj.environment_code
       ]
@@ -66,7 +66,7 @@ module "env_nethub" {
   project_id                    = var.env_nethub_project_id
   environment_code              = var.environment_code
   org_id                        = var.org_id
-  default_region1               = var.default_region1
+  default_region               = var.default_region
   domain                        = "${var.domain}."
   bgp_asn_subnet                = "64514"
   windows_activation_enabled    = false
@@ -81,7 +81,7 @@ module "env_nethub" {
   public_subnets                = []
   private_subnets               = concat(local.primary_env_nethub_private_subnets,local.primary_business_project_private_subnets)
   data_subnets                  = concat(local.primary_env_nethub_data_subnets,local.primary_business_project_data_subnets)
-  private_service_connect_ip    = var.env_nethub_private_svc_connect_ip
+  private_svc_connect_ip        = var.env_nethub_private_svc_connect_ip
 
   secondary_ranges = {
     for subnet_name in distinct(local.secondary_business_project_subnets.*.subnet_name) :
@@ -91,29 +91,4 @@ module "env_nethub" {
   # FIXME Security issue
   allow_all_egress_ranges       = ["0.0.0.0/0"]
   allow_all_ingress_ranges      = ["0.0.0.0/0"]
-}
-
-/***************************************************************
-  Configure Service Networking for Cloud SQL & future services.
- **************************************************************/
-
-resource "google_compute_global_address" "private_service_access_address" {
-  for_each = toset(var.env_nethub_private_svc_subnet_ranges)
-
-  name          = "${var.org_nethub_vpc_name}-private-access"
-  project       = var.env_nethub_project_id
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  address       = element(split("/", each.value), 0)
-  prefix_length = element(split("/", each.value), 1)
-  network       = module.env_nethub.network_self_link
-}
-
-resource "google_service_networking_connection" "private_vpc_connection" {
-  for_each = toset(var.env_nethub_private_svc_subnet_ranges)
-
-  network                 = module.env_nethub.network_self_link
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_service_access_address[each.key].name]
-
 }

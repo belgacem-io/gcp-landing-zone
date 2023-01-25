@@ -15,7 +15,7 @@ module "squid_proxy_template" {
   version = "~> 7.3"
 
   project_id      = var.project_id
-  region          = var.default_region1
+  region          = var.default_region
   can_ip_forward  = true
   disk_size_gb    = 10
   name_prefix     = var.name
@@ -51,7 +51,7 @@ module "squid_proxy_migs" {
   source            = "terraform-google-modules/vm/google//modules/mig"
   version           = "~> 7.3"
   project_id        = var.project_id
-  region            = var.default_region1
+  region            = var.default_region
   target_size       = var.min_replicas
   hostname          = var.name
   instance_template = module.squid_proxy_template.self_link
@@ -74,10 +74,10 @@ module "squid_proxy_migs" {
 
 module "squid_proxy_ilbs" {
   source  = "GoogleCloudPlatform/lb-internal/google"
-  version = "~> 2.4.0"
+  version = "~> 5.0"
 
   project                 = var.project_id
-  region                  = var.default_region1
+  region                  = var.default_region
   name                    = var.name
   ports                   = null
   all_ports               = true

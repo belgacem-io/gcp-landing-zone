@@ -37,3 +37,57 @@
 | sa | Project SA email |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+<!-- BEGIN_TF_DOCS -->
+## Organization policies
+
+To manage organization policies, the `orgpolicy.googleapis.com` service should be enabled in the quota project.
+
+#### Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
+
+#### Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_org_cloudsql_external_ip_access"></a> [org_cloudsql_external_ip_access](#module_org_cloudsql_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_compute_disable_guest_attributes_access"></a> [org_compute_disable_guest_attributes_access](#module_org_compute_disable_guest_attributes_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_disable_automatic_iam_grants_on_default_service_accounts"></a> [org_disable_automatic_iam_grants_on_default_service_accounts](#module_org_disable_automatic_iam_grants_on_default_service_accounts) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_disable_nested_virtualization"></a> [org_disable_nested_virtualization](#module_org_disable_nested_virtualization) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_disable_sa_key_creation"></a> [org_disable_sa_key_creation](#module_org_disable_sa_key_creation) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_disable_serial_port_access"></a> [org_disable_serial_port_access](#module_org_disable_serial_port_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_domain_restricted_sharing"></a> [org_domain_restricted_sharing](#module_org_domain_restricted_sharing) | terraform-google-modules/org-policy/google//modules/domain_restricted_sharing | ~> 5.0 |
+| <a name="module_org_enforce_bucket_level_access"></a> [org_enforce_bucket_level_access](#module_org_enforce_bucket_level_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_require_os_login"></a> [org_require_os_login](#module_org_require_os_login) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_shared_vpc_lien_removal"></a> [org_shared_vpc_lien_removal](#module_org_shared_vpc_lien_removal) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_skip_default_network"></a> [org_skip_default_network](#module_org_skip_default_network) | terraform-google-modules/org-policy/google | ~> 5.2 |
+| <a name="module_org_vm_external_ip_access"></a> [org_vm_external_ip_access](#module_org_vm_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
+
+#### Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_domains_to_allow"></a> [domains_to_allow](#input_domains_to_allow) | The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy. | `list(string)` | n/a | yes |
+| <a name="input_resource_id"></a> [resource_id](#input_resource_id) | Resource id where the policies must be applied | `string` | n/a | yes |
+| <a name="input_resource_type"></a> [resource_type](#input_resource_type) | Resource type where the policies must be applied. Possible values: organization, folder and project | `string` | n/a | yes |
+| <a name="input_create_access_context_manager_access_policy"></a> [create_access_context_manager_access_policy](#input_create_access_context_manager_access_policy) | Whether to create access context manager access policy | `bool` | `false` | no |
+| <a name="input_disable_automatic_iam_grants_on_default_service_accounts_policy"></a> [disable_automatic_iam_grants_on_default_service_accounts_policy](#input_disable_automatic_iam_grants_on_default_service_accounts_policy) | Disable automatic IAM grants on default service accounts Organization Policy. | `bool` | `false` | no |
+| <a name="input_disable_guest_attributes_access_policy"></a> [disable_guest_attributes_access_policy](#input_disable_guest_attributes_access_policy) | Disable guest attributes access Organization Policy. | `bool` | `false` | no |
+| <a name="input_disable_nested_virtualization_policy"></a> [disable_nested_virtualization_policy](#input_disable_nested_virtualization_policy) | Disable nested virtualization Organization Policy. | `bool` | `false` | no |
+| <a name="input_disable_serial_port_access_policy"></a> [disable_serial_port_access_policy](#input_disable_serial_port_access_policy) | Disable serial port access Organization Policy. | `bool` | `false` | no |
+| <a name="input_enable_cloudsql_external_ip_access_policy"></a> [enable_cloudsql_external_ip_access_policy](#input_enable_cloudsql_external_ip_access_policy) | Enable Cloud SQL external IP Organization Policy. | `bool` | `false` | no |
+| <a name="input_enable_domains_sharing_restriction_policy"></a> [enable_domains_sharing_restriction_policy](#input_enable_domains_sharing_restriction_policy) | Enable domains sharing restriction Organization Policy. | `bool` | `false` | no |
+| <a name="input_enable_os_login_policy"></a> [enable_os_login_policy](#input_enable_os_login_policy) | Require os login Organization Policy. | `bool` | `false` | no |
+| <a name="input_enable_sa_key_creation_deny_policy"></a> [enable_sa_key_creation_deny_policy](#input_enable_sa_key_creation_deny_policy) | Deny service account key creation at the organization level. | `bool` | `false` | no |
+| <a name="input_enforce_bucket_level_access_policy"></a> [enforce_bucket_level_access_policy](#input_enforce_bucket_level_access_policy) | Enforce bucket level access Organization Policy. | `bool` | `false` | no |
+| <a name="input_shared_vpc_lien_removal_policy"></a> [shared_vpc_lien_removal_policy](#input_shared_vpc_lien_removal_policy) | Shared vpc lien removal Organization Policy. | `bool` | `false` | no |
+| <a name="input_skip_default_network_policy"></a> [skip_default_network_policy](#input_skip_default_network_policy) | Skip default network Organization Policy. | `bool` | `false` | no |
+| <a name="input_vm_external_ip_access_policy"></a> [vm_external_ip_access_policy](#input_vm_external_ip_access_policy) | vm external ip_access Organization Policy. | `list(string)` | `null` | no |
+
+#### Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->

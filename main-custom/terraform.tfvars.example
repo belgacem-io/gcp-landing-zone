@@ -1,8 +1,8 @@
 gcp_organization_id     = "983256491121"
 gcp_organization_domain   = "company.cloud"
 gcp_billing_account     = "01A47A-F9BAF1-1EE048"
-gcp_default_region1     = "europe-west4"
-gcp_default_region1_azs = [
+gcp_default_region     = "europe-west4"
+gcp_default_region_azs = [
   "europe-west4-a",
   "europe-west4-b",
   "europe-west4-c"

@@ -19,7 +19,7 @@ variable "environment_code" {
   description = "A short form of the folder level resources (environment) within the Google Cloud organization."
 }
 
-variable "default_region1" {
+variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"
 }
@@ -77,8 +77,21 @@ variable "data_subnets" {
   default     = []
 }
 
+variable "private_svc_connect_subnets" {
+  type        = list(object({
+    project_name = string
+    subnet_name  = string
+    subnet_ip    = string
+  }))
+  description = "The list of subnets to publish a managed service by using Private Service Connect."
+  default     = []
+}
+
 variable "secondary_ranges" {
-  type        = map(list(object({ range_name = string, ip_cidr_range = string })))
+  type        = map(list(object({
+    range_name = string,
+    ip_cidr_range = string
+  })))
   description = "Secondary ranges that will be used in some of the subnets"
   default     = {}
 }
@@ -177,12 +190,6 @@ variable "subnetworks_enable_logging" {
   type        = bool
   description = "Toggle subnetworks flow logging for VPC Subnetworks."
   default     = false
-}
-
-variable "private_service_connect_ip" {
-  description = "The internal IP to be used for the private service connect. Required for hub mode"
-  type        = string
-  default = null
 }
 
 variable "network_internet_egress_tag" {

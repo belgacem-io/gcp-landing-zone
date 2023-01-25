@@ -13,29 +13,14 @@ output "subnets_names" {
   description = "The names of the subnets being created"
 }
 
-output "subnets_ips" {
+output "subnets_ids" {
   value       = module.main.subnets_ips
-  description = "The IPs and CIDRs of the subnets being created"
+  description = "The IDs of the subnets being created"
 }
 
 output "subnets_self_links" {
   value       = module.main.subnets_self_links
   description = "The self-links of subnets being created"
-}
-
-output "subnets_regions" {
-  value       = module.main.subnets_regions
-  description = "The region where the subnets will be created"
-}
-
-output "subnets_private_access" {
-  value       = module.main.subnets_private_access
-  description = "Whether the subnets have access to Google API's without a public IP"
-}
-
-output "subnets_flow_logs" {
-  value       = module.main.subnets_flow_logs
-  description = "Whether the subnets have VPC flow logs enabled"
 }
 
 output "subnets_secondary_ranges" {

@@ -66,3 +66,8 @@ RUN chmod +x /usr/local/bin/kubectl
 # Install Google cloud cli
 ################################
 RUN pip install gcloud --upgrade
+
+################################
+# Install dev dependencies
+################################
+RUN apt install -y jq

@@ -22,8 +22,8 @@ module "gke" {
   dns_zone_name                    = "exp-company-cloud"
   dns_zone                         = "exp.${var.gcp_organization_domain}"
   project_id                       = module.fetch.projects_by_name["exp-uc1-kube"].project_id
-  region                           = var.gcp_default_region1
-  region_azs                       = var.gcp_default_region1_azs
+  region                           = var.gcp_default_region
+  region_azs                       = var.gcp_default_region_azs
   network_name                     = module.fetch.nethubs_shared_vpc_by_env_code["exp"].name
   network_self_link                = module.fetch.nethubs_shared_vpc_by_env_code["exp"].self_link
   network_project_id               = module.fetch.nethubs_by_env_code["exp"].project_id

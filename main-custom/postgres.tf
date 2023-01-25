@@ -7,11 +7,11 @@ module "pg" {
   random_instance_name = true
   project_id           = module.fetch.projects_by_name["exp-uc1-kube"].project_id
   database_version     = "POSTGRES_11"
-  region               = var.gcp_default_region1
+  region               = var.gcp_default_region
 
   // Master configurations
   tier                            = "db-custom-2-13312"
-  zone                            = var.gcp_default_region1_azs[0]
+  zone                            = var.gcp_default_region_azs[0]
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12

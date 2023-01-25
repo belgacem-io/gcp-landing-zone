@@ -12,7 +12,7 @@ data "google_active_folder" "infra" {
 }
 
 data "google_projects" "org_nethub" {
-  filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.nethub_project_name} lifecycleState=ACTIVE"
+  filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.project_name} lifecycleState=ACTIVE"
 }
 
 

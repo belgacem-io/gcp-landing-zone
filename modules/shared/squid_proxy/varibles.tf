@@ -7,7 +7,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "default_region1" {
+variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"
 }

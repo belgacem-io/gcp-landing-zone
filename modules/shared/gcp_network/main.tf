@@ -7,34 +7,49 @@ locals {
     for subnet in var.public_subnets : {
       subnet_name           = subnet.subnet_name
       subnet_ip             = subnet.subnet_ip
-      subnet_region         = var.default_region1
+      subnet_region         = var.default_region
       subnet_private_access = false
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region1}"
+      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region}"
+      purpose               = "PRIVATE"
     }
   ]
   private_subnets = [
     for subnet in var.private_subnets : {
       subnet_name           = subnet.subnet_name
       subnet_ip             = subnet.subnet_ip
-      subnet_region         = var.default_region1
+      subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region1}"
+      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region}"
+      purpose               = "PRIVATE"
     }
   ]
   data_subnets = [
     for subnet in var.data_subnets : {
       subnet_name           = subnet.subnet_name
       subnet_ip             = subnet.subnet_ip
-      subnet_region         = var.default_region1
+      subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
-      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region1}"
+      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region}"
+      purpose               = "PRIVATE"
     }
   ]
 
-  subnets = concat(local.public_subnets,local.private_subnets,local.data_subnets)
+  private_svc_connect_subnets = [
+    for subnet in var.private_svc_connect_subnets : {
+      subnet_name           = subnet.subnet_name
+      subnet_ip             = subnet.subnet_ip
+      subnet_region         = var.default_region
+      subnet_private_access = true
+      subnet_flow_logs      = var.subnetworks_enable_logging
+      description           = "${ var.environment_code }/${subnet.project_name}/${var.default_region}"
+      purpose               = "PRIVATE_SERVICE_CONNECT"
+    }
+  ]
+
+  subnets = concat(local.public_subnets,local.private_subnets,local.data_subnets,local.private_svc_connect_subnets)
 }
 
 /******************************************
@@ -96,23 +111,4 @@ module "main" {
     ]
     : []
   )
-}
-
-/******************************************
-  Private Google APIs DNS Zone & records.
- *****************************************/
-module "private_service_connect" {
-  source                     = "terraform-google-modules/network/google//modules/private-service-connect"
-  version                                = "~> 5.2"
-
-  count   = var.mode == "hub" ? 1 : 0
-
-  project_id                 = var.project_id
-  network_self_link          = module.main.network_self_link
-  private_service_connect_ip = var.private_service_connect_ip
-  forwarding_rule_target     = "all-apis"
-
-  depends_on = [
-    module.main
-  ]
 }

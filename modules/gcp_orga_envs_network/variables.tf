@@ -26,7 +26,7 @@ variable "env_nethub_project_name" {
   description = "Subnet prefix for env nethub project"
 }
 
-variable "default_region1" {
+variable "default_region" {
   type        = string
   description = "First subnet region. The shared vpc modules only configures two regions."
 }

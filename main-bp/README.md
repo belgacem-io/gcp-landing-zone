@@ -17,8 +17,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_gcp_billing_account"></a> [gcp_billing_account](#input_gcp_billing_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
-| <a name="input_gcp_default_region1"></a> [gcp_default_region1](#input_gcp_default_region1) | Default region for resources. | `string` | n/a | yes |
-| <a name="input_gcp_default_region1_azs"></a> [gcp_default_region1_azs](#input_gcp_default_region1_azs) | Default availability zones for region 1. | `list(string)` | n/a | yes |
+| <a name="input_gcp_default_region"></a> [gcp_default_region](#input_gcp_default_region) | Default region for resources. | `string` | n/a | yes |
+| <a name="input_gcp_default_region_azs"></a> [gcp_default_region_azs](#input_gcp_default_region_azs) | Default availability zones for region 1. | `list(string)` | n/a | yes |
 | <a name="input_gcp_group_org_admins"></a> [gcp_group_org_admins](#input_gcp_group_org_admins) | Google Group for GCP Organization Administrators | `string` | n/a | yes |
 | <a name="input_gcp_group_org_billing_admins"></a> [gcp_group_org_billing_admins](#input_gcp_group_org_billing_admins) | Google Group for GCP Organization Billing Administrators | `string` | n/a | yes |
 | <a name="input_gcp_group_org_network_admins"></a> [gcp_group_org_network_admins](#input_gcp_group_org_network_admins) | Google Group for GCP Organization Network Administrators | `string` | n/a | yes |

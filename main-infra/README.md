@@ -11,7 +11,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_infra_hub_networks"></a> [infra_hub_networks](#module_infra_hub_networks) | ../modules/gcp_orga_infra_network | n/a |
-| <a name="module_infra_hub_networks_http_proxy"></a> [infra_hub_networks_http_proxy](#module_infra_hub_networks_http_proxy) | ../modules/shared/squid_proxy | n/a |
+| <a name="module_infra_nethub_bastions"></a> [infra_nethub_bastions](#module_infra_nethub_bastions) | ../modules/shared/gcp_bastion_host | n/a |
 | <a name="module_infra_projects"></a> [infra_projects](#module_infra_projects) | ../modules/gcp_orga_infra_projects | n/a |
 
 #### Inputs
@@ -19,8 +19,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_gcp_billing_account"></a> [gcp_billing_account](#input_gcp_billing_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
-| <a name="input_gcp_default_region1"></a> [gcp_default_region1](#input_gcp_default_region1) | Default region for resources. | `string` | n/a | yes |
-| <a name="input_gcp_default_region1_azs"></a> [gcp_default_region1_azs](#input_gcp_default_region1_azs) | Default availability zones for region 1. | `list(string)` | n/a | yes |
+| <a name="input_gcp_default_region"></a> [gcp_default_region](#input_gcp_default_region) | Default region for resources. | `string` | n/a | yes |
+| <a name="input_gcp_default_region_azs"></a> [gcp_default_region_azs](#input_gcp_default_region_azs) | Default availability zones for region 1. | `list(string)` | n/a | yes |
 | <a name="input_gcp_infra_projects"></a> [gcp_infra_projects](#input_gcp_infra_projects) | n/a | <pre>object({<br>    folder = string<br>    security       = object({<br>      name   = string<br>      budget = object({<br>        amount                    = number,<br>        time_unit                 = string,<br>        email_addresses_to_notify = list(string)<br>      })<br>    })<br>    observability  = object({<br>      name   = string<br>      budget = object({<br>        amount                    = number,<br>        time_unit                 = string,<br>        alert_pubsub_topic        = string<br>        email_addresses_to_notify = list(string)<br>      })<br>    })<br>    nethub = object({<br>      name    = string<br>      budget  = object({<br>        amount                    = number,<br>        time_unit                 = string,<br>        email_addresses_to_notify = list(string)<br>      })<br>      network = object({<br>        name        = string,<br>        cidr_blocks = object({<br>          public_subnet_ranges = list(string)<br>          private_subnet_ranges = list(string)<br>          data_subnet_ranges = list(string)<br>          private_svc_subnet_ranges = list(string)<br>          private_svc_connect_ip = string<br>        })<br>      })<br>    })<br>  })</pre> | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
 | <a name="input_gcp_organization_domain"></a> [gcp_organization_domain](#input_gcp_organization_domain) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |

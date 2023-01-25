@@ -1,22 +1,20 @@
 <!-- BEGIN_TF_DOCS -->
 #### Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.5 |
+No providers.
 
 #### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_env_nethub"></a> [env_nethub](#module_env_nethub) | ../shared/gcp_network_hub | n/a |
+| <a name="module_env_nethub"></a> [env_nethub](#module_env_nethub) | ../shared/gcp_network | n/a |
 
 #### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_business_project_subnets"></a> [business_project_subnets](#input_business_project_subnets) | Default subnets for Organization network hub. | <pre>list(object({<br>    project_name = string<br>    environment_code = string<br>    private_subnet_ranges  = list(string)<br>    data_subnet_ranges =  list(string)<br>    private_subnet_k8s_2nd_ranges = list(string)<br>  }))</pre> | n/a | yes |
-| <a name="input_default_region1"></a> [default_region1](#input_default_region1) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |
+| <a name="input_default_region"></a> [default_region](#input_default_region) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_env_nethub_data_subnet_ranges"></a> [env_nethub_data_subnet_ranges](#input_env_nethub_data_subnet_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_env_nethub_private_subnet_ranges"></a> [env_nethub_private_subnet_ranges](#input_env_nethub_private_subnet_ranges) | n/a | `list(string)` | n/a | yes |

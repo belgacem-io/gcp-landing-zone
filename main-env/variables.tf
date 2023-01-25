@@ -30,12 +30,12 @@ variable "gcp_terraform_sa_id" {
   type        = string
 }
 
-variable "gcp_default_region1" {
+variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
 }
 
-variable "gcp_default_region1_azs" {
+variable "gcp_default_region_azs" {
   description = "Default availability zones for region 1."
   type        = list(string)
 }

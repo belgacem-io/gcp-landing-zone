@@ -1,10 +1,10 @@
 variable "parent_id" {
-  type = string
+  type        = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
 variable "organization_id" {
-  type = string
+  type        = string
   description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
@@ -18,18 +18,17 @@ variable "billing_account" {
   type        = string
 }
 variable "infra_folder_name" {
-  type = string
-  default = "Infrastructure"
+  type        = string
+  default     = "Infrastructure"
   description = "Folder witch will contains all infra projects"
 }
 
-variable "nethub_project_name" {
-  type = string
+variable "project_name" {
+  type        = string
   description = "Project witch will contains all dns configs"
 }
 
-
-variable "default_region1" {
+variable "default_region" {
   type        = string
   description = "First subnet region for DNS Hub network."
 }
@@ -60,51 +59,51 @@ variable "bgp_asn_dns" {
 variable "enable_dns_proxy_advertising" {
   type        = bool
   description = "Enables routers to advertise DNS proxy range 35.199.192.0/19."
-  default = false
+  default     = false
 }
 
-variable "enable_orga_nethub_windows_activation" {
+variable "enable_windows_activation" {
   type        = bool
   description = "Enable Windows license activation for Windows workloads in Base Hub"
   default     = false
 }
 
-variable "enable_orga_nethub_dns_inbound_forwarding" {
+variable "enable_dns_inbound_forwarding" {
   type        = bool
   description = "Toggle inbound query forwarding for Base Hub VPC DNS."
   default     = true
 }
 
-variable "enable_orga_nethub_dns_logging" {
+variable "enable_dns_logging" {
   type        = bool
   description = "Toggle DNS logging for Base Hub VPC DNS."
   default     = true
 }
-variable "enable_orga_nethub_firewall_logging" {
+variable "enable_firewall_logging" {
   type        = bool
   description = "Toggle firewall logging for VPC Firewalls in Base Hub VPC."
   default     = true
 }
 
-variable "enable_orga_nethub_optional_fw_rules" {
+variable "enable_optional_fw_rules" {
   type        = bool
   description = "Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges in Hub VPC."
   default     = true
 }
 
-variable "enable_orga_nethub_nat" {
+variable "enable_nat" {
   type        = bool
   description = "Toggle creation of NAT cloud router in Hub."
   default     = true
 }
 
-variable "orga_nethub_nat_bgp_asn" {
+variable "nat_bgp_asn" {
   type        = number
   description = "BGP ASN for first NAT cloud routes in Base Hub."
   default     = 64514
 }
 
-variable "orga_nethub_nat_num_addresses_region1" {
+variable "nat_num_addresses_region1" {
   type        = number
   description = "Number of external IPs to reserve for first Cloud NAT in Base Hub."
   default     = 2
@@ -121,16 +120,27 @@ variable "gcp_labels" {
   description = "Map of tags"
 }
 
-variable "orga_nethub_subnets" {
-  description = "Default subnets for Organization network hub."
-  type        = object({
-    public_subnet_ranges = list(string)
-    private_subnet_ranges  = list(string)
-    data_subnet_ranges =  list(string)
-  })
+variable "public_subnet_ranges" {
+  type        = list(string)
+  description = "The list of public subnets ranges being created"
 }
 
-variable "org_nethub_private_svc_connect_ip" {
+variable "private_subnet_ranges" {
+  type        = list(string)
+  description = "The list of private subnets ranges being created"
+}
+
+variable "data_subnet_ranges" {
+  type        = list(string)
+  description = "The list of data subnets ranges being created"
+}
+
+variable "private_svc_connect_ranges" {
+  type        = list(string)
+  description = "The list of subnets to publish a managed service by using Private Service Connect."
+}
+
+variable "private_svc_connect_ip" {
   type        = string
   description = "The internal IP to be used for the private service connect."
 }

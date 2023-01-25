@@ -12,13 +12,18 @@ variable "environment_code" {
   type        = string
 }
 
-variable "default_region1" {
+variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"
 }
 
 
-variable "vpc_name" {
+variable "network_self_link" {
+  description = "The GCP VPC network link for the cluster to be built in."
+  type        = string
+}
+
+variable "network_name" {
   description = "The GCP VPC network name for the cluster to be built in."
   type        = string
 }
@@ -33,3 +38,13 @@ variable "internal_trusted_cidr_ranges" {
   default = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
 }
 
+variable "private_svc_connect_ip" {
+  description = "The internal IP to be used for the private service connect. Required for hub mode"
+  type        = string
+  default = null
+}
+
+variable "private_svc_connect_subnets_ids" {
+  type        = list(string)
+  description = "The list of subnets where service Private Service Connect will be published."
+}
