@@ -62,6 +62,9 @@
 |------|--------|---------|
 | <a name="module_dns-forwarding-zone"></a> [dns-forwarding-zone](#module_dns-forwarding-zone) | terraform-google-modules/cloud-dns/google | ~> 4.2 |
 | <a name="module_main"></a> [main](#module_main) | terraform-google-modules/network/google | ~> 5.2 |
+| <a name="module_peering"></a> [peering](#module_peering) | terraform-google-modules/network/google//modules/network-peering | ~> 5.2 |
+| <a name="module_private_service_connect"></a> [private_service_connect](#module_private_service_connect) | terraform-google-modules/network/google//modules/private-service-connect | ~> 5.2 |
+| <a name="module_transitivity_gateway"></a> [transitivity_gateway](#module_transitivity_gateway) | ../squid_proxy | n/a |
 
 #### Inputs
 
@@ -71,6 +74,7 @@
 | <a name="input_default_region"></a> [default_region](#input_default_region) | Default region 1 for subnets and Cloud Routers | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of peering managed zone, for instance 'example.com.' | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment_code](#input_environment_code) | A short form of the folder level resources (environment) within the Google Cloud organization. | `string` | n/a | yes |
+| <a name="input_network_name"></a> [network_name](#input_network_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org_id](#input_org_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | Project ID for Private Shared VPC. | `string` | n/a | yes |
 | <a name="input_allow_all_egress_ranges"></a> [allow_all_egress_ranges](#input_allow_all_egress_ranges) | List of network ranges to which all egress traffic will be allowed | `list(string)` | `null` | no |
@@ -82,6 +86,7 @@
 | <a name="input_dns_enable_outbound_forwarding"></a> [dns_enable_outbound_forwarding](#input_dns_enable_outbound_forwarding) | Toggle outbound query forwarding for VPC DNS. if true dns_outbound_server_addresses must be set | `bool` | `false` | no |
 | <a name="input_dns_outbound_server_addresses"></a> [dns_outbound_server_addresses](#input_dns_outbound_server_addresses) | List of IPv4 address of target name servers for the forwarding zone configuration. See https://cloud.google.com/dns/docs/overview#dns-forwarding-zones for details on target name servers in the context of Cloud DNS forwarding zones. | <pre>list(object({<br>    ipv4_address    = string,<br>    forwarding_path = string<br>  }))</pre> | `null` | no |
 | <a name="input_firewall_enable_logging"></a> [firewall_enable_logging](#input_firewall_enable_logging) | Toggle firewall logging for VPC Firewalls. | `bool` | `true` | no |
+| <a name="input_internal_trusted_cidr_ranges"></a> [internal_trusted_cidr_ranges](#input_internal_trusted_cidr_ranges) | Internal trusted ip ranges. Must be set to private ip ranges | `list(string)` | <pre>[<br>  "10.0.0.0/8",<br>  "172.16.0.0/12",<br>  "192.168.0.0/16"<br>]</pre> | no |
 | <a name="input_mode"></a> [mode](#input_mode) | Network deployment mode, should be set to `hub` or `spoke`. | `string` | `null` | no |
 | <a name="input_nat_bgp_asn"></a> [nat_bgp_asn](#input_nat_bgp_asn) | BGP ASN for first NAT cloud routes. | `number` | `0` | no |
 | <a name="input_nat_enabled"></a> [nat_enabled](#input_nat_enabled) | Toggle creation of NAT cloud router. | `bool` | `false` | no |
@@ -89,8 +94,11 @@
 | <a name="input_nat_num_addresses_region1"></a> [nat_num_addresses_region1](#input_nat_num_addresses_region1) | Number of external IPs to reserve for first Cloud NAT. | `number` | `2` | no |
 | <a name="input_network_internet_egress_tag"></a> [network_internet_egress_tag](#input_network_internet_egress_tag) | Network tags for VMs with internet access. | `string` | `"egress-internet"` | no |
 | <a name="input_optional_fw_rules_enabled"></a> [optional_fw_rules_enabled](#input_optional_fw_rules_enabled) | Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges. | `bool` | `false` | no |
+| <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project. Required en spoke mode | `string` | `null` | no |
+| <a name="input_org_nethub_vpc_self_link"></a> [org_nethub_vpc_self_link](#input_org_nethub_vpc_self_link) | Organization hub network VPC self link. Required en spoke mode | `string` | `null` | no |
 | <a name="input_private_service_cidr"></a> [private_service_cidr](#input_private_service_cidr) | CIDR range for private service networking. Used for Cloud SQL and other managed services. | `string` | `null` | no |
 | <a name="input_private_subnets"></a> [private_subnets](#input_private_subnets) | The list of private subnets being created | <pre>list(object({<br>    project_name = string<br>    subnet_name  = string<br>    subnet_ip    = string<br>  }))</pre> | `[]` | no |
+| <a name="input_private_svc_connect_ip"></a> [private_svc_connect_ip](#input_private_svc_connect_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | `null` | no |
 | <a name="input_private_svc_connect_subnets"></a> [private_svc_connect_subnets](#input_private_svc_connect_subnets) | The list of subnets to publish a managed service by using Private Service Connect. | <pre>list(object({<br>    project_name = string<br>    subnet_name  = string<br>    subnet_ip    = string<br>  }))</pre> | `[]` | no |
 | <a name="input_public_subnets"></a> [public_subnets](#input_public_subnets) | The list of public subnets being created | <pre>list(object({<br>    project_name = string<br>    subnet_name  = string<br>    subnet_ip    = string<br>  }))</pre> | `[]` | no |
 | <a name="input_secondary_ranges"></a> [secondary_ranges](#input_secondary_ranges) | Secondary ranges that will be used in some of the subnets | <pre>map(list(object({<br>    range_name = string,<br>    ip_cidr_range = string<br>  })))</pre> | `{}` | no |

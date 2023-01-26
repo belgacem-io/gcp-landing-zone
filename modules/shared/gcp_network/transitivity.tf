@@ -45,6 +45,38 @@ module "private_service_connect" {
   forwarding_rule_target       = "all-apis"
 }
 
+/******************************************
+  Routes to internet
+ *****************************************/
+
+resource "google_compute_route" "internet_routes" {
+  count   = var.mode == "hub" ? 1 : 0
+
+  project           = var.project_id
+  network           = var.network_name
+  name              = "rt-${var.network_name}-internet"
+  description       = "Transitivity route for internet"
+  tags              = [var.network_name]
+  dest_range        = "0.0.0.0/0"
+  next_hop_gateway  = "default-internet-gateway"
+}
+
+
+/******************************************
+  Mandatory firewall rules
+ *****************************************/
+
+resource "google_compute_route" "transitivity_routes" {
+  for_each = var.mode == "hub" && var.private_svc_connect_ip !=null ? toset(var.internal_trusted_cidr_ranges) : toset([])
+
+  project      = var.project_id
+  network      = var.network_name
+  name         = "rt-${var.network_name}-${replace(replace(each.value, "/", "-"), ".", "-")}"
+  description  = "Transitivity route for ${each.value}"
+  dest_range   = each.value
+  next_hop_ilb = module.transitivity_gateway.0.ilb_id
+}
+
 /*
  * Service connect
  */
