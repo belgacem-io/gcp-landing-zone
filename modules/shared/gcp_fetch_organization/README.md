@@ -13,7 +13,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The organization id | `string` | n/a | yes |
+| <a name="input_parent_container_id"></a> [parent_container_id](#input_parent_container_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 
 #### Outputs
 

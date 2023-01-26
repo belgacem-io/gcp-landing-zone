@@ -8,7 +8,6 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_env_nethub"></a> [env_nethub](#module_env_nethub) | ../shared/gcp_network | n/a |
-| <a name="module_env_nethub_transit_gw"></a> [env_nethub_transit_gw](#module_env_nethub_transit_gw) | ../shared/gcp_network_transitivity | n/a |
 
 #### Inputs
 
@@ -19,9 +18,10 @@ No providers.
 | <a name="input_default_region"></a> [default_region](#input_default_region) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment_code](#input_environment_code) | n/a | `string` | n/a | yes |
+| <a name="input_network_name"></a> [network_name](#input_network_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org_id](#input_org_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project id | `string` | n/a | yes |
-| <a name="input_org_nethub_vpc_name"></a> [org_nethub_vpc_name](#input_org_nethub_vpc_name) | Organization hub network VPC name | `string` | n/a | yes |
+| <a name="input_org_nethub_vpc_self_link"></a> [org_nethub_vpc_self_link](#input_org_nethub_vpc_self_link) | Organization hub network VPC self link | `string` | n/a | yes |
 | <a name="input_private_subnet_ranges"></a> [private_subnet_ranges](#input_private_subnet_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_private_svc_connect_ip"></a> [private_svc_connect_ip](#input_private_svc_connect_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | n/a | yes |
 | <a name="input_private_svc_connect_ranges"></a> [private_svc_connect_ranges](#input_private_svc_connect_ranges) | CIDR range for private service networking. Used for Cloud SQL and other managed services. | `list(string)` | n/a | yes |

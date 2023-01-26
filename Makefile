@@ -17,6 +17,9 @@ plan:
 apply:
 	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) apply'
 
+refresh:
+	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) refresh'
+
 destroy:
 	docker compose exec terraform bash -c '. /wks/.env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) destroy'
 

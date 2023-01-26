@@ -10,7 +10,6 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_dns-public-zone"></a> [dns-public-zone](#module_dns-public-zone) | terraform-google-modules/cloud-dns/google | ~> 4.2 |
-| <a name="module_infra_hub_networks_transit_gw"></a> [infra_hub_networks_transit_gw](#module_infra_hub_networks_transit_gw) | ../shared/gcp_network_transitivity | n/a |
 | <a name="module_nethub"></a> [nethub](#module_nethub) | ../shared/gcp_network | n/a |
 
 #### Inputs
@@ -22,6 +21,7 @@
 | <a name="input_default_region"></a> [default_region](#input_default_region) | First subnet region for DNS Hub network. | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input_domain) | The DNS name of forwarding managed zone, for instance 'example.com'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_gcp_labels"></a> [gcp_labels](#input_gcp_labels) | Map of tags | `map(string)` | n/a | yes |
+| <a name="input_network_name"></a> [network_name](#input_network_name) | The network name. | `string` | n/a | yes |
 | <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_parent_id"></a> [parent_id](#input_parent_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 | <a name="input_private_subnet_ranges"></a> [private_subnet_ranges](#input_private_subnet_ranges) | The list of private subnets ranges being created | `list(string)` | n/a | yes |
