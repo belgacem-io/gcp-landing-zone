@@ -48,3 +48,14 @@ variable "private_svc_connect_subnets_ids" {
   type        = list(string)
   description = "The list of subnets where service Private Service Connect will be published."
 }
+variable "org_nethub_project_id" {
+  type = string
+  default = null
+  description = "Organization hub network project if"
+}
+
+variable "org_nethub_vpc_name" {
+  type = string
+  default = null
+  description = "Organization hub network VPC name"
+}

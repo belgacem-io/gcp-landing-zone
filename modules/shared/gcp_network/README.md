@@ -62,7 +62,6 @@
 |------|--------|---------|
 | <a name="module_dns-forwarding-zone"></a> [dns-forwarding-zone](#module_dns-forwarding-zone) | terraform-google-modules/cloud-dns/google | ~> 4.2 |
 | <a name="module_main"></a> [main](#module_main) | terraform-google-modules/network/google | ~> 5.2 |
-| <a name="module_peering"></a> [peering](#module_peering) | terraform-google-modules/network/google//modules/network-peering | ~> 5.2 |
 
 #### Inputs
 
@@ -90,8 +89,6 @@
 | <a name="input_nat_num_addresses_region1"></a> [nat_num_addresses_region1](#input_nat_num_addresses_region1) | Number of external IPs to reserve for first Cloud NAT. | `number` | `2` | no |
 | <a name="input_network_internet_egress_tag"></a> [network_internet_egress_tag](#input_network_internet_egress_tag) | Network tags for VMs with internet access. | `string` | `"egress-internet"` | no |
 | <a name="input_optional_fw_rules_enabled"></a> [optional_fw_rules_enabled](#input_optional_fw_rules_enabled) | Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges. | `bool` | `false` | no |
-| <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project if | `string` | `null` | no |
-| <a name="input_org_nethub_vpc_name"></a> [org_nethub_vpc_name](#input_org_nethub_vpc_name) | Organization hub network VPC name | `string` | `null` | no |
 | <a name="input_private_service_cidr"></a> [private_service_cidr](#input_private_service_cidr) | CIDR range for private service networking. Used for Cloud SQL and other managed services. | `string` | `null` | no |
 | <a name="input_private_subnets"></a> [private_subnets](#input_private_subnets) | The list of private subnets being created | <pre>list(object({<br>    project_name = string<br>    subnet_name  = string<br>    subnet_ip    = string<br>  }))</pre> | `[]` | no |
 | <a name="input_private_svc_connect_subnets"></a> [private_svc_connect_subnets](#input_private_svc_connect_subnets) | The list of subnets to publish a managed service by using Private Service Connect. | <pre>list(object({<br>    project_name = string<br>    subnet_name  = string<br>    subnet_ip    = string<br>  }))</pre> | `[]` | no |

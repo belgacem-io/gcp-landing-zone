@@ -38,6 +38,7 @@ No output.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_peering"></a> [peering](#module_peering) | terraform-google-modules/network/google//modules/network-peering | ~> 5.2 |
 | <a name="module_private_service_connect"></a> [private_service_connect](#module_private_service_connect) | terraform-google-modules/network/google//modules/private-service-connect | ~> 5.2 |
 | <a name="module_transitivity_gateway"></a> [transitivity_gateway](#module_transitivity_gateway) | ../squid_proxy | n/a |
 
@@ -54,6 +55,8 @@ No output.
 | <a name="input_project_id"></a> [project_id](#input_project_id) | VPC Project ID | `string` | n/a | yes |
 | <a name="input_subnet_name"></a> [subnet_name](#input_subnet_name) | The subnet in the VPC for the proxy cluster to be deployed to. | `string` | n/a | yes |
 | <a name="input_internal_trusted_cidr_ranges"></a> [internal_trusted_cidr_ranges](#input_internal_trusted_cidr_ranges) | Internal trusted ip ranges. Must be set to private ip ranges | `list(string)` | <pre>[<br>  "10.0.0.0/8",<br>  "172.16.0.0/12",<br>  "192.168.0.0/16"<br>]</pre> | no |
+| <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project if | `string` | `null` | no |
+| <a name="input_org_nethub_vpc_name"></a> [org_nethub_vpc_name](#input_org_nethub_vpc_name) | Organization hub network VPC name | `string` | `null` | no |
 | <a name="input_private_svc_connect_ip"></a> [private_svc_connect_ip](#input_private_svc_connect_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | `null` | no |
 
 #### Outputs

@@ -100,3 +100,24 @@ module "env_nethub" {
   allow_all_egress_ranges       = ["0.0.0.0/0"]
   allow_all_ingress_ranges      = ["0.0.0.0/0"]
 }
+
+module "env_nethub_transit_gw" {
+  source = "../shared/gcp_network_transitivity"
+
+  environment_code                = "prod"
+  mode                            = "spoke"
+  project_id                      = var.project_id
+  default_region                  = var.default_region
+  internal_trusted_cidr_ranges    = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+  subnet_name                     = local.primary_env_nethub_private_subnets[0].subnet_name
+  network_self_link               = module.env_nethub.network_self_link
+  network_name                    = module.env_nethub.network_name
+  private_svc_connect_subnets_ids = []
+  private_svc_connect_ip          = var.private_svc_connect_ip
+  org_nethub_vpc_name             = var.org_nethub_vpc_name
+  org_nethub_project_id           = var.org_nethub_project_id
+
+  depends_on = [
+    module.env_nethub
+  ]
+}

@@ -154,17 +154,6 @@ variable "allow_all_ingress_ranges" {
   description = "List of network ranges from which all ingress traffic will be allowed"
   default     = null
 }
-variable "org_nethub_vpc_name" {
-  type = string
-  default = null
-  description = "Organization hub network VPC name"
-}
-
-variable "org_nethub_project_id" {
-  type = string
-  default = null
-  description = "Organization hub network project if"
-}
 
 variable "bgp_asn_dns" {
   type        = number
