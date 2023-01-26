@@ -8,6 +8,11 @@ variable "project_id" {
   description = "Project ID for Private Shared VPC."
 }
 
+variable "network_name" {
+  type        = string
+  description = "The network name."
+}
+
 variable "mode" {
   type        = string
   description = "Network deployment mode, should be set to `hub` or `spoke`."

@@ -1,7 +1,4 @@
 locals {
-  mode                    = var.mode == null ? "" : var.mode == "hub" ? "-hub" : "-spoke"
-  vpc_name                = "${var.environment_code}-shared${local.mode}"
-  network_name            = "vpc-${local.vpc_name}"
   private_googleapis_cidr = "199.36.153.8/30"
   public_subnets = [
     for subnet in var.public_subnets : {
@@ -62,7 +59,7 @@ module "main" {
   version                                = "~> 5.2"
 
   project_id                             = var.project_id
-  network_name                           = local.network_name
+  network_name                           = var.network_name
   shared_vpc_host                        = true
   delete_default_internet_gateway_routes = true
 
@@ -71,7 +68,7 @@ module "main" {
 
   routes = concat(
     var.nat_enabled ? [{
-      name              = "rt-${local.vpc_name}-1000-all-default-private-api"
+      name              = "rt-${var.network_name}-1000-all-default-private-api"
       description       = "Route through IGW to allow private google api access."
       destination_range = "199.36.153.8/30"
       next_hop_internet = "true"
@@ -80,7 +77,7 @@ module "main" {
     var.nat_enabled ?
     [
       {
-        name              = "rt-${local.vpc_name}-1000-egress-internet-default"
+        name              = "rt-${var.network_name}-1000-egress-internet-default"
         description       = "Tag based route through IGW to access internet"
         destination_range = "0.0.0.0/0"
         tags              = var.network_internet_egress_tag
@@ -91,7 +88,7 @@ module "main" {
     : [],
     var.nat_enabled && var.windows_activation_enabled ?
     [{
-      name              = "rt-${local.vpc_name}-1000-all-default-windows-kms"
+      name              = "rt-${var.network_name}-1000-all-default-windows-kms"
       description       = "Route through IGW to allow Windows KMS activation for GCP."
       destination_range = "35.190.247.13/32"
       next_hop_internet = "true"

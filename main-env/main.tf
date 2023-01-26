@@ -79,6 +79,7 @@ module "env_nethub_networks" {
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
   project_id                            = module.env_nethub_projects[each.key].project_id
+  network_name                          = each.value.network.prefix
   private_subnet_ranges                 = each.value.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges                    = each.value.network.cidr_blocks.data_subnet_ranges
   private_svc_connect_ranges            = each.value.network.cidr_blocks.private_svc_subnet_ranges

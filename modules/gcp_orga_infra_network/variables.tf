@@ -144,3 +144,8 @@ variable "private_svc_connect_ip" {
   type        = string
   description = "The internal IP to be used for the private service connect."
 }
+
+variable "network_name" {
+  type        = string
+  description = "The network name."
+}

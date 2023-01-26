@@ -64,3 +64,8 @@ variable "business_project_subnets" {
     private_subnet_k8s_2nd_ranges = list(string)
   }))
 }
+
+variable "network_name" {
+  type        = string
+  description = "The network name."
+}

@@ -54,6 +54,7 @@ module "nethub" {
   nat_enabled                   = var.enable_nat
   nat_bgp_asn                   = var.nat_bgp_asn
   nat_num_addresses_region1     = var.nat_num_addresses_region1
+  network_name                  = var.network_name
   mode                          = "hub"
 
   public_subnets                = local.org_public_subnets

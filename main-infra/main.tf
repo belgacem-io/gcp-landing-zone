@@ -47,6 +47,7 @@ module "infra_hub_networks" {
   data_subnet_ranges         = var.gcp_infra_projects.nethub.network.cidr_blocks.data_subnet_ranges
   private_svc_connect_ranges = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_subnet_ranges
   private_svc_connect_ip     = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_connect_ip
+  network_name               = var.gcp_infra_projects.nethub.network.name
 
   gcp_labels = var.gcp_labels
 

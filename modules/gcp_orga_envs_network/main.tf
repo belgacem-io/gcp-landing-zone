@@ -85,6 +85,7 @@ module "env_nethub" {
   firewall_enable_logging       = false
   optional_fw_rules_enabled     = false
   nat_enabled                   = false
+  network_name                  = var.network_name
 
   mode                          = "spoke"
 
