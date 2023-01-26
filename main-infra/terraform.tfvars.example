@@ -1,5 +1,5 @@
 gcp_organization_id     = "12345678910"
-gcp_parent_resource_id  = "folders/242505545"
+gcp_parent_container_id  = "folders/242505545"
 gcp_organization_domain   = "company.cloud"
 gcp_billing_account     = "012345-AB01CD02-EF03GH04"
 gcp_default_region     = "europe-west4"

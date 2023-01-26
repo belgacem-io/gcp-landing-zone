@@ -87,6 +87,12 @@ variable "private_svc_connect_subnets" {
   default     = []
 }
 
+variable "private_svc_connect_ip" {
+  description = "The internal IP to be used for the private service connect. Required for hub mode"
+  type        = string
+  default = null
+}
+
 variable "secondary_ranges" {
   type        = map(list(object({
     range_name = string,
@@ -185,4 +191,22 @@ variable "network_internet_egress_tag" {
   type = string
   description = "Network tags for VMs with internet access."
   default = "egress-internet"
+}
+
+variable "internal_trusted_cidr_ranges" {
+  description = "Internal trusted ip ranges. Must be set to private ip ranges"
+  type = list(string)
+  default = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+}
+
+variable "org_nethub_project_id" {
+  type = string
+  default = null
+  description = "Organization hub network project. Required en spoke mode"
+}
+
+variable "org_nethub_vpc_self_link" {
+  type = string
+  default = null
+  description = "Organization hub network VPC self link. Required en spoke mode"
 }

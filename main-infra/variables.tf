@@ -3,7 +3,7 @@ variable "gcp_organization_id" {
   type        = string
 }
 
-variable "gcp_parent_resource_id" {
+variable "gcp_parent_container_id" {
   type = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }

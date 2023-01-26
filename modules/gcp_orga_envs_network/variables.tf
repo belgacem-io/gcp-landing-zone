@@ -2,9 +2,9 @@ variable "environment_code" {
   type = string
 }
 
-variable "org_nethub_vpc_name" {
+variable "org_nethub_vpc_self_link" {
   type = string
-  description = "Organization hub network VPC name"
+  description = "Organization hub network VPC self link"
 }
 
 variable "org_nethub_project_id" {

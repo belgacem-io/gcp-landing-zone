@@ -5,7 +5,7 @@
 module "fetch" {
   source = "../modules/shared/gcp_fetch_organization"
 
-  organization_id = var.gcp_organization_id
+  parent_container_id = var.gcp_parent_container_id
 }
 
 /******************************************
@@ -16,19 +16,19 @@ module "business_project" {
 
   for_each = local.business_projects_map
 
-  source                                   = "../modules/gcp_orga_business_project"
-  billing_account                          = var.gcp_billing_account
-  environment_code                         = each.value.environment_code
-  org_id                                   = var.gcp_organization_id
-  project_name                             = "${each.value.environment_code}-${each.value.name}"
-  terraform_service_account                = var.gcp_terraform_sa_email
+  source                              = "../modules/gcp_orga_business_project"
+  billing_account                     = var.gcp_billing_account
+  environment_code                    = each.value.environment_code
+  org_id                              = var.gcp_organization_id
+  project_name                        = "${each.value.environment_code}-${each.value.name}"
+  parent_folder_id                    = module.fetch.folders_by_env_code[each.value.environment_code][each.value.department].name
+  terraform_service_account           = var.gcp_terraform_sa_email
   env_nethub_project_id               = module.fetch.nethubs_by_env_code[each.value.environment_code].project_id
   env_nethub_vpc_subnetwork_self_link = [
-  for self_link in module.fetch.nethubs_shared_vpc_by_env_code[each.value.environment_code].subnetworks_self_links :
-  self_link if length(regexall("${each.value.environment_code}-${each.value.name}-.*", self_link)) > 0
+    for self_link in module.fetch.nethubs_shared_vpc_by_env_code[each.value.environment_code].subnetworks_self_links :
+    self_link if length(regexall("${each.value.environment_code}-${each.value.name}-.*", self_link)) > 0
   ]
-  parent_folder_id                         = module.fetch.folders_by_env_code[each.value.environment_code][each.value.department].name
-  activate_apis                            = [
+  activate_apis = [
     "iam.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",

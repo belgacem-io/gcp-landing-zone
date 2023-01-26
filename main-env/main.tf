@@ -17,7 +17,7 @@ data "google_compute_network" "org_nethub" {
 
 data "google_active_folder" "infra" {
   display_name = var.gcp_infra_projects.folder
-  parent       = var.gcp_parent_resource_id
+  parent       = var.gcp_parent_container_id
 }
 
 locals {
@@ -85,7 +85,7 @@ module "env_nethub_networks" {
   project_name                          = each.value.name
   private_svc_connect_ip                = each.value.network.cidr_blocks.private_svc_connect_ip
   org_nethub_project_id                 = data.google_projects.org_nethub.projects[0].project_id
-  org_nethub_vpc_name                   = data.google_compute_network.org_nethub.name
+  org_nethub_vpc_self_link              = data.google_compute_network.org_nethub.self_link
   business_project_subnets              = [
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
@@ -112,6 +112,6 @@ module "env_nethub_bastions" {
   subnet_self_link   = module.env_nethub_networks[each.key].subnetwork_self_links[0]
 
   depends_on = [
-    module.env_nethub_projects
+    module.env_nethub_networks
   ]
 }

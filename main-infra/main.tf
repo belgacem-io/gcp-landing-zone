@@ -7,7 +7,7 @@ module "infra_projects" {
 
   terraform_sa_email          = var.gcp_terraform_sa_email
   billing_account             = var.gcp_billing_account
-  parent_id                   = var.gcp_parent_resource_id
+  parent_id                   = var.gcp_parent_container_id
   infra_folder_name           = var.gcp_infra_projects.folder
   organization_id             = var.gcp_organization_id
   infra_security_project      = var.gcp_infra_projects.security
@@ -37,7 +37,7 @@ module "infra_hub_networks" {
 
   domain                     = var.gcp_organization_domain
   organization_id            = var.gcp_organization_id
-  parent_id                  = var.gcp_parent_resource_id
+  parent_id                  = var.gcp_parent_container_id
   terraform_sa_email         = var.gcp_terraform_sa_email
   billing_account            = var.gcp_billing_account
   project_name               = var.gcp_infra_projects.nethub.name

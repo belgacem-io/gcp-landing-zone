@@ -74,7 +74,9 @@ module "env_nethub" {
   project_id                    = var.project_id
   environment_code              = var.environment_code
   org_id                        = var.org_id
-  default_region               = var.default_region
+  default_region                = var.default_region
+  org_nethub_vpc_self_link      = var.org_nethub_vpc_self_link
+  org_nethub_project_id         = var.org_nethub_project_id
   domain                        = "${var.domain}."
   bgp_asn_subnet                = "64514"
   windows_activation_enabled    = false
@@ -84,13 +86,12 @@ module "env_nethub" {
   optional_fw_rules_enabled     = false
   nat_enabled                   = false
 
-  mode                          = "hub"
+  mode                          = "spoke"
 
   public_subnets                = []
   private_subnets               = concat(local.primary_env_nethub_private_subnets,local.primary_business_project_private_subnets)
   data_subnets                  = concat(local.primary_env_nethub_data_subnets,local.primary_business_project_data_subnets)
   private_svc_connect_subnets   = local.primary_env_nethub_private_svc_connect_subnets
-
   secondary_ranges = {
     for subnet_name in distinct(local.secondary_business_project_subnets.*.subnet_name) :
           subnet_name => [ for s_range in local.secondary_business_project_subnets : s_range if s_range.subnet_name == subnet_name ]
@@ -99,25 +100,4 @@ module "env_nethub" {
   # FIXME Security issue
   allow_all_egress_ranges       = ["0.0.0.0/0"]
   allow_all_ingress_ranges      = ["0.0.0.0/0"]
-}
-
-module "env_nethub_transit_gw" {
-  source = "../shared/gcp_network_transitivity"
-
-  environment_code                = "prod"
-  mode                            = "spoke"
-  project_id                      = var.project_id
-  default_region                  = var.default_region
-  internal_trusted_cidr_ranges    = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
-  subnet_name                     = local.primary_env_nethub_private_subnets[0].subnet_name
-  network_self_link               = module.env_nethub.network_self_link
-  network_name                    = module.env_nethub.network_name
-  private_svc_connect_subnets_ids = []
-  private_svc_connect_ip          = var.private_svc_connect_ip
-  org_nethub_vpc_name             = var.org_nethub_vpc_name
-  org_nethub_project_id           = var.org_nethub_project_id
-
-  depends_on = [
-    module.env_nethub
-  ]
 }

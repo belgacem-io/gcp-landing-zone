@@ -17,7 +17,7 @@ data "google_project" "projects" {
 *****************************************/
 
 data "google_folders" "level1" {
-  parent_id = "organizations/${var.organization_id}"
+  parent_id = var.parent_container_id
 }
 
 data "google_folders" "level2" {
@@ -71,7 +71,7 @@ locals {
 data "google_compute_network" "nethub_vpc" {
   for_each = local.nethubs_by_env_code
 
-  name    = "vpc-${each.key}-shared-spoke"
+  name    = "vpc-${each.key}-shared-hub"
   project = each.value.project_id
 
   depends_on = [

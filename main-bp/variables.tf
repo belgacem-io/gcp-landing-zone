@@ -3,6 +3,11 @@ variable "gcp_organization_id" {
   type        = string
 }
 
+variable "gcp_parent_container_id" {
+  type = string
+  description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
+}
+
 variable "gcp_organization_domain" {
   type        = string
   description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
@@ -25,55 +30,6 @@ variable "gcp_terraform_sa_id" {
   type        = string
 }
 
-variable "gcp_group_org_admins" {
-  description = "Google Group for GCP Organization Administrators"
-  type        = string
-}
-variable "gcp_group_org_viewers" {
-  description = "Google Group for GCP Organization read only users"
-  type        = string
-}
-variable "gcp_group_org_security_admins" {
-  description = "Google Group for GCP Organization Security Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_security_reviewers" {
-  description = "Google Group for GCP Organization Security reviewer"
-  type        = string
-}
-
-variable "gcp_group_org_billing_admins" {
-  description = "Google Group for GCP Organization Billing Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_network_admins" {
-  description = "Google Group for GCP Organization Network Administrators"
-  type        = string
-}
-
-variable "gcp_group_org_network_viewers" {
-  description = "Google Group for GCP Organization Network Read only users"
-  type        = string
-}
-
-variable "gcp_terraform_sa_org_iam_permissions" {
-  description = "List of permissions granted to Terraform service account across the GCP organization."
-  type        = list(string)
-  default     = [
-    "roles/billing.user",
-    "roles/compute.networkAdmin",
-    "roles/compute.xpnAdmin",
-    "roles/iam.securityAdmin",
-    "roles/iam.serviceAccountAdmin",
-    "roles/logging.configWriter",
-    "roles/orgpolicy.policyAdmin",
-    "roles/resourcemanager.folderAdmin",
-    "roles/resourcemanager.organizationViewer",
-  ]
-}
-
 variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
@@ -87,11 +43,14 @@ variable "gcp_default_region_azs" {
 variable "gcp_organization_environments" {
   type        = map(object({
     environment_code = string,
+    name             = string
     network          = object({
       prefix      = string,
       cidr_blocks = object({
-        private_subnet_ranges = list(string)
-        data_subnet_ranges = list(string)
+        private_subnet_ranges  = list(string)
+        data_subnet_ranges     = list(string)
+        private_svc_subnet_ranges = list(string)
+        private_svc_connect_ip = string
       })
     })
     children         = list(object({
@@ -118,6 +77,7 @@ variable "gcp_business_projects" {
     network          = object({
       cidr_blocks = object({
         private_subnet_ranges = list(string)
+        private_subnet_k8s_2nd_ranges = list(string)
         data_subnet_ranges = list(string)
       })
     })
@@ -133,9 +93,9 @@ variable "gcp_labels" {
 
 variable "gcp_infra_projects" {
   type = object({
+    folder = string
     security       = object({
       name   = string
-      folder = string
       budget = object({
         amount                    = number,
         time_unit                 = string,
@@ -144,7 +104,6 @@ variable "gcp_infra_projects" {
     })
     observability  = object({
       name   = string
-      folder = string
       budget = object({
         amount                    = number,
         time_unit                 = string,
@@ -154,7 +113,6 @@ variable "gcp_infra_projects" {
     })
     nethub = object({
       name    = string
-      folder  = string
       budget  = object({
         amount                    = number,
         time_unit                 = string,
@@ -163,16 +121,19 @@ variable "gcp_infra_projects" {
       network = object({
         name        = string,
         cidr_blocks = object({
+          public_subnet_ranges = list(string)
           private_subnet_ranges = list(string)
           data_subnet_ranges = list(string)
+          private_svc_subnet_ranges = list(string)
+          private_svc_connect_ip = string
         })
       })
     })
   })
 }
 
-variable "gcp_infra_folder_name" {
-  default     = "Infrastructure"
-  type        = string
-  description = "Folder witch will contains all infra projects"
+variable "gcp_alert_spent_percents" {
+  description = "A list of percentages of the budget to alert on when threshold is exceeded"
+  type        = list(number)
+  default     = [0.5, 0.75, 0.9, 0.95]
 }

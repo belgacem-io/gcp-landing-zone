@@ -3,17 +3,17 @@
  ***********************************************/
 
 resource "google_organization_iam_member" "tf_sa_org_perms" {
-  for_each = startswith(var.gcp_parent_resource_id, "organizations") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
+  for_each = startswith(var.gcp_parent_container_id, "organizations") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
 
-  org_id = split("/",var.gcp_parent_resource_id)[1]
+  org_id = split("/",var.gcp_parent_container_id)[1]
   role   = each.value
   member = "serviceAccount:${var.gcp_terraform_sa_email}"
 }
 
 resource "google_folder_iam_member" "tf_sa_org_perms" {
-  for_each = startswith(var.gcp_parent_resource_id, "folders") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
+  for_each = startswith(var.gcp_parent_container_id, "folders") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
 
-  folder = split("/",var.gcp_parent_resource_id)[1]
+  folder = split("/",var.gcp_parent_container_id)[1]
   role   = each.value
   member = "serviceAccount:${var.gcp_terraform_sa_email}"
 }
@@ -32,18 +32,18 @@ resource "google_service_account_iam_member" "org_admin_sa_impersonate_permissio
 }
 
 resource "google_organization_iam_member" "org_admin_serviceusage_consumer" {
-  count  = startswith(var.gcp_parent_resource_id, "organizations") && var.gcp_group_org_admins !=null ? 1 : 0
+  count  = startswith(var.gcp_parent_container_id, "organizations") && var.gcp_group_org_admins !=null ? 1 : 0
 
-  org_id = split("/",var.gcp_parent_resource_id)[1]
+  org_id = split("/",var.gcp_parent_container_id)[1]
   role   = "roles/serviceusage.serviceUsageConsumer"
   member = "group:${var.gcp_group_org_admins}"
 }
 
 resource "google_folder_iam_member" "org_admin_serviceusage_consumer" {
 
-  count  = startswith(var.gcp_parent_resource_id, "folders") && var.gcp_group_org_admins !=null ? 1 : 0
+  count  = startswith(var.gcp_parent_container_id, "folders") && var.gcp_group_org_admins !=null ? 1 : 0
 
-  folder = split("/",var.gcp_parent_resource_id)[1]
+  folder = split("/",var.gcp_parent_container_id)[1]
   role   = "roles/serviceusage.serviceUsageConsumer"
   member = "group:${var.gcp_group_org_admins}"
 }

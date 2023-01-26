@@ -60,42 +60,11 @@ module "nethub" {
   private_subnets               = local.org_private_subnets
   data_subnets                  = local.org_data_subnets
   private_svc_connect_subnets   = local.org_private_svc_connect_subnets
+  private_svc_connect_ip        = var.private_svc_connect_ip
 
   secondary_ranges = {}
 
   # FIXME Security issue
   allow_all_egress_ranges       = ["0.0.0.0/0"]
   allow_all_ingress_ranges      = ["0.0.0.0/0"]
-}
-
-data "google_compute_subnetwork" "private_svc_connect_subnet" {
-  for_each = toset(local.org_private_svc_connect_subnets.*.subnet_name)
-
-  name   = each.value
-  project   = local.org_nethub_project_id
-  region    = var.default_region
-
-  depends_on = [
-    module.nethub
-  ]
-}
-
-module "infra_hub_networks_transit_gw" {
-  source = "../shared/gcp_network_transitivity"
-
-  environment_code                = "prod"
-  mode                            = "hub"
-  project_id                      = local.org_nethub_project_id
-  default_region                  = var.default_region
-  internal_trusted_cidr_ranges    = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
-  subnet_name                     = local.org_private_subnets[0].subnet_name
-  network_self_link               = module.nethub.network_self_link
-  network_name                    = module.nethub.network_name
-  private_svc_connect_subnets_ids = [for subnet in data.google_compute_subnetwork.private_svc_connect_subnet : subnet.id]
-  private_svc_connect_ip          = var.private_svc_connect_ip
-
-  depends_on = [
-    module.nethub,
-    data.google_compute_subnetwork.private_svc_connect_subnet
-  ]
 }

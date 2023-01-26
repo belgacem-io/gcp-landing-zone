@@ -4,6 +4,7 @@
 
 resource "google_compute_router" "nat_router_region1" {
   count   = var.nat_enabled ? 1 : 0
+
   name    = "cr-${local.vpc_name}-${var.default_region}-nat-router"
   project = var.project_id
   region  = var.default_region
@@ -16,6 +17,7 @@ resource "google_compute_router" "nat_router_region1" {
 
 resource "google_compute_address" "nat_external_addresses_region1" {
   count   = var.nat_enabled ? var.nat_num_addresses_region1 : 0
+
   project = var.project_id
   name    = "ca-${local.vpc_name}-${var.default_region}-${count.index}"
   region  = var.default_region
@@ -23,6 +25,7 @@ resource "google_compute_address" "nat_external_addresses_region1" {
 
 resource "google_compute_router_nat" "egress_nat_region1" {
   count                              = var.nat_enabled ? 1 : 0
+
   name                               = "rn-${local.vpc_name}-${var.default_region}-egress"
   project                            = var.project_id
   router                             = google_compute_router.nat_router_region1.0.name
