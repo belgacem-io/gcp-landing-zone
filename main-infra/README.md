@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.50.0 |
+| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.52.0 |
 
 #### Modules
 
@@ -36,7 +36,6 @@
 | <a name="input_gcp_group_org_security_reviewers"></a> [gcp_group_org_security_reviewers](#input_gcp_group_org_security_reviewers) | Google Group for GCP Organization Security reviewer | `string` | `null` | no |
 | <a name="input_gcp_group_org_viewers"></a> [gcp_group_org_viewers](#input_gcp_group_org_viewers) | Google Group for GCP Organization read only users | `string` | `null` | no |
 | <a name="input_gcp_organization_environments"></a> [gcp_organization_environments](#input_gcp_organization_environments) | The tree of organizational folders to construct. Defaults to an empty tree. | <pre>map(object({<br>    environment_code = string,<br>    name             = string<br>    network          = object({<br>      prefix      = string,<br>      cidr_blocks = object({<br>        private_subnet_ranges = list(string)<br>        data_subnet_ranges = list(string)<br>        private_svc_subnet_ranges = list(string)<br>        private_svc_connect_ip = string<br>      })<br>    })<br>    children         = list(object({<br>      name     = string,<br>      children = list(object({<br>        name = string<br>      }))<br>    }))<br>  }))</pre> | `{}` | no |
-| <a name="input_gcp_terraform_sa_org_iam_permissions"></a> [gcp_terraform_sa_org_iam_permissions](#input_gcp_terraform_sa_org_iam_permissions) | List of permissions granted to Terraform service account across the GCP organization. | `list(string)` | <pre>[<br>  "roles/billing.user",<br>  "roles/compute.networkAdmin",<br>  "roles/compute.xpnAdmin",<br>  "roles/iam.securityAdmin",<br>  "roles/iam.serviceAccountAdmin",<br>  "roles/logging.configWriter",<br>  "roles/orgpolicy.policyAdmin",<br>  "roles/resourcemanager.folderAdmin",<br>  "roles/securitycenter.admin",<br>  "roles/iam.securityAdmin",<br>  "roles/monitoring.admin"<br>]</pre> | no |
 
 #### Outputs
 

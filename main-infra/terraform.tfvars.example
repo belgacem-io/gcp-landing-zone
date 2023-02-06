@@ -1,6 +1,7 @@
-gcp_organization_id     = "12345678910"
-gcp_organization_domain   = "company.cloud"
-gcp_billing_account     = "012345-AB01CD02-EF03GH04"
+gcp_organization_id     = "974329834803"
+gcp_parent_container_id  = "folders/203063131241"
+gcp_organization_domain   = "belgacem.io"
+gcp_billing_account     = "01128E-760A55-55799B"
 gcp_default_region     = "europe-west4"
 gcp_default_region_azs = [
   "europe-west4-a",
@@ -9,20 +10,29 @@ gcp_default_region_azs = [
 ]
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-340608.iam.gserviceaccount.com"
-
+gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
+gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
+gcp_bootstrap_project_id         = "infra-automation-375008"
+gcp_group_org_admins             = "gcp-organization-admins@belgacem.io"
+gcp_group_org_security_admins    = "gcp-security-admins@belgacem.io"
+gcp_group_org_security_reviewers = "gcp-security-reviewers@belgacem.io"
+gcp_group_org_billing_admins     = "gcp-billing-admins@belgacem.io"
+gcp_group_org_viewers            = "gcp-organization-viewers@belgacem.io"
+gcp_group_org_network_admins     = "gcp-network-admins@belgacem.io"
+gcp_group_org_network_viewers    = "gcp-network-viewers@belgacem.io"
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
   experiment  = {
     environment_code = "exp"
+    name             = "network-hub"
     network          = {
-      prefix      = "vpc-exp-network-hub",
+      prefix      = "vpc-exp-shared-hub",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.0.0/24"]
         data_subnet_ranges = ["172.18.1.0/24"]
-        private_service_range  = "172.19.0.0/24"
+        private_svc_subnet_ranges = ["172.18.2.0/24"]
+        private_svc_connect_ip = "172.18.3.5"
       }
     }
     children         = [
@@ -38,12 +48,14 @@ gcp_organization_environments    = {
   },
   development = {
     environment_code = "dev"
+    name             = "network-hub"
     network          = {
-      prefix      = "vpc-dev-network-hub",
+      prefix      = "vpc-dev-shared-hub",
       cidr_blocks = {
-        private_subnet_ranges = ["172.18.2.0/24"]
-        data_subnet_ranges = ["172.18.3.0/24"]
-        private_service_range  = "172.19.1.0/24"
+        private_subnet_ranges = ["172.18.4.0/24"]
+        data_subnet_ranges = ["172.18.5.0/24"]
+        private_svc_subnet_ranges = ["172.18.6.0/24"]
+        private_svc_connect_ip = "172.18.7.5"
       }
     }
     children         = [
@@ -72,6 +84,7 @@ gcp_business_projects            = [
     network          = {
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.0/27"]
+        private_subnet_k8s_2nd_ranges = []
         data_subnet_ranges = ["10.1.0.0/27"]
       }
     }
@@ -88,6 +101,7 @@ gcp_business_projects            = [
     network          = {
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.32/27"]
+        private_subnet_k8s_2nd_ranges = []
         data_subnet_ranges = ["10.1.0.32/27"]
       }
     }
@@ -103,8 +117,9 @@ gcp_business_projects            = [
     }
     network          = {
       cidr_blocks = {
-        private_subnet_ranges = ["10.0.0.64/27"]
-        data_subnet_ranges = ["10.1.0.64/27"]
+        private_subnet_ranges         = ["10.0.0.64/27"]
+        private_subnet_k8s_2nd_ranges = []
+        data_subnet_ranges            = ["10.1.0.64/27"]
       }
     }
   }
@@ -115,9 +130,9 @@ gcp_labels = {
 }
 
 gcp_infra_projects = {
+  folder = "Infrastructure"
   security = {
     name   = "orga-security-audit"
-    folder = "Infrastructure"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -127,7 +142,6 @@ gcp_infra_projects = {
 
   observability = {
     name   = "orga-monitoring-logging"
-    folder = "Infrastructure"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -138,17 +152,19 @@ gcp_infra_projects = {
 
   nethub = {
     name    = "orga-network-hub"
-    folder  = "Infrastructure"
     budget  = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
       email_addresses_to_notify = []
     }
     network = {
-      name        = "vpc-org-shared-hub",
+      name        = "vpc-prod-shared-hub",
       cidr_blocks = {
-        private_subnet_ranges = ["172.16.0.0/16"]
-        data_subnet_ranges = ["172.17.0.0/16"]
+        public_subnet_ranges = ["172.16.0.0/24"]
+        private_subnet_ranges = ["172.16.1.0/24"]
+        data_subnet_ranges = ["172.16.2.0/24"]
+        private_svc_subnet_ranges = ["172.16.3.0/24"]
+        private_svc_connect_ip = "172.16.4.5"
       }
     }
   }

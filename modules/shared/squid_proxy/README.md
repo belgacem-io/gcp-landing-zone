@@ -23,6 +23,7 @@
 | <a name="input_internal_trusted_cidr_ranges"></a> [internal_trusted_cidr_ranges](#input_internal_trusted_cidr_ranges) | Your internal CIDR range requiring access to this proxy. | `list(string)` | n/a | yes |
 | <a name="input_name"></a> [name](#input_name) | Root name that all cloud objects will be named with. | `string` | n/a | yes |
 | <a name="input_network_internet_egress_tag"></a> [network_internet_egress_tag](#input_network_internet_egress_tag) | Network tags for VMs with internet access. | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The project id of your GCP project | `string` | n/a | yes |
 | <a name="input_subnet_name"></a> [subnet_name](#input_subnet_name) | The subnet in the VPC for the proxy cluster to be deployed to. | `string` | n/a | yes |
 | <a name="input_vpc_name"></a> [vpc_name](#input_vpc_name) | The GCP VPC network name for the cluster to be built in. | `string` | n/a | yes |

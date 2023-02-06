@@ -76,6 +76,7 @@
 | <a name="input_environment_code"></a> [environment_code](#input_environment_code) | A short form of the folder level resources (environment) within the Google Cloud organization. | `string` | n/a | yes |
 | <a name="input_network_name"></a> [network_name](#input_network_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org_id](#input_org_id) | Organization ID | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | Project ID for Private Shared VPC. | `string` | n/a | yes |
 | <a name="input_allow_all_egress_ranges"></a> [allow_all_egress_ranges](#input_allow_all_egress_ranges) | List of network ranges to which all egress traffic will be allowed | `list(string)` | `null` | no |
 | <a name="input_allow_all_ingress_ranges"></a> [allow_all_ingress_ranges](#input_allow_all_ingress_ranges) | List of network ranges from which all ingress traffic will be allowed | `list(string)` | `null` | no |

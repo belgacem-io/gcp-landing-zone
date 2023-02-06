@@ -73,6 +73,7 @@ module "env_nethub" {
   source                        = "../shared/gcp_network"
   project_id                    = var.project_id
   environment_code              = var.environment_code
+  prefix                        = var.prefix
   org_id                        = var.org_id
   default_region                = var.default_region
   org_nethub_vpc_self_link      = var.org_nethub_vpc_self_link

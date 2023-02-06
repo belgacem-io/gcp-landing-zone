@@ -7,6 +7,11 @@ variable "parent_folder_id" {
   type = string
 }
 
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
+
 variable "default_region" {
   description = "Default region to create resources where applicable."
   type        = string

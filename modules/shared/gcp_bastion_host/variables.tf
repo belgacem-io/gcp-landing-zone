@@ -2,6 +2,10 @@ variable "environment_code" {
   type        = string
   description = "A short form of the folder level resources (environment) within the Google Cloud organization."
 }
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
 
 variable "authorized_members" {
   description = "List of members in the standard GCP form: user:{email}, serviceAccount:{email}, group:{email}"

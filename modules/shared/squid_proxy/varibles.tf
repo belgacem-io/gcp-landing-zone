@@ -7,6 +7,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
+
 variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"

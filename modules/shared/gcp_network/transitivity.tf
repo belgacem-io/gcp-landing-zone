@@ -22,6 +22,7 @@ module "transitivity_gateway" {
   environment_code             = var.environment_code
   project_id                   = var.project_id
   default_region               = var.default_region
+  prefix                       = var.prefix
   internal_trusted_cidr_ranges = var.internal_trusted_cidr_ranges
   name                         = "${var.environment_code}-transit-gwt"
   subnet_name                  = var.private_subnets[0].subnet_name

@@ -21,6 +21,7 @@ No providers.
 | <a name="input_monitoring_project_id"></a> [monitoring_project_id](#input_monitoring_project_id) | Monitoring project id | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org_id](#input_org_id) | The organization id for the associated services | `string` | n/a | yes |
 | <a name="input_parent_folder_id"></a> [parent_folder_id](#input_parent_folder_id) | n/a | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_name"></a> [project_name](#input_project_name) | project name | `string` | n/a | yes |
 | <a name="input_terraform_service_account"></a> [terraform_service_account](#input_terraform_service_account) | Service account email of the account to impersonate to run Terraform | `string` | n/a | yes |
 | <a name="input_alert_pubsub_topic"></a> [alert_pubsub_topic](#input_alert_pubsub_topic) | The name of the Cloud Pub/Sub topic where budget related messages will be published, in the form of `projects/{project_id}/topics/{topic_id}` | `string` | `null` | no |

@@ -21,6 +21,7 @@
 | <a name="input_environment_code"></a> [environment_code](#input_environment_code) | A short form of the folder level resources (environment) within the Google Cloud organization. | `string` | n/a | yes |
 | <a name="input_instance_name"></a> [instance_name](#input_instance_name) | Name of the VM instance to create and allow SSH from IAP. | `string` | n/a | yes |
 | <a name="input_network_self_link"></a> [network_self_link](#input_network_self_link) | Network where to install the bastion host | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | Project ID where to set up the instance and IAP tunneling | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input_region) | Region to create the subnet and VM. | `string` | n/a | yes |
 | <a name="input_subnet_self_link"></a> [subnet_self_link](#input_subnet_self_link) | Subnet where to install the bastion host | `string` | n/a | yes |

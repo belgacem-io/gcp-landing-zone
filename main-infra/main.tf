@@ -10,6 +10,7 @@ module "infra_projects" {
   parent_id                   = var.gcp_parent_container_id
   infra_folder_name           = var.gcp_infra_projects.folder
   organization_id             = var.gcp_organization_id
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   infra_security_project      = var.gcp_infra_projects.security
   infra_observability_project = var.gcp_infra_projects.observability
   infra_nethub_project        = var.gcp_infra_projects.nethub
@@ -41,7 +42,8 @@ module "infra_hub_networks" {
   terraform_sa_email         = var.gcp_terraform_sa_email
   billing_account            = var.gcp_billing_account
   project_name               = var.gcp_infra_projects.nethub.name
-  default_region            = var.gcp_default_region
+  prefix                     = var.gcp_infra_projects.nethub.name
+  default_region             = var.gcp_default_region
   public_subnet_ranges       = var.gcp_infra_projects.nethub.network.cidr_blocks.public_subnet_ranges
   private_subnet_ranges      = var.gcp_infra_projects.nethub.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges         = var.gcp_infra_projects.nethub.network.cidr_blocks.data_subnet_ranges
@@ -62,6 +64,7 @@ module "infra_nethub_bastions" {
   environment_code   = "prod"
   instance_name      = "prod-bastion"
   project_id         = module.infra_projects.org_nethub_project_id
+  prefix             = var.gcp_infra_projects.nethub.name
   authorized_members = ["group:org-nethub-devops@belgacem.io"]
   region             = var.gcp_default_region
   network_self_link  = module.infra_hub_networks.vpc_network_self_links

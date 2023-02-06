@@ -43,8 +43,9 @@ module "nethub" {
   project_id                    = local.nethub_project_id
   environment_code              = "prod"
   org_id                        = var.organization_id
+  prefix                        = var.prefix
   bgp_asn_subnet                = var.enable_partner_interconnect ? "16550" : "64514"
-  default_region               = var.default_region
+  default_region                = var.default_region
   domain                        = var.domain
   windows_activation_enabled    = var.enable_windows_activation
   dns_enable_inbound_forwarding = var.enable_dns_inbound_forwarding

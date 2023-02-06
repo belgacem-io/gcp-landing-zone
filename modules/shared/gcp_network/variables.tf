@@ -8,6 +8,11 @@ variable "project_id" {
   description = "Project ID for Private Shared VPC."
 }
 
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
+
 variable "network_name" {
   type        = string
   description = "The network name."

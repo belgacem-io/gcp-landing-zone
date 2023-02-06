@@ -25,6 +25,7 @@
 | <a name="input_network_project_id"></a> [network_project_id](#input_network_project_id) | The GCP project housing the VPC network to host the cluster in | `string` | n/a | yes |
 | <a name="input_network_self_link"></a> [network_self_link](#input_network_self_link) | The VPC network to host the cluster in | `string` | n/a | yes |
 | <a name="input_pods_secondary_ip_range_name"></a> [pods_secondary_ip_range_name](#input_pods_secondary_ip_range_name) | The secondary ip range to use for pods | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The project ID to host the cluster in | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input_region) | The region to host the cluster in | `string` | n/a | yes |
 | <a name="input_region_azs"></a> [region_azs](#input_region_azs) | List of azs to host the cluster workers in | `list(string)` | n/a | yes |

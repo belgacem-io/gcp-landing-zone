@@ -24,6 +24,7 @@
 | <a name="input_network_name"></a> [network_name](#input_network_name) | The network name. | `string` | n/a | yes |
 | <a name="input_organization_id"></a> [organization_id](#input_organization_id) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_parent_id"></a> [parent_id](#input_parent_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_private_subnet_ranges"></a> [private_subnet_ranges](#input_private_subnet_ranges) | The list of private subnets ranges being created | `list(string)` | n/a | yes |
 | <a name="input_private_svc_connect_ip"></a> [private_svc_connect_ip](#input_private_svc_connect_ip) | The internal IP to be used for the private service connect. | `string` | n/a | yes |
 | <a name="input_private_svc_connect_ranges"></a> [private_svc_connect_ranges](#input_private_svc_connect_ranges) | The list of subnets to publish a managed service by using Private Service Connect. | `list(string)` | n/a | yes |

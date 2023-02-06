@@ -22,6 +22,7 @@ No providers.
 | <a name="input_org_id"></a> [org_id](#input_org_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_org_nethub_project_id"></a> [org_nethub_project_id](#input_org_nethub_project_id) | Organization hub network project id | `string` | n/a | yes |
 | <a name="input_org_nethub_vpc_self_link"></a> [org_nethub_vpc_self_link](#input_org_nethub_vpc_self_link) | Organization hub network VPC self link | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_private_subnet_ranges"></a> [private_subnet_ranges](#input_private_subnet_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_private_svc_connect_ip"></a> [private_svc_connect_ip](#input_private_svc_connect_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | n/a | yes |
 | <a name="input_private_svc_connect_ranges"></a> [private_svc_connect_ranges](#input_private_svc_connect_ranges) | CIDR range for private service networking. Used for Cloud SQL and other managed services. | `list(string)` | n/a | yes |

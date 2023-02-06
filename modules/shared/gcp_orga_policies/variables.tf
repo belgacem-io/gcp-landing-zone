@@ -8,7 +8,6 @@ variable "resource_type" {
   description = "Resource type where the policies must be applied. Possible values: organization, folder and project"
 }
 
-
 variable "enable_sa_key_creation_deny_policy" {
   description = "Deny service account key creation at the organization level."
   type        = bool

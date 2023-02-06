@@ -3,6 +3,11 @@ variable "parent_id" {
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
+
 variable "organization_id" {
   type        = string
   description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"

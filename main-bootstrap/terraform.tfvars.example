@@ -1,0 +1,33 @@
+gcp_organization_id     = "212229844803"
+gcp_parent_container_id  = "folders/212229844803"
+gcp_organization_domain   = "example.com"
+gcp_billing_account     = "AAAAA-BBBBBB-55799B"
+gcp_default_region     = "europe-west3"
+gcp_default_region_azs = [
+  "europe-west3-a",
+  "europe-west3-b",
+  "europe-west3-c"
+]
+
+##################################### Terraform SA ###################
+gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
+gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
+gcp_bootstrap_project_id         = "infra-automation-375008"
+gcp_group_org_admins             = "gcp-organization-admins@example.com"
+gcp_group_org_security_admins    = "gcp-security-admins@example.com"
+gcp_group_org_security_reviewers = "gcp-security-reviewers@example.com"
+gcp_group_org_billing_admins     = "gcp-billing-admins@example.com"
+gcp_group_org_viewers            = "gcp-organization-viewers@example.com"
+gcp_group_org_network_admins     = "gcp-network-admins@example.com"
+gcp_group_org_network_viewers    = "gcp-network-viewers@example.com"
+gcp_terraform_sa_org_iam_permissions = [
+  "roles/compute.networkAdmin",
+  "roles/compute.xpnAdmin",
+  "roles/iam.securityAdmin",
+  "roles/iam.serviceAccountAdmin",
+  "roles/logging.configWriter",
+  "roles/resourcemanager.folderAdmin",
+  "roles/securitycenter.admin",
+  "roles/iam.securityAdmin",
+  "roles/monitoring.admin"
+]

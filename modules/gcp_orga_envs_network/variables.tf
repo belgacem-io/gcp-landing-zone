@@ -1,7 +1,10 @@
 variable "environment_code" {
   type = string
 }
-
+variable "prefix" {
+  type        = string
+  description = "Prefix applied to service to all resources."
+}
 variable "org_nethub_vpc_self_link" {
   type = string
   description = "Organization hub network VPC self link"
