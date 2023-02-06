@@ -1,3 +1,24 @@
+resource "google_project_service" "precog-enableapi" {
+  for_each = toset([
+    "cloudresourcemanager.googleapis.com",
+    "serviceusage.googleapis.com",
+    "cloudbilling.googleapis.com",
+    "iam.googleapis.com",
+    "billingbudgets.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "pubsub.googleapis.com",
+    "logging.googleapis.com",
+    "monitoring.googleapis.com",
+  ])
+
+  service = each.value
+  timeouts {
+    create = "30m"
+    update = "40m"
+  }
+  disable_dependent_services = true
+}
+
 /***********************************************
   Organization permissions for Terraform.
  ***********************************************/

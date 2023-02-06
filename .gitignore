@@ -6,7 +6,8 @@ terraform.tfstate.*
 .build
 .tls/*
 .gcloud/*
-.env
+.auth/env
 terraform.tfvars
-.secret/
-/main-infra/.terraform.tfstate.lock.info
+.auth/
+.terraform.tfstate.lock.info
+/.auth/*

@@ -1,18 +1,40 @@
 ### Installation
+1. Create a dedicated folder
+2. Create a bootstrap GCP project that will be used for running terraform scripts
+3. Create a service account with the following permissions
+   - organisation -> Billing Account Costs Manager
+   - organisation -> Billing Account User
+   - folder -> Owner
+   - folder -> Project Creator
+   - project -> Service Account Token Creator
+   - project -> Service Account User
 
-1. Clone the repo
+4. Clone the repo
    ```sh
    git clone https://github.com/h-belgacem/eks-apigee.git
    ```
-2. Setup your local environment
+5. Setup your local environment
    ```sh
    make up
    ```
-3. Create an '.env' file and add GCP credentials 
+6. Create a service account key and download the credentials file as JSON
+7. Create an '.auth/env' file and add GCP credentials 
    ```sh
-    export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
+    export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
    ```
-4. Apply terraform scripts
+8. Init bootstrap project 
    ```sh
-    make apply eks
+    make init bootstap && make apply bootstap
+   ```
+9. Create and configure infra projects
+   ```sh
+    make init infra && make apply infra
+   ```
+10. Create and configure env projects
+   ```sh
+    make init env && make apply env
+   ```
+11. Create and configure business projects
+   ```sh
+    make init bp && make apply bp
    ```
