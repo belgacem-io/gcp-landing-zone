@@ -1,3 +1,8 @@
+### Requirements
+1. GCP account with organisation setup
+2. Billing account ID
+3. You can used an organization or a folder as parent container
+
 ### Installation
 1. Create a dedicated folder
 2. Create a bootstrap GCP project that will be used for running terraform scripts
@@ -6,9 +11,17 @@
    - organisation -> Billing Account User
    - folder -> Owner
    - folder -> Project Creator
+   - folder -> Security Admin
    - project -> Service Account Token Creator
    - project -> Service Account User
-
+4. Create the following groups
+   - xx-organization-admins@example.com
+   - xx-security-admins@example.com
+   - xx-security-reviewers@example.com
+   - xx-billing-admins@example.com
+   - xx-organization-viewers@example.com
+   - xx-network-admins@example.com
+   - xx-network-viewers@example.com
 4. Clone the repo
    ```sh
    git clone https://github.com/h-belgacem/eks-apigee.git
@@ -21,6 +34,8 @@
 7. Create an '.auth/env' file and add GCP credentials 
    ```sh
     export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
+    export PROJECT_ID=xx-bootstrap-prod-375008
+    export PROJECT_NAME=xx-bootstrap-prod
    ```
 8. Init bootstrap project 
    ```sh

@@ -1,4 +1,4 @@
-resource "google_project_service" "precog-enableapi" {
+resource "google_project_service" "enableapi" {
   for_each = toset([
     "cloudresourcemanager.googleapis.com",
     "serviceusage.googleapis.com",
@@ -10,7 +10,7 @@ resource "google_project_service" "precog-enableapi" {
     "logging.googleapis.com",
     "monitoring.googleapis.com",
   ])
-
+  project = var.gcp_bootstrap_project_id
   service = each.value
   timeouts {
     create = "30m"
@@ -37,34 +37,4 @@ resource "google_folder_iam_member" "tf_sa_org_perms" {
   folder = split("/",var.gcp_parent_container_id)[1]
   role   = each.value
   member = "serviceAccount:${var.gcp_terraform_sa_email}"
-}
-
-/***********************************************
-  IAM - Impersonation permissions to run terraform
-  as org admin.
- ***********************************************/
-
-resource "google_service_account_iam_member" "org_admin_sa_impersonate_permissions" {
-  count = var.gcp_group_org_admins !=null ? 1: 0
-
-  service_account_id = var.gcp_terraform_sa_id
-  role               = "roles/iam.serviceAccountTokenCreator"
-  member             = "group:${var.gcp_group_org_admins}"
-}
-
-resource "google_organization_iam_member" "org_admin_serviceusage_consumer" {
-  count  = startswith(var.gcp_parent_container_id, "organizations") && var.gcp_group_org_admins !=null ? 1 : 0
-
-  org_id = split("/",var.gcp_parent_container_id)[1]
-  role   = "roles/serviceusage.serviceUsageConsumer"
-  member = "group:${var.gcp_group_org_admins}"
-}
-
-resource "google_folder_iam_member" "org_admin_serviceusage_consumer" {
-
-  count  = startswith(var.gcp_parent_container_id, "folders") && var.gcp_group_org_admins !=null ? 1 : 0
-
-  folder = split("/",var.gcp_parent_container_id)[1]
-  role   = "roles/serviceusage.serviceUsageConsumer"
-  member = "group:${var.gcp_group_org_admins}"
 }

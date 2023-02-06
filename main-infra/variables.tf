@@ -70,24 +70,6 @@ variable "gcp_group_org_network_viewers" {
   default = null
 }
 
-variable "gcp_terraform_sa_org_iam_permissions" {
-  description = "List of permissions granted to Terraform service account across the GCP organization."
-  type        = list(string)
-  default     = [
-    "roles/billing.user",
-    "roles/compute.networkAdmin",
-    "roles/compute.xpnAdmin",
-    "roles/iam.securityAdmin",
-    "roles/iam.serviceAccountAdmin",
-    "roles/logging.configWriter",
-    "roles/orgpolicy.policyAdmin",
-    "roles/resourcemanager.folderAdmin",
-    "roles/securitycenter.admin",
-    "roles/iam.securityAdmin",
-    "roles/monitoring.admin"
-  ]
-}
-
 variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
