@@ -1,33 +1,32 @@
-gcp_organization_id     = "974329834803"
-gcp_parent_container_id  = "folders/203063131241"
-gcp_organization_domain   = "belgacem.io"
-gcp_billing_account     = "01128E-760A55-55799B"
-gcp_default_region     = "europe-west4"
+gcp_organization_id     = "{{ env("ORGANISATION_ID") }}"
+gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
+gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
+gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
+gcp_default_region     = "{{ env("REGION") }}"
 gcp_default_region_azs = [
-  "europe-west4-a",
-  "europe-west4-b",
-  "europe-west4-c"
+  "{{ env("REGION") }}-a",
+  "{{ env("REGION") }}-b",
+  "{{ env("REGION") }}-c"
 ]
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/infra-automation-340608/serviceAccounts/landing-zone-automation@infra-automation-375008.iam.gserviceaccount.com"
-gcp_bootstrap_project_id         = "infra-automation-375008"
-gcp_group_org_admins             = "gcp-organization-admins@belgacem.io"
-gcp_group_org_security_admins    = "gcp-security-admins@belgacem.io"
-gcp_group_org_security_reviewers = "gcp-security-reviewers@belgacem.io"
-gcp_group_org_billing_admins     = "gcp-billing-admins@belgacem.io"
-gcp_group_org_viewers            = "gcp-organization-viewers@belgacem.io"
-gcp_group_org_network_admins     = "gcp-network-admins@belgacem.io"
-gcp_group_org_network_viewers    = "gcp-network-viewers@belgacem.io"
+gcp_terraform_sa_email           = "{{ env("AUTOMATION_SA") }}"
+gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("AUTOMATION_SA") }}"
+#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_DOMAIN") }}"
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
   experiment  = {
     environment_code = "exp"
-    name             = "network-hub"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      prefix      = "vpc-exp-shared-hub",
+      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-exp-vpc-glob",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.0.0/24"]
         data_subnet_ranges = ["172.18.1.0/24"]
@@ -48,9 +47,9 @@ gcp_organization_environments    = {
   },
   development = {
     environment_code = "dev"
-    name             = "network-hub"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      prefix      = "vpc-dev-shared-hub",
+      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-dev-vpc-glob",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.4.0/24"]
         data_subnet_ranges = ["172.18.5.0/24"]
@@ -73,7 +72,7 @@ gcp_organization_environments    = {
 # The set of accounts to create. Defaults to an empty list.
 gcp_business_projects            = [
   {
-    name             = "uc1-kube"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team1"
     department       = "Department_HR"
     environment_code = "exp"
     budget           = {
@@ -90,7 +89,7 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "uc2-ml-ia"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team2"
     department       = "Department_Marketing"
     environment_code = "exp"
     budget           = {
@@ -107,7 +106,7 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "uc3-catalyse"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team3"
     department       = "Department_HR"
     environment_code = "dev"
     budget           = {
@@ -132,7 +131,7 @@ gcp_labels = {
 gcp_infra_projects = {
   folder = "Infrastructure"
   security = {
-    name   = "orga-security-audit"
+    name   = "{{ env("ORGANISATION_PREFIX") }}-security-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -141,7 +140,7 @@ gcp_infra_projects = {
   }
 
   observability = {
-    name   = "orga-monitoring-logging"
+    name   = "{{ env("ORGANISATION_PREFIX") }}-observability-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -151,14 +150,14 @@ gcp_infra_projects = {
   }
 
   nethub = {
-    name    = "orga-network-hub"
+    name    = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod"
     budget  = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
       email_addresses_to_notify = []
     }
     network = {
-      name        = "vpc-prod-shared-hub",
+      name        = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod-vpc-glob",
       cidr_blocks = {
         public_subnet_ranges = ["172.16.0.0/24"]
         private_subnet_ranges = ["172.16.1.0/24"]

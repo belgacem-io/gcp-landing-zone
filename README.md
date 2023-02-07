@@ -3,7 +3,7 @@
 2. Billing account ID
 3. You can used an organization or a folder as parent container
 
-### Installation
+### Setup Google cloud requirements
 1. Create a dedicated folder
 2. Create a bootstrap GCP project that will be used for running terraform scripts
 3. Create a service account with the following permissions
@@ -12,9 +12,9 @@
    - folder -> Owner
    - folder -> Project Creator
    - folder -> Security Admin
-   - project -> Service Account Token Creator
-   - project -> Service Account User
-4. Create the following groups
+   - folder -> Service Account Token Creator
+   - folder -> Service Account User
+4. Create the following groups (optional)
    - xx-organization-admins@example.com
    - xx-security-admins@example.com
    - xx-security-reviewers@example.com
@@ -22,34 +22,44 @@
    - xx-organization-viewers@example.com
    - xx-network-admins@example.com
    - xx-network-viewers@example.com
-4. Clone the repo
+5. On bootstrap project, enable the flowing APIs
+   - IAM Service Account Credentials API
+   - Cloud Resource Manager API
+
+### Installation
+1. Clone the repo
    ```sh
    git clone https://github.com/h-belgacem/eks-apigee.git
    ```
-5. Setup your local environment
-   ```sh
-   make up
-   ```
-6. Create a service account key and download the credentials file as JSON
-7. Create an '.auth/env' file and add GCP credentials 
+2. For each module main-xxx, create a terraform.tfvars file with the appropriates values
+3. Create a service account key and download the credentials file as JSON
+4. Create an '.auth/env' file and add GCP credentials 
    ```sh
     export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
     export PROJECT_ID=xx-bootstrap-prod-375008
     export PROJECT_NAME=xx-bootstrap-prod
    ```
-8. Init bootstrap project 
+5. Setup your local environment
    ```sh
-    make init bootstap && make apply bootstap
+    make up
+    ./terraformd --insall
    ```
-9. Create and configure infra projects
+   terraform
+6. Init bootstrap project 
    ```sh
-    make init infra && make apply infra
+    terraformd -chdir=main-bootstap init && terraformd -chdir=main-bootstap apply
    ```
-10. Create and configure env projects
+7. Create and configure infra projects
    ```sh
-    make init env && make apply env
+    terraformd -chdir=main-infra init
+    terraformd -chdir=main-infra apply -target module.infra_projects
+    terraformd -chdir=main-infra apply
    ```
-11. Create and configure business projects
+8. Create and configure env projects
    ```sh
-    make init bp && make apply bp
+    terraformd -chdir=main-env init && terraformd -chdir=main-env apply
+   ```
+9. Create and configure business projects
+   ```sh
+    terraformd -chdir=main-bp init && terraformd -chdir=main-bp apply
    ```

@@ -1,0 +1,171 @@
+gcp_organization_id     = "{{ env("ORGANISATION_ID") }}"
+gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
+gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
+gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
+gcp_default_region     = "{{ env("REGION") }}"
+gcp_default_region_azs = [
+  "{{ env("REGION") }}-a",
+  "{{ env("REGION") }}-b",
+  "{{ env("REGION") }}-c"
+]
+
+##################################### Terraform SA ###################
+gcp_terraform_sa_email           = "{{ env("AUTOMATION_SA") }}"
+gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("AUTOMATION_SA") }}"
+#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_DOMAIN") }}"
+##################################### GCP Organization ###################
+# The tree of organizational units to construct. Defaults to an empty tree.
+gcp_organization_environments    = {
+  experiment  = {
+    environment_code = "exp"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
+    network          = {
+      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-exp-vpc-glob",
+      cidr_blocks = {
+        private_subnet_ranges = ["172.18.0.0/24"]
+        data_subnet_ranges = ["172.18.1.0/24"]
+        private_svc_subnet_ranges = ["172.18.2.0/24"]
+        private_svc_connect_ip = "172.18.3.5"
+      }
+    }
+    children         = [
+      {
+        name     = "Department_Marketing",
+        children = []
+      },
+      {
+        name     = "Department_HR",
+        children = []
+      }
+    ]
+  },
+  development = {
+    environment_code = "dev"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
+    network          = {
+      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-dev-vpc-glob",
+      cidr_blocks = {
+        private_subnet_ranges = ["172.18.4.0/24"]
+        data_subnet_ranges = ["172.18.5.0/24"]
+        private_svc_subnet_ranges = ["172.18.6.0/24"]
+        private_svc_connect_ip = "172.18.7.5"
+      }
+    }
+    children         = [
+      {
+        name     = "Department_HR",
+        children = []
+      },
+      {
+        name     = "Department_Marketing",
+        children = []
+      }
+    ]
+  }
+}
+# The set of accounts to create. Defaults to an empty list.
+gcp_business_projects            = [
+  {
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team1"
+    department       = "Department_HR"
+    environment_code = "exp"
+    budget           = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      email_addresses_to_notify = []
+    }
+    network          = {
+      cidr_blocks = {
+        private_subnet_ranges = ["10.0.0.0/27"]
+        private_subnet_k8s_2nd_ranges = []
+        data_subnet_ranges = ["10.1.0.0/27"]
+      }
+    }
+  },
+  {
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team2"
+    department       = "Department_Marketing"
+    environment_code = "exp"
+    budget           = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      email_addresses_to_notify = []
+    }
+    network          = {
+      cidr_blocks = {
+        private_subnet_ranges = ["10.0.0.32/27"]
+        private_subnet_k8s_2nd_ranges = []
+        data_subnet_ranges = ["10.1.0.32/27"]
+      }
+    }
+  },
+  {
+    name             = "{{ env("ORGANISATION_PREFIX") }}-team3"
+    department       = "Department_HR"
+    environment_code = "dev"
+    budget           = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      email_addresses_to_notify = []
+    }
+    network          = {
+      cidr_blocks = {
+        private_subnet_ranges         = ["10.0.0.64/27"]
+        private_subnet_k8s_2nd_ranges = []
+        data_subnet_ranges            = ["10.1.0.64/27"]
+      }
+    }
+  }
+]
+
+gcp_labels = {
+  "managed-by" = "Cloud-Center"
+}
+
+gcp_infra_projects = {
+  folder = "Infrastructure"
+  security = {
+    name   = "{{ env("ORGANISATION_PREFIX") }}-security-prod"
+    budget = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      email_addresses_to_notify = []
+    }
+  }
+
+  observability = {
+    name   = "{{ env("ORGANISATION_PREFIX") }}-observability-prod"
+    budget = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      alert_pubsub_topic        = null
+      email_addresses_to_notify = []
+    }
+  }
+
+  nethub = {
+    name    = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod"
+    budget  = {
+      amount                    = 100,
+      time_unit                 = "MONTHLY",
+      email_addresses_to_notify = []
+    }
+    network = {
+      name        = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod-vpc-glob",
+      cidr_blocks = {
+        public_subnet_ranges = ["172.16.0.0/24"]
+        private_subnet_ranges = ["172.16.1.0/24"]
+        data_subnet_ranges = ["172.16.2.0/24"]
+        private_svc_subnet_ranges = ["172.16.3.0/24"]
+        private_svc_connect_ip = "172.16.4.5"
+      }
+    }
+  }
+}
+
