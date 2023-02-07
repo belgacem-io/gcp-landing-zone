@@ -33,11 +33,22 @@
    ```
 2. For each module main-xxx, create a terraform.tfvars file with the appropriates values
 3. Create a service account key and download the credentials file as JSON
-4. Create an '.auth/env' file and add GCP credentials 
+4. Create an '.auth/env' file and add required variables 
    ```sh
-    export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
-    export PROJECT_ID=xx-bootstrap-prod-375008
-    export PROJECT_NAME=xx-bootstrap-prod
+   ##################################### GCP Credentials ###################
+   export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
+   export PROJECT_ID=xx-bootstrap-prod-375008
+   export PROJECT_NAME=xx-bootstrap-prod
+   
+   ##################################### tfvars generator ###################
+   export REGION=europe-west9
+   export ORGANISATION_ID=25135412153
+   export ORGANISATION_DOMAIN=example.com
+   export ORGANISATION_PREFIX=xx
+   export CONTAINER_ID=folders/2565982345
+   export BILLING_ACCOUNT_ID=AAAAA-BBBBB-CCCCC
+   export AUTOMATION_SA=lz-automation@xx-bootstrap-prod-375008.iam.gserviceaccount.com
+   #export TF_LOG=INFO
    ```
 5. Setup your local environment
    ```sh
