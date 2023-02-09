@@ -1,14 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-
-#### Modules
-
-No modules.
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

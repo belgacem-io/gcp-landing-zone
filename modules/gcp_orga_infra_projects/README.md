@@ -1,24 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-| <a name="provider_random"></a> [random](#provider_random) | n/a |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_bigquery_destination"></a> [bigquery_destination](#module_bigquery_destination) | terraform-google-modules/log-export/google//modules/bigquery | ~> 7.4 |
-| <a name="module_log_export_to_biqquery"></a> [log_export_to_biqquery](#module_log_export_to_biqquery) | terraform-google-modules/log-export/google | ~> 7.4 |
-| <a name="module_log_export_to_storage"></a> [log_export_to_storage](#module_log_export_to_storage) | terraform-google-modules/log-export/google | ~> 7.4 |
-| <a name="module_orga_policies"></a> [orga_policies](#module_orga_policies) | ../shared/gcp_orga_policies | n/a |
-| <a name="module_organization_nethub"></a> [organization_nethub](#module_organization_nethub) | terraform-google-modules/project-factory/google | ~> 14.1 |
-| <a name="module_organization_observability"></a> [organization_observability](#module_organization_observability) | terraform-google-modules/project-factory/google | ~> 14.1 |
-| <a name="module_organization_security"></a> [organization_security](#module_organization_security) | terraform-google-modules/project-factory/google | ~> 14.1 |
-| <a name="module_storage_destination"></a> [storage_destination](#module_storage_destination) | terraform-google-modules/log-export/google//modules/storage | ~> 7.4 |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

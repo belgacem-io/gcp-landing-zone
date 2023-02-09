@@ -1,17 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_dns-public-zone"></a> [dns-public-zone](#module_dns-public-zone) | terraform-google-modules/cloud-dns/google | ~> 4.2 |
-| <a name="module_nethub"></a> [nethub](#module_nethub) | ../shared/gcp_network | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

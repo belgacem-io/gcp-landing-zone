@@ -2,19 +2,6 @@
 ## Purpose
 Set up a folder structure, projects for applications, which are connected as service projects to the shared VPC created in the previous stage.
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.50.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_business_project"></a> [business_project](#module_business_project) | ../modules/gcp_orga_business_project | n/a |
-| <a name="module_fetch"></a> [fetch](#module_fetch) | ../modules/shared/gcp_fetch_organization | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

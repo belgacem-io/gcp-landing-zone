@@ -43,29 +43,6 @@
 
 To manage organization policies, the `orgpolicy.googleapis.com` service should be enabled in the quota project.
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_org_cloudsql_external_ip_access"></a> [org_cloudsql_external_ip_access](#module_org_cloudsql_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_compute_disable_guest_attributes_access"></a> [org_compute_disable_guest_attributes_access](#module_org_compute_disable_guest_attributes_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_disable_automatic_iam_grants_on_default_service_accounts"></a> [org_disable_automatic_iam_grants_on_default_service_accounts](#module_org_disable_automatic_iam_grants_on_default_service_accounts) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_disable_nested_virtualization"></a> [org_disable_nested_virtualization](#module_org_disable_nested_virtualization) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_disable_sa_key_creation"></a> [org_disable_sa_key_creation](#module_org_disable_sa_key_creation) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_disable_serial_port_access"></a> [org_disable_serial_port_access](#module_org_disable_serial_port_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_domain_restricted_sharing"></a> [org_domain_restricted_sharing](#module_org_domain_restricted_sharing) | terraform-google-modules/org-policy/google//modules/domain_restricted_sharing | ~> 5.0 |
-| <a name="module_org_enforce_bucket_level_access"></a> [org_enforce_bucket_level_access](#module_org_enforce_bucket_level_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_require_os_login"></a> [org_require_os_login](#module_org_require_os_login) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_shared_vpc_lien_removal"></a> [org_shared_vpc_lien_removal](#module_org_shared_vpc_lien_removal) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_skip_default_network"></a> [org_skip_default_network](#module_org_skip_default_network) | terraform-google-modules/org-policy/google | ~> 5.2 |
-| <a name="module_org_vm_external_ip_access"></a> [org_vm_external_ip_access](#module_org_vm_external_ip_access) | terraform-google-modules/org-policy/google | ~> 5.2 |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

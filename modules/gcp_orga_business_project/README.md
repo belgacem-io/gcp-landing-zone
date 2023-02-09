@@ -1,14 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-No providers.
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_business_project"></a> [business_project](#module_business_project) | ../shared/gcp_single_project | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

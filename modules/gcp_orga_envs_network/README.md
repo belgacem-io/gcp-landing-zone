@@ -1,14 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-No providers.
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_env_nethub"></a> [env_nethub](#module_env_nethub) | ../shared/gcp_network | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

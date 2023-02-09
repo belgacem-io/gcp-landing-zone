@@ -1,19 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_squid_proxy_ilbs"></a> [squid_proxy_ilbs](#module_squid_proxy_ilbs) | GoogleCloudPlatform/lb-internal/google | ~> 5.0 |
-| <a name="module_squid_proxy_migs"></a> [squid_proxy_migs](#module_squid_proxy_migs) | terraform-google-modules/vm/google//modules/mig | ~> 7.3 |
-| <a name="module_squid_proxy_service_account"></a> [squid_proxy_service_account](#module_squid_proxy_service_account) | terraform-google-modules/service-accounts/google | ~> 4.2 |
-| <a name="module_squid_proxy_template"></a> [squid_proxy_template](#module_squid_proxy_template) | terraform-google-modules/vm/google//modules/instance_template | ~> 7.3 |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

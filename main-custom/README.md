@@ -2,20 +2,6 @@
 ## Purpose
 Set up custom services for application.
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | >= 4.0, < 5.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_fetch"></a> [fetch](#module_fetch) | ../modules/shared/gcp_fetch_organization | n/a |
-| <a name="module_gke"></a> [gke](#module_gke) | ../modules/gcp_gke | n/a |
-| <a name="module_pg"></a> [pg](#module_pg) | GoogleCloudPlatform/sql-db/google//modules/postgresql | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

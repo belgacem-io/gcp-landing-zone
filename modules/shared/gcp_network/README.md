@@ -50,22 +50,6 @@
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | >= 4.0, < 5.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_dns-forwarding-zone"></a> [dns-forwarding-zone](#module_dns-forwarding-zone) | terraform-google-modules/cloud-dns/google | ~> 4.2 |
-| <a name="module_main"></a> [main](#module_main) | terraform-google-modules/network/google | ~> 5.2 |
-| <a name="module_peering"></a> [peering](#module_peering) | terraform-google-modules/network/google//modules/network-peering | ~> 5.2 |
-| <a name="module_private_service_connect"></a> [private_service_connect](#module_private_service_connect) | terraform-google-modules/network/google//modules/private-service-connect | ~> 5.2 |
-| <a name="module_transitivity_gateway"></a> [transitivity_gateway](#module_transitivity_gateway) | ../squid_proxy | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

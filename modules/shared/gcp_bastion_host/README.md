@@ -1,18 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | n/a |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_iap_tunneling"></a> [iap_tunneling](#module_iap_tunneling) | terraform-google-modules/bastion-host/google//modules/iap-tunneling | ~> 5.1 |
-| <a name="module_instance_template"></a> [instance_template](#module_instance_template) | terraform-google-modules/vm/google//modules/instance_template | ~> 7.9 |
-| <a name="module_mig"></a> [mig](#module_mig) | terraform-google-modules/vm/google//modules/mig | ~> 7.9 |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

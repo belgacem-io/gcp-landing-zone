@@ -2,22 +2,6 @@
 ## Purpose
 Sets up development, non-production, and production environments within the Google Cloud organization that you've created.
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | 4.50.0 |
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.50.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider_google-beta) | 4.50.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_env_nethub_bastions"></a> [env_nethub_bastions](#module_env_nethub_bastions) | ../modules/shared/gcp_bastion_host | n/a |
-| <a name="module_env_nethub_networks"></a> [env_nethub_networks](#module_env_nethub_networks) | ../modules/gcp_orga_envs_network | n/a |
-| <a name="module_env_nethub_projects"></a> [env_nethub_projects](#module_env_nethub_projects) | terraform-google-modules/project-factory/google | ~> 14.1 |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

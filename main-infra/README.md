@@ -2,20 +2,6 @@
 ## Purpose
 Sets up organization-level logging, monitoring and networking projects, and sets baseline security settings through organizational policy.
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.52.0 |
-
-#### Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_infra_hub_networks"></a> [infra_hub_networks](#module_infra_hub_networks) | ../modules/gcp_orga_infra_network | n/a |
-| <a name="module_infra_nethub_bastions"></a> [infra_nethub_bastions](#module_infra_nethub_bastions) | ../modules/shared/gcp_bastion_host | n/a |
-| <a name="module_infra_projects"></a> [infra_projects](#module_infra_projects) | ../modules/gcp_orga_infra_projects | n/a |
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |

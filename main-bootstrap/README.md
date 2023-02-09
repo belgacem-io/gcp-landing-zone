@@ -30,17 +30,6 @@ Before stating, make sure that you've done the following:
    - IAM Service Account Credentials API
    - Cloud Resource Manager API
 
-#### Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_google"></a> [google](#provider_google) | 4.52.0 |
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider_google.impersonate) | 4.52.0 |
-
-#### Modules
-
-No modules.
-
 #### Inputs
 
 | Name | Description | Type | Default | Required |
