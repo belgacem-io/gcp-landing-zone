@@ -29,7 +29,7 @@
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/h-belgacem/eks-apigee.git
+   git clone https://github.com/belgacem-io/gcp-landing-zone.git
    ```
 2. For each module main-xxx, create a terraform.tfvars file with the appropriates values
 3. Create a service account key and download the credentials file as JSON
