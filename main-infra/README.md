@@ -1,4 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
+## Purpose
+Sets up organization-level logging, monitoring and networking projects, and sets baseline security settings through organizational policy.
+
 #### Providers
 
 | Name | Version |
