@@ -38,7 +38,6 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_data_subnets_names"></a> [data\_subnets\_names](#output\_data\_subnets\_names) | n/a |
-| <a name="output_network_internet_egress_tag"></a> [network\_internet\_egress\_tag](#output\_network\_internet\_egress\_tag) | Network tags for VMs with internet access. |
 | <a name="output_private_subnets_names"></a> [private\_subnets\_names](#output\_private\_subnets\_names) | n/a |
 | <a name="output_public_subnets_names"></a> [public\_subnets\_names](#output\_public\_subnets\_names) | n/a |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | n/a |

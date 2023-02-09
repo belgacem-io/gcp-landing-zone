@@ -21,8 +21,3 @@ output "vpc_subnetwork_self_links" {
 output "vpc_network_self_links" {
   value = module.nethub.network_self_link
 }
-
-output "network_internet_egress_tag" {
-  value       = module.nethub.network_internet_egress_tag
-  description = "Network tags for VMs with internet access."
-}

@@ -27,7 +27,7 @@ module "transitivity_gateway" {
   name                         = "${var.environment_code}-transit-gwt"
   subnet_name                  = var.private_subnets[0].subnet_name
   vpc_name                     = module.main.network_name
-  network_internet_egress_tag  = "egress-internet"
+  network_internet_egress_tag  = var.network_internet_egress_tag
 }
 /******************************************
   Private Google APIs DNS Zone & records.
