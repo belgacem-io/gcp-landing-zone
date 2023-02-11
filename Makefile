@@ -25,6 +25,9 @@ destroy:
 docs:
 	docker compose exec terraform bash -c 'for f in $$(find /wks -maxdepth 4 -type f -name "main.tf"); do cd $${f/main.tf/} && terraform-docs markdown table --config /wks/.terraform-docs.yml --output-file README.md  $${f/main.tf/} ; done;'
 
+tfsec:
+	docker compose exec terraform bash -c 'for f in $$(find /wks -maxdepth 2 -type f -name "terraform.tfvars"); do tfsec $${f/terraform.tfvars/} ; done;'
+
 exec:
 	docker compose exec -it -w /wks terraform bash
 

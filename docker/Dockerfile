@@ -68,6 +68,11 @@ RUN chmod +x /usr/local/bin/kubectl
 RUN pip install gcloud --upgrade
 
 ################################
+# Install tfsec
+################################
+RUN curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+
+################################
 # Install dev dependencies
 ################################
 RUN apt install -y jq
