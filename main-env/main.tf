@@ -47,7 +47,8 @@ module "env_nethub_projects" {
   create_project_sa       = false
   default_service_account = "delete"
 
-  name            = format("%s-${each.value.name}", each.value.environment_code)
+  #[prefix]-[project]-[env]
+  name            = "${each.value.name}-${each.value.environment_code}"
   org_id          = var.gcp_organization_id
   billing_account = var.gcp_billing_account
   folder_id       = google_folder.environments[each.key].id
@@ -79,7 +80,7 @@ module "env_nethub_networks" {
   environment_code                      = each.value.environment_code
   org_id                                = var.gcp_organization_id
   project_id                            = module.env_nethub_projects[each.key].project_id
-  network_name                          = each.value.network.prefix
+  network_name                          = each.value.network.name
   private_subnet_ranges                 = each.value.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges                    = each.value.network.cidr_blocks.data_subnet_ranges
   private_svc_connect_ranges            = each.value.network.cidr_blocks.private_svc_subnet_ranges

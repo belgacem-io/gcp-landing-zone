@@ -1,29 +1,24 @@
 <table>
 <tbody>
 <tr>
-<td><a href="./main-bootstrap/README.md">bootstrap</a></td>
-<td>Bootstraps a Google Cloud organization, creating all the required resources
-and permissions. 
+<td><a href="./main-bootstrap/README.md">Step 0 - bootstrap</a></td>
+<td>Bootstraps a Google Cloud organization and creates all the required resources and permissions. 
 </td>
 </tr>
 <tr>
-<td><a href="./main-infra/README.md">infrastructure</a></td>
-<td>Sets up top-level shared folders, monitoring and networking projects, and
-organization-level logging, and sets baseline security settings through
-organizational policy.</td>
+<td><a href="./main-infra/README.md">Step 1 - infrastructure</a></td>
+<td>Sets up top-level shared folders, monitoring and networking projects, and organization-level logging, and sets baseline security settings through organizational policy.</td>
 </tr>
 <tr>
-<td><a href="./main-env/README.md"><span style="white-space: nowrap;">environments</span></a></td>
-<td>Sets up development, non-production, and production environments within the
-Google Cloud organization that you've created.</td>
+<td><a href="./main-env/README.md"><span style="white-space: nowrap;">Step 2 - environments</span></a></td>
+<td>Sets up development, non-production, and production environments within the Google Cloud organization that you've created.</td>
 </tr>
 <tr>
-<td><a href="./main-bp/README.md">projects</a></td>
-<td>Set up a folder structure, projects for applications,
- which are connected as service projects to the shared VPC created in the previous stage.</td>
+<td><a href="./main-bp/README.md">Step 3 - projects</a></td>
+<td>Set up a folder structure, projects for applications, which are connected as service projects to the shared VPC created in the previous stage.</td>
 </tr>
 <tr>
-<td><a href="./main-custom/README.md">custom</a></td>
+<td><a href="./main-custom/README.md">Step 4 - custom</a></td>
 <td>Set up custom services for application.</td>
 </tr>
 </tbody>
@@ -91,13 +86,13 @@ Before stating, make sure that you've done the following:
    ```sh
     terraformd -chdir=main-bootstap init && terraformd -chdir=main-bootstap apply
    ```
-7. Create and configure [infra projects](./main-infra/README.md)
+7. Create and configure [infrastructure projects](./main-infra/README.md)
    ```sh
     terraformd -chdir=main-infra init
     terraformd -chdir=main-infra apply -target module.infra_projects
     terraformd -chdir=main-infra apply
    ```
-8. Create and configure [env projects](./main-env/README.md)
+8. Create and configure [environments projects](./main-env/README.md)
    ```sh
     terraformd -chdir=main-env init && terraformd -chdir=main-env apply
    ```

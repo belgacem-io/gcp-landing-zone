@@ -24,7 +24,8 @@ module "transitivity_gateway" {
   default_region               = var.default_region
   prefix                       = var.prefix
   internal_trusted_cidr_ranges = var.internal_trusted_cidr_ranges
-  name                         = "${var.environment_code}-transit-gwt"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name                         = "${var.prefix}-tgw-${var.default_region}"
   subnet_name                  = var.private_subnets[0].subnet_name
   vpc_name                     = module.main.network_name
   network_internet_egress_tag  = var.network_internet_egress_tag
@@ -55,7 +56,8 @@ resource "google_compute_route" "internet_routes" {
 
   project           = var.project_id
   network           = var.network_name
-  name              = "rt-${var.network_name}-internet"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name              = "${var.prefix}-rt-glb-${var.network_name}-internet"
   description       = "Transitivity route for internet"
   tags              = [var.network_name]
   dest_range        = "0.0.0.0/0"
@@ -72,7 +74,8 @@ resource "google_compute_route" "transitivity_routes" {
 
   project      = var.project_id
   network      = var.network_name
-  name         = "rt-${var.network_name}-${replace(replace(each.value, "/", "-"), ".", "-")}"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name         = "${var.prefix}-rt-glb-${var.network_name}-${replace(replace(each.value, "/", "-"), ".", "-")}"
   description  = "Transitivity route for ${each.value}"
   dest_range   = each.value
   next_hop_ilb = module.transitivity_gateway.0.ilb_id
@@ -84,8 +87,8 @@ resource "google_compute_route" "transitivity_routes" {
 
 resource "google_compute_service_attachment" "svc_attachment" {
   count = var.mode == "hub" ? 1 :  0
-
-  name        = "${var.environment_code}-transit-gwt"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name        = "${var.prefix}-tgw-${var.default_region}"
   region      = var.default_region
   project     = var.project_id
   description = "Transit gateway service attachment"

@@ -23,10 +23,10 @@ gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAcco
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
   experiment  = {
-    environment_code = "exp"
+    environment_code = "dev"
     name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-exp-vpc-glob",
+      name      = "{{ env("ORGANISATION_PREFIX") }}-netenv-dev-vpc-glob",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.0.0/24"]
         data_subnet_ranges = ["172.18.1.0/24"]
@@ -46,10 +46,10 @@ gcp_organization_environments    = {
     ]
   },
   development = {
-    environment_code = "dev"
+    environment_code = "prod"
     name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      prefix      = "{{ env("ORGANISATION_PREFIX") }}-netenv-dev-vpc-glob",
+      name      = "{{ env("ORGANISATION_PREFIX") }}-netenv-prod-vpc-glob",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.4.0/24"]
         data_subnet_ranges = ["172.18.5.0/24"]
@@ -72,9 +72,9 @@ gcp_organization_environments    = {
 # The set of accounts to create. Defaults to an empty list.
 gcp_business_projects            = [
   {
-    name             = "{{ env("ORGANISATION_PREFIX") }}-team1"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-app1"
     department       = "Department_HR"
-    environment_code = "exp"
+    environment_code = "dev"
     budget           = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -89,9 +89,9 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "{{ env("ORGANISATION_PREFIX") }}-team2"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-app2"
     department       = "Department_Marketing"
-    environment_code = "exp"
+    environment_code = "dev"
     budget           = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -106,9 +106,9 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "{{ env("ORGANISATION_PREFIX") }}-team3"
+    name             = "{{ env("ORGANISATION_PREFIX") }}-app1"
     department       = "Department_HR"
-    environment_code = "dev"
+    environment_code = "prod"
     budget           = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -168,4 +168,3 @@ gcp_infra_projects = {
     }
   }
 }
-

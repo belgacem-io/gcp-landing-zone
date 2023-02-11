@@ -70,8 +70,8 @@ locals {
 
 data "google_compute_network" "nethub_vpc" {
   for_each = local.nethubs_by_env_code
-
-  name    = "vpc-${each.key}-shared-hub"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name    = "${var.}-vpc-${each.key}-shared-hub"
   project = each.value.project_id
 
   depends_on = [

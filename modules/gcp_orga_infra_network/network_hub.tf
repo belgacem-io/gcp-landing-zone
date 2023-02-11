@@ -2,33 +2,37 @@ locals {
   nethub_project_id = try(data.google_projects.org_nethub.projects[0].project_id, null)
   org_public_subnets            = [
     for subnet_range in var.public_subnet_ranges : {
-      subnet_name           = "org-network-hub-public-${index(var.public_subnet_ranges,subnet_range )}-${var.default_region}"
+      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      subnet_name           = "${var.prefix}-sub-${var.default_region}-public-${index(var.public_subnet_ranges,subnet_range )}"
       subnet_ip             = subnet_range
-      project_name          = "org-network-hub"
+      project_name          = var.project_name
     }
   ]
 
   org_private_subnets            = [
     for subnet_range in var.private_subnet_ranges : {
-      subnet_name           = "org-network-hub-private-${index(var.private_subnet_ranges,subnet_range )}-${var.default_region}"
+      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      subnet_name           = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges,subnet_range )}"
       subnet_ip             = subnet_range
-      project_name          = "org-network-hub"
+      project_name          = var.project_name
     }
   ]
 
   org_private_svc_connect_subnets            = [
     for subnet_range in var.private_svc_connect_ranges : {
-      subnet_name           = "org-network-hub-svcconnect-${index(var.private_svc_connect_ranges,subnet_range )}-${var.default_region}"
+      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      subnet_name           = "${var.prefix}-svcc-${var.default_region}-${index(var.private_subnet_ranges,subnet_range )}"
       subnet_ip             = subnet_range
-      project_name          = "org-network-hub"
+      project_name          = var.project_name
     }
   ]
 
   org_data_subnets            = [
     for subnet_range in var.data_subnet_ranges : {
-      subnet_name           = "org-network-hub-data-${index(var.data_subnet_ranges,subnet_range )}-${var.default_region}"
+      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      subnet_name           = "${var.prefix}-sub-${var.default_region}-data-${index(var.private_subnet_ranges,subnet_range )}"
       subnet_ip             = subnet_range
-      project_name          = "org-network-hub"
+      project_name          = var.project_name
     }
   ]
 }

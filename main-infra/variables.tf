@@ -85,7 +85,7 @@ variable "gcp_organization_environments" {
     environment_code = string,
     name             = string
     network          = object({
-      prefix      = string,
+      name      = string,
       cidr_blocks = object({
         private_subnet_ranges = list(string)
         data_subnet_ranges = list(string)

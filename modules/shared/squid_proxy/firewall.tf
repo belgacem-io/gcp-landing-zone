@@ -2,7 +2,8 @@
   Mandatory firewall rules
  *****************************************/
 resource "google_compute_firewall" "allow_ingress" {
-  name      = "fw-allow-${var.name}-ingress"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name    = "${var.prefix}-fw-glb-allow-${var.name}-ingress"
   network   = var.vpc_name
   project   = var.project_id
   direction = "INGRESS"
@@ -27,7 +28,8 @@ resource "google_compute_firewall" "allow_ingress" {
 }
 
 resource "google_compute_firewall" "allow_egress" {
-  name      = "fw-allow-${var.name}-egress"
+  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  name    = "${var.prefix}-fw-glb-allow-${var.name}-egress"
   network   = var.vpc_name
   project   = var.project_id
   direction = "EGRESS"
