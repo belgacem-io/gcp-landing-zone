@@ -1,6 +1,6 @@
 name: security-scan-commenter
 on:
-  push:
+  pull_request:
 jobs:
   tfsec:
     name: Security scanner
