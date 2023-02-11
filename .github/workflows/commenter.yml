@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   tfsec:
-    name: tfsec PR commenter
+    name: Security scanner
     runs-on: ubuntu-latest
 
     steps:
