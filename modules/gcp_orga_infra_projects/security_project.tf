@@ -18,8 +18,8 @@ module "organization_security" {
   budget_amount               = var.infra_security_project.budget.amount
 
   labels = {
-    environment_code       = "prod"
-    application_name  = var.infra_security_project.name
+    environment_code = "prod"
+    application_name = var.infra_security_project.name
   }
 
 }

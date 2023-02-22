@@ -26,9 +26,9 @@ module "pg" {
   }
 
   ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = false
-    private_network = module.fetch.nethubs_shared_vpc_by_env_code["exp"].self_link
+    ipv4_enabled        = true
+    require_ssl         = false
+    private_network     = module.fetch.nethubs_shared_vpc_by_env_code["exp"].self_link
     authorized_networks = []
   }
 

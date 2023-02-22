@@ -1,4 +1,3 @@
-
 locals {
   org_nethub_project_id = data.google_projects.org_nethub.projects[0].project_id
 }

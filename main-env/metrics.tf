@@ -3,7 +3,7 @@
 *****************************************/
 
 resource "google_monitoring_monitored_project" "nethub_projects" {
-  provider      = google-beta
+  provider = google-beta
 
   for_each = var.gcp_organization_environments
 

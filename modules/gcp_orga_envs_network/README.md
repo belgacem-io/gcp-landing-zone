@@ -3,7 +3,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_business_project_subnets"></a> [business\_project\_subnets](#input\_business\_project\_subnets) | Default subnets for Organization network hub. | <pre>list(object({<br>    project_name = string<br>    environment_code = string<br>    private_subnet_ranges  = list(string)<br>    data_subnet_ranges =  list(string)<br>    private_subnet_k8s_2nd_ranges = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_business_project_subnets"></a> [business\_project\_subnets](#input\_business\_project\_subnets) | Default subnets for Organization network hub. | <pre>list(object({<br>    project_name                  = string<br>    environment_code              = string<br>    private_subnet_ranges         = list(string)<br>    data_subnet_ranges            = list(string)<br>    private_subnet_k8s_2nd_ranges = list(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_data_subnet_ranges"></a> [data\_subnet\_ranges](#input\_data\_subnet\_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input\_domain) | The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period. | `string` | n/a | yes |

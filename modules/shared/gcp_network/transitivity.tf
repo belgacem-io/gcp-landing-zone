@@ -2,9 +2,9 @@ data "google_compute_subnetwork" "private_svc_connect_subnet" {
 
   for_each = var.mode == "hub" ? toset(var.private_svc_connect_subnets.*.subnet_name) : toset([])
 
-  name      = each.value
-  project   = var.project_id
-  region    = var.default_region
+  name    = each.value
+  project = var.project_id
+  region  = var.default_region
 
   depends_on = [
     module.main
@@ -17,7 +17,7 @@ data "google_compute_subnetwork" "private_svc_connect_subnet" {
 module "transitivity_gateway" {
   source = "../squid_proxy"
 
-  count = var.mode == "hub" ? 1 :  0
+  count = var.mode == "hub" ? 1 : 0
 
   environment_code             = var.environment_code
   project_id                   = var.project_id
@@ -34,10 +34,10 @@ module "transitivity_gateway" {
   Private Google APIs DNS Zone & records.
  *****************************************/
 module "private_service_connect" {
-  source                     = "terraform-google-modules/network/google//modules/private-service-connect"
-  version                                = "~> 5.2"
+  source  = "terraform-google-modules/network/google//modules/private-service-connect"
+  version = "~> 5.2"
 
-  count   = var.mode == "hub" && var.private_svc_connect_ip !=null ? 1 : 0
+  count = var.mode == "hub" && var.private_svc_connect_ip !=null ? 1 : 0
 
   forwarding_rule_name         = "privategoogleapi"
   private_service_connect_name = "${var.environment_code}-gip-psconnect"
@@ -52,16 +52,16 @@ module "private_service_connect" {
  *****************************************/
 
 resource "google_compute_route" "internet_routes" {
-  count   = var.mode == "hub" ? 1 : 0
+  count = var.mode == "hub" ? 1 : 0
 
-  project           = var.project_id
-  network           = var.network_name
+  project          = var.project_id
+  network          = var.network_name
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name              = "${var.prefix}-rt-glb-${var.network_name}-internet"
-  description       = "Transitivity route for internet"
-  tags              = [var.network_name]
-  dest_range        = "0.0.0.0/0"
-  next_hop_gateway  = "default-internet-gateway"
+  name             = "${var.prefix}-rt-glb-${var.network_name}-internet"
+  description      = "Transitivity route for internet"
+  tags             = [var.network_name]
+  dest_range       = "0.0.0.0/0"
+  next_hop_gateway = "default-internet-gateway"
 }
 
 
@@ -86,15 +86,15 @@ resource "google_compute_route" "transitivity_routes" {
  */
 
 resource "google_compute_service_attachment" "svc_attachment" {
-  count = var.mode == "hub" ? 1 :  0
+  count       = var.mode == "hub" ? 1 : 0
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   name        = "${var.prefix}-tgw-${var.default_region}"
   region      = var.default_region
   project     = var.project_id
   description = "Transit gateway service attachment"
 
-  enable_proxy_protocol    = false
-  connection_preference    = "ACCEPT_AUTOMATIC"
-  nat_subnets              = [for subnet in data.google_compute_subnetwork.private_svc_connect_subnet : subnet.id]
-  target_service           = module.transitivity_gateway.0.ilb_id
+  enable_proxy_protocol = false
+  connection_preference = "ACCEPT_AUTOMATIC"
+  nat_subnets           = [for subnet in data.google_compute_subnetwork.private_svc_connect_subnet : subnet.id]
+  target_service        = module.transitivity_gateway.0.ilb_id
 }

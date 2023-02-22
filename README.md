@@ -25,6 +25,7 @@
 </table>
 
 ### Prerequisites
+
 Before stating, make sure that you've done the following:
 
 1. Set up a Google Cloud [organization](https://cloud.google.com/resource-manager/docs/creating-managing-organization).
@@ -33,33 +34,34 @@ Before stating, make sure that you've done the following:
 4. Create a dedicated folder (optional, can use the organisation as container)
 5. Create a bootstrap GCP project that will be used for running terraform scripts
 6. Create a service account with the following permissions
-   - organisation -> Billing Account Costs Manager
-   - organisation -> Billing Account User
-   - folder -> Owner
-   - folder -> Project Creator
-   - folder -> Security Admin
-   - folder -> Service Account Token Creator
-   - folder -> Service Account User
+    - organisation -> Billing Account Costs Manager
+    - organisation -> Billing Account User
+    - folder -> Owner
+    - folder -> Project Creator
+    - folder -> Security Admin
+    - folder -> Service Account Token Creator
+    - folder -> Service Account User
 7. Create the following groups (optional)
-   - xx-organization-admins@example.com
-   - xx-security-admins@example.com
-   - xx-security-reviewers@example.com
-   - xx-billing-admins@example.com
-   - xx-organization-viewers@example.com
-   - xx-network-admins@example.com
-   - xx-network-viewers@example.com
-8. On bootstrap project, enable the flowing APIs
-   - IAM Service Account Credentials API
-   - Cloud Resource Manager API
+    - xx-organization-admins@example.com
+    - xx-security-admins@example.com
+    - xx-security-reviewers@example.com
+    - xx-billing-admins@example.com
+    - xx-organization-viewers@example.com
+    - xx-network-admins@example.com
+    - xx-network-viewers@example.com
+8. In bootstrap project, enable the flowing APIs
+    - IAM Service Account Credentials API
+    - Cloud Resource Manager API
 
 ### Installation
+
 1. Clone the repo
    ```sh
    git clone https://github.com/belgacem-io/gcp-landing-zone.git
    ```
 2. For each module main-xxx, create a terraform.tfvars file with the appropriates values
 3. Create a service account key and download the credentials file as JSON
-4. Create an '.auth/env' file and add required variables 
+4. Create an '.auth/env' file and add required variables
    ```sh
    ##################################### GCP Credentials ###################
    export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
@@ -81,8 +83,8 @@ Before stating, make sure that you've done the following:
     make up
     ./terraformd --insall
    ```
-   terraform
-6. Init [bootstrap project](./main-bootstrap/README.md) 
+   
+6. Init [bootstrap project](./main-bootstrap/README.md)
    ```sh
     terraformd -chdir=main-bootstap init && terraformd -chdir=main-bootstap apply
    ```

@@ -13,7 +13,7 @@ module "fetch" {
 *****************************************/
 locals {
   authorized_internal_ip_ranges = flatten(concat(values(module.fetch.shared_subnets_by_project_and_region["exp-uc1-kube"]),
-  values(module.fetch.shared_subnets_by_project_and_region["exp-sharedsvc"]))).*.ip_cidr_range
+    values(module.fetch.shared_subnets_by_project_and_region["exp-sharedsvc"]))).*.ip_cidr_range
 }
 module "gke" {
   source = "../modules/gcp_gke"

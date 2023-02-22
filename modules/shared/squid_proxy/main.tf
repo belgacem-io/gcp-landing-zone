@@ -14,16 +14,16 @@ module "squid_proxy_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
   version = "~> 7.3"
 
-  project_id      = var.project_id
-  region          = var.default_region
-  can_ip_forward  = true
-  disk_size_gb    = 10
-  name_prefix     = var.name
-  network         = var.vpc_name
-  subnetwork      = var.subnet_name
-  subnetwork_project= var.project_id
-  machine_type    = var.instance_type
-  service_account = {
+  project_id         = var.project_id
+  region             = var.default_region
+  can_ip_forward     = true
+  disk_size_gb       = 10
+  name_prefix        = var.name
+  network            = var.vpc_name
+  subnetwork         = var.subnet_name
+  subnetwork_project = var.project_id
+  machine_type       = var.instance_type
+  service_account    = {
     email  = module.squid_proxy_service_account.emails_list[0]
     scopes = ["cloud-platform"]
   }
@@ -37,10 +37,10 @@ module "squid_proxy_template" {
       safe_ports          = var.authorized_ports
     })
   }
-  source_image_family = split("/",var.instance_image)[1]
-  source_image_project = split("/",var.instance_image)[0]
+  source_image_family  = split("/", var.instance_image)[1]
+  source_image_project = split("/", var.instance_image)[0]
 
-  tags = [var.network_internet_egress_tag,var.name]
+  tags = [var.network_internet_egress_tag, var.name]
 
   depends_on = [
     module.squid_proxy_service_account

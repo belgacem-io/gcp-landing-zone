@@ -10,8 +10,8 @@ header-from: header.md
 
 # see: https://terraform-docs.io/user-guide/configuration/recursive
 recursive:
- enabled: false
- path: modules
+  enabled: false
+  path: modules
 
 # see: https://terraform-docs.io/user-guide/configuration/sections
 sections:

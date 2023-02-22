@@ -26,7 +26,7 @@ resource "google_project_service" "enableapi" {
 resource "google_organization_iam_member" "tf_sa_org_perms" {
   for_each = startswith(var.gcp_parent_container_id, "organizations") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
 
-  org_id = split("/",var.gcp_parent_container_id)[1]
+  org_id = split("/", var.gcp_parent_container_id)[1]
   role   = each.value
   member = "serviceAccount:${var.gcp_terraform_sa_email}"
 }
@@ -34,7 +34,7 @@ resource "google_organization_iam_member" "tf_sa_org_perms" {
 resource "google_folder_iam_member" "tf_sa_org_perms" {
   for_each = startswith(var.gcp_parent_container_id, "folders") ? toset(var.gcp_terraform_sa_org_iam_permissions) : toset([])
 
-  folder = split("/",var.gcp_parent_container_id)[1]
+  folder = split("/", var.gcp_parent_container_id)[1]
   role   = each.value
   member = "serviceAccount:${var.gcp_terraform_sa_email}"
 }

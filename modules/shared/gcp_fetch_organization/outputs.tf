@@ -19,8 +19,9 @@ output "folders_by_id" {
 }
 
 output "folders_by_name" {
-  value = {for folder in local.folders :
-        folder.name => [ for fld in local.folders: fld if fld.display_name == folder.display_name ]
+  value = {
+    for folder in local.folders :
+    folder.name => [for fld in local.folders : fld if fld.display_name == folder.display_name]
   }
 }
 output "folders_by_env_code" {

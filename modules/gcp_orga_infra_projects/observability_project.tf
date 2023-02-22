@@ -5,9 +5,9 @@
 module "organization_observability" {
   source                  = "terraform-google-modules/project-factory/google"
   version                 = "~> 14.1"
-  random_project_id           = true
-  create_project_sa           = false
-  default_service_account     = "delete"
+  random_project_id       = true
+  create_project_sa       = false
+  default_service_account = "delete"
   name                    = var.infra_observability_project.name
   org_id                  = var.organization_id
   billing_account         = var.billing_account
@@ -59,11 +59,11 @@ module "log_export_to_biqquery" {
   filter                 = local.main_logs_filter
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   log_sink_name          = "${var.infra_observability_project.name}-bq-${var.default_region}-orglogs"
-  parent_resource_id     = split("/",var.parent_id )[1]
-  parent_resource_type   = startswith("organisations",var.parent_id) ? "organisation" : "folder"
+  parent_resource_id     = split("/", var.parent_id )[1]
+  parent_resource_type   = startswith("organisations", var.parent_id) ? "organisation" : "folder"
   include_children       = true
   unique_writer_identity = true
-  bigquery_options = {
+  bigquery_options       = {
     use_partitioned_tables = true
   }
 }
@@ -111,8 +111,8 @@ module "log_export_to_storage" {
   filter                 = ""
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   log_sink_name          = "${var.infra_observability_project.name}-sk-glb-orglogs"
-  parent_resource_id     = split("/",var.parent_id )[1]
-  parent_resource_type   = startswith("organizations",var.parent_id) ? "organization" : "folder"
+  parent_resource_id     = split("/", var.parent_id )[1]
+  parent_resource_type   = startswith("organizations", var.parent_id) ? "organization" : "folder"
   include_children       = true
   unique_writer_identity = true
 }

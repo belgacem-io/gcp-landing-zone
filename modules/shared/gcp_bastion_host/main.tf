@@ -17,7 +17,7 @@ module "instance_template" {
     email  = google_service_account.vm_sa.email
     scopes = ["cloud-platform"]
   }
-  metadata        = {
+  metadata = {
     enable-oslogin = "TRUE"
   }
 }
@@ -26,7 +26,7 @@ module "mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
   version = "~> 7.9"
 
-  project_id      = var.project_id
+  project_id        = var.project_id
   region            = var.region
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   hostname          = "${var.prefix}-mig-${var.instance_name}"

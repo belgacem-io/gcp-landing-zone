@@ -2,7 +2,7 @@
   Default DNS Policy
  *****************************************/
 resource "google_dns_policy" "default_spoke_policy" {
-  count   = var.mode == "spoke" ? 1 : 0
+  count = var.mode == "spoke" ? 1 : 0
 
   project                   = var.project_id
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]

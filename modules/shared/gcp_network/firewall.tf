@@ -4,16 +4,18 @@
 
 resource "google_compute_firewall" "deny_all_egress" {
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-deny-all-egress"
+  name      = "${var.prefix}-fw-glb-deny-all-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
   priority  = 65535
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -30,16 +32,18 @@ resource "google_compute_firewall" "deny_all_egress" {
 
 resource "google_compute_firewall" "allow_private_api_egress" {
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-private-google-api-egress"
+  name      = "${var.prefix}-fw-glb-allow-private-google-api-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
   priority  = 65534
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -62,7 +66,7 @@ resource "google_compute_firewall" "allow_private_api_egress" {
 
 // Allow SSH via IAP when using the allow-iap-ssh tag for Linux workloads.
 resource "google_compute_firewall" "allow_iap_ssh" {
-  count   = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.optional_fw_rules_enabled ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-ssh"
@@ -70,9 +74,11 @@ resource "google_compute_firewall" "allow_iap_ssh" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -92,7 +98,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
 
 // Allow RDP via IAP when using the allow-iap-rdp tag for Windows workloads.
 resource "google_compute_firewall" "allow_iap_rdp" {
-  count   = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.optional_fw_rules_enabled ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-rdp"
@@ -100,9 +106,11 @@ resource "google_compute_firewall" "allow_iap_rdp" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -122,19 +130,21 @@ resource "google_compute_firewall" "allow_iap_rdp" {
 
 // Allow access to kms.windows.googlecloud.com for Windows license activation
 resource "google_compute_firewall" "allow_windows_activation" {
-  count     = var.windows_activation_enabled ? 1 : 0
+  count = var.windows_activation_enabled ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-windows-activation"
+  name      = "${var.prefix}-fw-glb-allow-windows-activation"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
   priority  = 0
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -153,7 +163,7 @@ resource "google_compute_firewall" "allow_windows_activation" {
 
 // Allow traffic for Internal & Global load balancing health check and load balancing IP ranges.
 resource "google_compute_firewall" "allow_lb" {
-  count   = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.optional_fw_rules_enabled ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-lb-health"
@@ -161,9 +171,11 @@ resource "google_compute_firewall" "allow_lb" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -182,19 +194,21 @@ resource "google_compute_firewall" "allow_lb" {
 }
 
 resource "google_compute_firewall" "allow_all_egress" {
-  count     = var.allow_all_egress_ranges != null ? 1 : 0
+  count = var.allow_all_egress_ranges != null ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-limited-egress"
+  name      = "${var.prefix}-fw-glb-allow-limited-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
   priority  = 1000
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata
@@ -209,19 +223,21 @@ resource "google_compute_firewall" "allow_all_egress" {
 }
 
 resource "google_compute_firewall" "allow_all_ingress" {
-  count     = var.allow_all_ingress_ranges != null ? 1 : 0
+  count = var.allow_all_ingress_ranges != null ? 1 : 0
 
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-limited-ingress"
+  name      = "${var.prefix}-fw-glb-allow-limited-ingress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "INGRESS"
   priority  = 1000
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [{
-      metadata = "INCLUDE_ALL_METADATA"
-    }] : []
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
 
     content {
       metadata = log_config.value.metadata

@@ -39,11 +39,11 @@ module "gke" {
   kubernetes_version                = var.kubernetes_version
 
   master_authorized_networks = [
-  for range in var.authorized_subnetwork_ip_ranges :
-  {
-    cidr_block   = range
-    display_name = "VPC"
-  }
+    for range in var.authorized_subnetwork_ip_ranges :
+    {
+      cidr_block   = range
+      display_name = "VPC"
+    }
   ]
 
   node_pools = [
@@ -82,7 +82,7 @@ module "gke" {
 
   node_pools_labels = {
 
-    all          = {
+    all = {
 
     }
     my-node-pool = {

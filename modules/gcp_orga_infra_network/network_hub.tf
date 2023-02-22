@@ -1,38 +1,38 @@
 locals {
-  nethub_project_id = try(data.google_projects.org_nethub.projects[0].project_id, null)
-  org_public_subnets            = [
+  nethub_project_id  = try(data.google_projects.org_nethub.projects[0].project_id, null)
+  org_public_subnets = [
     for subnet_range in var.public_subnet_ranges : {
       #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-sub-${var.default_region}-public-${index(var.public_subnet_ranges,subnet_range )}"
-      subnet_ip             = subnet_range
-      project_name          = var.project_name
+      subnet_name  = "${var.prefix}-sub-${var.default_region}-public-${index(var.public_subnet_ranges,subnet_range )}"
+      subnet_ip    = subnet_range
+      project_name = var.project_name
     }
   ]
 
-  org_private_subnets            = [
+  org_private_subnets = [
     for subnet_range in var.private_subnet_ranges : {
       #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges,subnet_range )}"
-      subnet_ip             = subnet_range
-      project_name          = var.project_name
+      subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges,subnet_range )}"
+      subnet_ip    = subnet_range
+      project_name = var.project_name
     }
   ]
 
-  org_private_svc_connect_subnets            = [
+  org_private_svc_connect_subnets = [
     for subnet_range in var.private_svc_connect_ranges : {
       #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-svcc-${var.default_region}-${index(var.private_subnet_ranges,subnet_range )}"
-      subnet_ip             = subnet_range
-      project_name          = var.project_name
+      subnet_name  = "${var.prefix}-svcc-${var.default_region}-${index(var.private_subnet_ranges,subnet_range )}"
+      subnet_ip    = subnet_range
+      project_name = var.project_name
     }
   ]
 
-  org_data_subnets            = [
+  org_data_subnets = [
     for subnet_range in var.data_subnet_ranges : {
       #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-sub-${var.default_region}-data-${index(var.private_subnet_ranges,subnet_range )}"
-      subnet_ip             = subnet_range
-      project_name          = var.project_name
+      subnet_name  = "${var.prefix}-sub-${var.default_region}-data-${index(var.private_subnet_ranges,subnet_range )}"
+      subnet_ip    = subnet_range
+      project_name = var.project_name
     }
   ]
 }
@@ -62,15 +62,15 @@ module "nethub" {
   network_name                  = var.network_name
   mode                          = "hub"
 
-  public_subnets                = local.org_public_subnets
-  private_subnets               = local.org_private_subnets
-  data_subnets                  = local.org_data_subnets
-  private_svc_connect_subnets   = local.org_private_svc_connect_subnets
-  private_svc_connect_ip        = var.private_svc_connect_ip
+  public_subnets              = local.org_public_subnets
+  private_subnets             = local.org_private_subnets
+  data_subnets                = local.org_data_subnets
+  private_svc_connect_subnets = local.org_private_svc_connect_subnets
+  private_svc_connect_ip      = var.private_svc_connect_ip
 
   secondary_ranges = {}
 
   # FIXME Security issue
-  allow_all_egress_ranges       = ["0.0.0.0/0"]
-  allow_all_ingress_ranges      = ["0.0.0.0/0"]
+  allow_all_egress_ranges  = ["0.0.0.0/0"]
+  allow_all_ingress_ranges = ["0.0.0.0/0"]
 }

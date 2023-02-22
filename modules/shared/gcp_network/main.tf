@@ -1,6 +1,6 @@
 locals {
   private_googleapis_cidr = "199.36.153.8/30"
-  public_subnets = [
+  public_subnets          = [
     for subnet in var.public_subnets : {
       subnet_name           = subnet.subnet_name
       subnet_ip             = subnet.subnet_ip
@@ -46,7 +46,7 @@ locals {
     }
   ]
 
-  subnets = concat(local.public_subnets,local.private_subnets,local.data_subnets,local.private_svc_connect_subnets)
+  subnets = concat(local.public_subnets, local.private_subnets, local.data_subnets, local.private_svc_connect_subnets)
 }
 
 
@@ -55,8 +55,8 @@ locals {
  *****************************************/
 
 module "main" {
-  source                                 = "terraform-google-modules/network/google"
-  version                                = "~> 5.2"
+  source  = "terraform-google-modules/network/google"
+  version = "~> 5.2"
 
   project_id                             = var.project_id
   network_name                           = var.network_name
@@ -67,14 +67,16 @@ module "main" {
   secondary_ranges = var.secondary_ranges
 
   routes = concat(
-    var.nat_enabled ? [{
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      name              = "${var.prefix}-rt-glb-1000-all-default-private-api"
-      description       = "Route through IGW to allow private google api access."
-      destination_range = "199.36.153.8/30"
-      next_hop_internet = "true"
-      priority          = "1000"
-    }] : [],
+    var.nat_enabled ? [
+      {
+        #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+        name              = "${var.prefix}-rt-glb-1000-all-default-private-api"
+        description       = "Route through IGW to allow private google api access."
+        destination_range = "199.36.153.8/30"
+        next_hop_internet = "true"
+        priority          = "1000"
+      }
+    ] : [],
     var.nat_enabled ?
     [
       {
@@ -89,13 +91,14 @@ module "main" {
     ]
     : [],
     var.nat_enabled && var.windows_activation_enabled ?
-    [{
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      name              = "${var.prefix}-rt-glb-1000-all-default-windows-kms"
-      description       = "Route through IGW to allow Windows KMS activation for GCP."
-      destination_range = "35.190.247.13/32"
-      next_hop_internet = "true"
-      priority          = "1000"
+    [
+      {
+        #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+        name              = "${var.prefix}-rt-glb-1000-all-default-windows-kms"
+        description       = "Route through IGW to allow Windows KMS activation for GCP."
+        destination_range = "35.190.247.13/32"
+        next_hop_internet = "true"
+        priority          = "1000"
       }
     ]
     : []

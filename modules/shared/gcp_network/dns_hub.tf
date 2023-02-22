@@ -3,7 +3,7 @@
  *****************************************/
 
 resource "google_dns_policy" "default_policy" {
-  count   = var.mode == "hub" ? 1 : 0
+  count = var.mode == "hub" ? 1 : 0
 
   project                   = var.project_id
   #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
@@ -23,7 +23,7 @@ module "dns-forwarding-zone" {
   source  = "terraform-google-modules/cloud-dns/google"
   version = "~> 4.2"
 
-  count   = ( var.mode == "hub" && var.dns_enable_outbound_forwarding ) ? 1 : 0
+  count = ( var.mode == "hub" && var.dns_enable_outbound_forwarding ) ? 1 : 0
 
   project_id = var.project_id
   type       = "forwarding"
