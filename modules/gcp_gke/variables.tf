@@ -1,5 +1,5 @@
 variable "project_id" {
-  type = string
+  type        = string
   description = "The project ID to host the cluster in"
 }
 variable "prefix" {
@@ -7,74 +7,74 @@ variable "prefix" {
   description = "Prefix applied to service to all resources."
 }
 variable "cluster_name" {
-  type = string
+  type        = string
   description = "the default cluster name"
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "The region to host the cluster in"
 }
 variable "region_azs" {
   description = "List of azs to host the cluster workers in"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "network_name" {
-  type = string
+  type        = string
   description = "The VPC network to host the cluster in"
 }
 
 variable "network_self_link" {
-  type = string
+  type        = string
   description = "The VPC network to host the cluster in"
 }
 
 variable "network_project_id" {
-  type = string
+  type        = string
   description = "The GCP project housing the VPC network to host the cluster in"
 }
 
 variable "subnetwork_name" {
-  type = string
+  type        = string
   description = "The subnetwork to host the cluster in"
 }
 variable "authorized_subnetwork_ip_ranges" {
-  type = list(string)
+  type        = list(string)
   description = "The subnetwork ip range authorized to access master API"
 }
 
 variable "pods_secondary_ip_range_name" {
-  type = string
+  type        = string
   description = "The secondary ip range to use for pods"
 }
 
 variable "services_secondary_ip_range_name" {
-  type = string
+  type        = string
   description = "The secondary ip range to use for services"
 }
 
 variable "min_node_count" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "Min node count"
 }
 
 variable "max_node_count" {
-  type = number
-  default = 3
+  type        = number
+  default     = 3
   description = "Max nodes count"
 }
 
 variable "initial_node_count" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "Initial node count"
 }
 
 variable "preemptible_nodes" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Use preemptible VMs as workers"
 }
 
@@ -113,14 +113,14 @@ variable "k8s_ingress_helm_chart_repo" {
 
 variable "k8s_dashboard_namespace" {
   description = "Kubernetes Dashboard namespace."
-  type = string
-  default = "k8s-dashboard"
+  type        = string
+  default     = "k8s-dashboard"
 }
 
 variable "nodes_tag" {
   description = "Network tags for GKE nodes."
-  type = string
-  default = "tf-lb-https-gke"
+  type        = string
+  default     = "tf-lb-https-gke"
 }
 
 variable "ingress_service_port" {

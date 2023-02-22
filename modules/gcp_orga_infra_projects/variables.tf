@@ -1,10 +1,10 @@
 variable "parent_id" {
-  type = string
+  type        = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
 variable "organization_id" {
-  type = string
+  type        = string
   description = "The ID of the current organization."
 }
 
@@ -25,17 +25,17 @@ variable "gcp_labels" {
 }
 
 variable "infra_folder_name" {
-  type = string
+  type        = string
   description = "Folder witch will contains all infra projects"
 }
 
 
 variable "infra_security_project" {
   type = object({
-    name = string
+    name   = string
     budget = object({
-      amount = number,
-      time_unit = string,
+      amount                    = number,
+      time_unit                 = string,
       email_addresses_to_notify = list(string)
     })
   })
@@ -43,11 +43,11 @@ variable "infra_security_project" {
 
 variable "infra_observability_project" {
   type = object({
-    name = string
+    name   = string
     budget = object({
-      amount = number,
-      time_unit = string,
-      alert_pubsub_topic = string
+      amount                    = number,
+      time_unit                 = string,
+      alert_pubsub_topic        = string
       email_addresses_to_notify = list(string)
     })
   })
@@ -55,10 +55,10 @@ variable "infra_observability_project" {
 
 variable "infra_nethub_project" {
   type = object({
-    name = string
+    name   = string
     budget = object({
-      amount = number,
-      time_unit = string,
+      amount                    = number,
+      time_unit                 = string,
       email_addresses_to_notify = list(string)
     })
   })
@@ -67,7 +67,7 @@ variable "infra_nethub_project" {
 variable "scc_notification_name" {
   description = "Name of the Security Command Center Notification. It must be unique in the organization. Run `gcloud scc notifications describe <scc_notification_name> --organization=org_id` to check if it already exists."
   type        = string
-  default = "org-scc-notify"
+  default     = "org-scc-notify"
 }
 
 variable "scc_notification_filter" {
@@ -149,14 +149,14 @@ variable "org_network_viewers" {
 
 variable "enable_log_export_to_biqquery" {
   description = "Enable log export to bigquery"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "enable_log_export_to_cs" {
   description = "Enable log export to bigquery"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "log_export_storage_lifecycle_rules" {
@@ -174,7 +174,7 @@ variable "log_export_storage_lifecycle_rules" {
     },
     {
       action = {
-        type = "SetStorageClass"
+        type          = "SetStorageClass"
         storage_class = "ARCHIVE"
       }
       condition = {
@@ -187,7 +187,7 @@ variable "log_export_storage_lifecycle_rules" {
 
 variable "log_export_storage_retention_policy" {
   description = "Configuration of the bucket's data retention policy for how long objects in the bucket should be retained."
-  type = object({
+  type        = object({
     is_locked             = bool
     retention_period_days = number
   })

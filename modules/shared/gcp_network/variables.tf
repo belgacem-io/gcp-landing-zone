@@ -58,7 +58,7 @@ variable "bgp_asn_subnet" {
 }
 
 variable "public_subnets" {
-  type        = list(object({
+  type = list(object({
     project_name = string
     subnet_name  = string
     subnet_ip    = string
@@ -68,7 +68,7 @@ variable "public_subnets" {
 }
 
 variable "private_subnets" {
-  type        = list(object({
+  type = list(object({
     project_name = string
     subnet_name  = string
     subnet_ip    = string
@@ -78,7 +78,7 @@ variable "private_subnets" {
 }
 
 variable "data_subnets" {
-  type        = list(object({
+  type = list(object({
     project_name = string
     subnet_name  = string
     subnet_ip    = string
@@ -88,7 +88,7 @@ variable "data_subnets" {
 }
 
 variable "private_svc_connect_subnets" {
-  type        = list(object({
+  type = list(object({
     project_name = string
     subnet_name  = string
     subnet_ip    = string
@@ -100,12 +100,12 @@ variable "private_svc_connect_subnets" {
 variable "private_svc_connect_ip" {
   description = "The internal IP to be used for the private service connect. Required for hub mode"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "secondary_ranges" {
-  type        = map(list(object({
-    range_name = string,
+  type = map(list(object({
+    range_name    = string,
     ip_cidr_range = string
   })))
   description = "Secondary ranges that will be used in some of the subnets"
@@ -160,13 +160,13 @@ variable "optional_fw_rules_enabled" {
 }
 
 variable "allow_all_egress_ranges" {
-  type = list(string)
+  type        = list(string)
   description = "List of network ranges to which all egress traffic will be allowed"
   default     = null
 }
 
 variable "allow_all_ingress_ranges" {
-  type = list(string)
+  type        = list(string)
   description = "List of network ranges from which all ingress traffic will be allowed"
   default     = null
 }
@@ -198,25 +198,25 @@ variable "subnetworks_enable_logging" {
 }
 
 variable "network_internet_egress_tag" {
-  type = string
+  type        = string
   description = "Network tags for VMs with internet access."
-  default = "egress-internet"
+  default     = "egress-internet"
 }
 
 variable "internal_trusted_cidr_ranges" {
   description = "Internal trusted ip ranges. Must be set to private ip ranges"
-  type = list(string)
-  default = ["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+  type        = list(string)
+  default     = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
 }
 
 variable "org_nethub_project_id" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Organization hub network project. Required en spoke mode"
 }
 
 variable "org_nethub_vpc_self_link" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Organization hub network VPC self link. Required en spoke mode"
 }

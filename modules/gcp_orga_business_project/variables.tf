@@ -75,12 +75,12 @@ variable "windows_activation_enabled" {
 }
 
 variable "project_name" {
-  type = string
+  type        = string
   description = "project name"
 }
 
 variable "env_nethub_project_id" {
-  type = string
+  type        = string
   description = "Environment hub network project id"
 }
 
@@ -89,11 +89,11 @@ variable "env_nethub_vpc_subnetwork_self_link" {
 }
 
 variable "activate_apis" {
-  type = list(string)
+  type        = list(string)
   description = "List of API to be enabled"
 }
 
 variable "monitoring_project_id" {
-  type = string
+  type        = string
   description = "Monitoring project id"
 }

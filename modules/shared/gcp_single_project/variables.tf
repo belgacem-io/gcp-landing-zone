@@ -11,7 +11,7 @@ variable "folder_id" {
 variable "billing_account" {
   description = "The ID of the billing account to associated this project with"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "activate_apis" {
@@ -56,7 +56,7 @@ variable "budget_amount" {
 }
 
 variable "env_nethub_project_id" {
-  type = string
+  type        = string
   description = "Environment hub network project id"
 }
 
@@ -65,11 +65,11 @@ variable "env_nethub_vpc_subnetwork_self_link" {
 }
 
 variable "project_name" {
-  type = string
+  type        = string
   description = "project name"
 }
 
 variable "monitoring_project_id" {
-  type = string
+  type        = string
   description = "Monitoring project id"
 }

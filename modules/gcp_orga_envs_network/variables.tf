@@ -6,16 +6,16 @@ variable "prefix" {
   description = "Prefix applied to service to all resources."
 }
 variable "org_nethub_vpc_self_link" {
-  type = string
+  type        = string
   description = "Organization hub network VPC self link"
 }
 
 variable "org_nethub_project_id" {
-  type = string
+  type        = string
   description = "Organization hub network project id"
 }
 variable "project_id" {
-  type = string
+  type        = string
   description = "Environment hub network project id"
 }
 
@@ -60,10 +60,10 @@ variable "private_svc_connect_ip" {
 variable "business_project_subnets" {
   description = "Default subnets for Organization network hub."
   type        = list(object({
-    project_name = string
-    environment_code = string
-    private_subnet_ranges  = list(string)
-    data_subnet_ranges =  list(string)
+    project_name                  = string
+    environment_code              = string
+    private_subnet_ranges         = list(string)
+    data_subnet_ranges            = list(string)
     private_subnet_k8s_2nd_ranges = list(string)
   }))
 }

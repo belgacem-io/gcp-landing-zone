@@ -4,12 +4,12 @@ variable "gcp_organization_id" {
 }
 
 variable "gcp_parent_container_id" {
-  type = string
+  type        = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
 variable "gcp_bootstrap_project_id" {
-  type = string
+  type        = string
   description = "The bootstrap project id."
 }
 
@@ -34,41 +34,41 @@ variable "gcp_terraform_sa_id" {
 variable "gcp_group_org_admins" {
   description = "Google Group for GCP Organization Administrators"
   type        = string
-  default = null
+  default     = null
 }
 variable "gcp_group_org_viewers" {
   description = "Google Group for GCP Organization read only users"
   type        = string
-  default = null
+  default     = null
 }
 variable "gcp_group_org_security_admins" {
   description = "Google Group for GCP Organization Security Administrators"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "gcp_group_org_security_reviewers" {
   description = "Google Group for GCP Organization Security reviewer"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "gcp_group_org_billing_admins" {
   description = "Google Group for GCP Organization Billing Administrators"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "gcp_group_org_network_admins" {
   description = "Google Group for GCP Organization Network Administrators"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "gcp_group_org_network_viewers" {
   description = "Google Group for GCP Organization Network Read only users"
   type        = string
-  default = null
+  default     = null
 }
 
 variable "gcp_terraform_sa_org_iam_permissions" {

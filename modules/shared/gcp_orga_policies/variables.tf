@@ -1,10 +1,10 @@
 variable "resource_id" {
-  type = string
+  type        = string
   description = "Resource id where the policies must be applied"
 }
 
 variable "resource_type" {
-  type = string
+  type        = string
   description = "Resource type where the policies must be applied. Possible values: organization, folder and project"
 }
 

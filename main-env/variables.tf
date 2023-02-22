@@ -4,7 +4,7 @@ variable "gcp_organization_id" {
 }
 
 variable "gcp_parent_container_id" {
-  type = string
+  type        = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
@@ -41,19 +41,19 @@ variable "gcp_default_region_azs" {
 }
 
 variable "gcp_organization_environments" {
-  type        = map(object({
+  type = map(object({
     environment_code = string,
     name             = string
     network          = object({
-      name      = string,
+      name        = string,
       cidr_blocks = object({
-        private_subnet_ranges  = list(string)
-        data_subnet_ranges     = list(string)
+        private_subnet_ranges     = list(string)
+        data_subnet_ranges        = list(string)
         private_svc_subnet_ranges = list(string)
-        private_svc_connect_ip = string
+        private_svc_connect_ip    = string
       })
     })
-    children         = list(object({
+    children = list(object({
       name     = string,
       children = list(object({
         name = string
@@ -65,7 +65,7 @@ variable "gcp_organization_environments" {
 }
 
 variable "gcp_business_projects" {
-  type        = list(object({
+  type = list(object({
     name             = string,
     department       = string,
     environment_code = string,
@@ -74,11 +74,11 @@ variable "gcp_business_projects" {
       time_unit                 = string,
       email_addresses_to_notify = list(string)
     })
-    network          = object({
+    network = object({
       cidr_blocks = object({
-        private_subnet_ranges = list(string)
+        private_subnet_ranges         = list(string)
         private_subnet_k8s_2nd_ranges = list(string)
-        data_subnet_ranges = list(string)
+        data_subnet_ranges            = list(string)
       })
     })
   }))
@@ -93,8 +93,8 @@ variable "gcp_labels" {
 
 variable "gcp_infra_projects" {
   type = object({
-    folder = string
-    security       = object({
+    folder   = string
+    security = object({
       name   = string
       budget = object({
         amount                    = number,
@@ -102,7 +102,7 @@ variable "gcp_infra_projects" {
         email_addresses_to_notify = list(string)
       })
     })
-    observability  = object({
+    observability = object({
       name   = string
       budget = object({
         amount                    = number,
@@ -112,8 +112,8 @@ variable "gcp_infra_projects" {
       })
     })
     nethub = object({
-      name    = string
-      budget  = object({
+      name   = string
+      budget = object({
         amount                    = number,
         time_unit                 = string,
         email_addresses_to_notify = list(string)
@@ -121,11 +121,11 @@ variable "gcp_infra_projects" {
       network = object({
         name        = string,
         cidr_blocks = object({
-          public_subnet_ranges = list(string)
-          private_subnet_ranges = list(string)
-          data_subnet_ranges = list(string)
+          public_subnet_ranges      = list(string)
+          private_subnet_ranges     = list(string)
+          data_subnet_ranges        = list(string)
           private_svc_subnet_ranges = list(string)
-          private_svc_connect_ip = string
+          private_svc_connect_ip    = string
         })
       })
     })

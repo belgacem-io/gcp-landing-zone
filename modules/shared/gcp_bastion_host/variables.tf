@@ -13,33 +13,33 @@ variable "authorized_members" {
 }
 
 variable "project_id" {
-  type = string
+  type        = string
   description = "Project ID where to set up the instance and IAP tunneling"
 }
 
 variable "instance_name" {
-  type = string
+  type        = string
   description = "Name of the VM instance to create and allow SSH from IAP."
 }
 
 variable "instance_type" {
-  type = string
+  type        = string
   description = "Type of the VM instance to create and allow SSH from IAP."
-  default = "e2-micro" #"n1-standard-1"
+  default     = "e2-micro" #"n1-standard-1"
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "Region to create the subnet and VM."
 }
 
 variable "network_self_link" {
-  type = string
+  type        = string
   description = "Network where to install the bastion host"
 }
 
 variable "subnet_self_link" {
-  type = string
+  type        = string
   description = "Subnet where to install the bastion host"
 }
 
@@ -66,7 +66,7 @@ variable "autoscaling_cpu" {
 
 variable "autoscaling_metric" {
   description = "Autoscaling, metric policy block as single element array. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#metric"
-  type = list(object({
+  type        = list(object({
     name   = string
     target = number
     type   = string
@@ -82,7 +82,7 @@ variable "autoscaling_lb" {
 
 variable "autoscaling_scale_in_control" {
   description = "Autoscaling, scale-in control block. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#scale_in_control"
-  type = object({
+  type        = object({
     fixed_replicas   = number
     percent_replicas = number
     time_window_sec  = number

@@ -136,7 +136,7 @@ variable "update_policy" {
     type                         = string
   }))
   description = "The rolling update policy. https://www.terraform.io/docs/providers/google/r/compute_region_instance_group_manager#rolling_update_policy"
-  default = [
+  default     = [
     {
       max_surge_fixed              = 0
       max_surge_percent            = null
@@ -146,7 +146,7 @@ variable "update_policy" {
       min_ready_sec                = 180
       minimal_action               = "RESTART"
       type                         = "OPPORTUNISTIC"
-      replacement_method            = "RECREATE"
+      replacement_method           = "RECREATE"
     }
   ]
 }

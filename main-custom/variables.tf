@@ -85,16 +85,16 @@ variable "gcp_default_region_azs" {
 }
 
 variable "gcp_organization_environments" {
-  type        = map(object({
+  type = map(object({
     environment_code = string,
     network          = object({
       prefix      = string,
       cidr_blocks = object({
         private_subnet_ranges = list(string)
-        data_subnet_ranges = list(string)
+        data_subnet_ranges    = list(string)
       })
     })
-    children         = list(object({
+    children = list(object({
       name     = string,
       children = list(object({
         name = string
@@ -106,7 +106,7 @@ variable "gcp_organization_environments" {
 }
 
 variable "gcp_business_projects" {
-  type        = list(object({
+  type = list(object({
     name             = string,
     department       = string,
     environment_code = string,
@@ -115,10 +115,10 @@ variable "gcp_business_projects" {
       time_unit                 = string,
       email_addresses_to_notify = list(string)
     })
-    network          = object({
+    network = object({
       cidr_blocks = object({
         private_subnet_ranges = list(string)
-        data_subnet_ranges = list(string)
+        data_subnet_ranges    = list(string)
       })
     })
   }))
@@ -133,7 +133,7 @@ variable "gcp_labels" {
 
 variable "gcp_infra_projects" {
   type = object({
-    security       = object({
+    security = object({
       name   = string
       folder = string
       budget = object({
@@ -142,7 +142,7 @@ variable "gcp_infra_projects" {
         email_addresses_to_notify = list(string)
       })
     })
-    observability  = object({
+    observability = object({
       name   = string
       folder = string
       budget = object({
@@ -153,9 +153,9 @@ variable "gcp_infra_projects" {
       })
     })
     nethub = object({
-      name    = string
-      folder  = string
-      budget  = object({
+      name   = string
+      folder = string
+      budget = object({
         amount                    = number,
         time_unit                 = string,
         email_addresses_to_notify = list(string)
@@ -164,7 +164,7 @@ variable "gcp_infra_projects" {
         name        = string,
         cidr_blocks = object({
           private_subnet_ranges = list(string)
-          data_subnet_ranges = list(string)
+          data_subnet_ranges    = list(string)
         })
       })
     })
