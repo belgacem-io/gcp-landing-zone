@@ -10,7 +10,7 @@ module "infra_projects" {
   parent_id                   = var.gcp_parent_container_id
   infra_folder_name           = var.gcp_infra_projects.folder
   organization_id             = var.gcp_organization_id
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[env]-[resource]-[location]-[description]-[suffix]
   infra_security_project      = var.gcp_infra_projects.security
   infra_observability_project = var.gcp_infra_projects.observability
   infra_nethub_project        = var.gcp_infra_projects.nethub
@@ -42,7 +42,7 @@ module "infra_hub_networks" {
   terraform_sa_email         = var.gcp_terraform_sa_email
   billing_account            = var.gcp_billing_account
   project_name               = var.gcp_infra_projects.nethub.name
-  prefix                     = var.gcp_infra_projects.nethub.name
+  prefix                     = "${var.gcp_organization_prefix}-prod"
   default_region             = var.gcp_default_region
   public_subnet_ranges       = var.gcp_infra_projects.nethub.network.cidr_blocks.public_subnet_ranges
   private_subnet_ranges      = var.gcp_infra_projects.nethub.network.cidr_blocks.private_subnet_ranges
@@ -50,6 +50,9 @@ module "infra_hub_networks" {
   private_svc_connect_ranges = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_subnet_ranges
   private_svc_connect_ip     = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_connect_ip
   network_name               = var.gcp_infra_projects.nethub.network.name
+  trusted_egress_ranges           = var.trusted_egress_ranges
+  trusted_ingress_ranges          = var.trusted_ingress_ranges
+  trusted_private_ranges  = var.trusted_private_ranges
 
   gcp_labels = var.gcp_labels
 
@@ -64,7 +67,7 @@ module "infra_nethub_bastions" {
   environment_code   = "prod"
   instance_name      = "prod-bastion"
   project_id         = module.infra_projects.org_nethub_project_id
-  prefix             = var.gcp_infra_projects.nethub.name
+  prefix             = "${var.gcp_organization_prefix}-prod"
   authorized_members = ["group:org-nethub-devops@belgacem.io"]
   region             = var.gcp_default_region
   network_self_link  = module.infra_hub_networks.vpc_network_self_links

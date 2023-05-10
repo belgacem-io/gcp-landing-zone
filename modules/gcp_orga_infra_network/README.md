@@ -18,6 +18,9 @@
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project witch will contains all dns configs | `string` | n/a | yes |
 | <a name="input_public_subnet_ranges"></a> [public\_subnet\_ranges](#input\_public\_subnet\_ranges) | The list of public subnets ranges being created | `list(string)` | n/a | yes |
 | <a name="input_terraform_sa_email"></a> [terraform\_sa\_email](#input\_terraform\_sa\_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
+| <a name="input_trusted_egress_ranges"></a> [trusted\_egress\_ranges](#input\_trusted\_egress\_ranges) | List of network ranges to which all egress traffic will be allowed | `list(string)` | n/a | yes |
+| <a name="input_trusted_ingress_ranges"></a> [trusted\_ingress\_ranges](#input\_trusted\_ingress\_ranges) | List of network ranges from which all ingress traffic will be allowed | `list(string)` | n/a | yes |
+| <a name="input_trusted_private_ranges"></a> [trusted\_private\_ranges](#input\_trusted\_private\_ranges) | List of network ranges from which internal traffic will be allowed | `list(string)` | n/a | yes |
 | <a name="input_bgp_asn_dns"></a> [bgp\_asn\_dns](#input\_bgp\_asn\_dns) | BGP Autonomous System Number (ASN). | `number` | `64667` | no |
 | <a name="input_dns_enable_logging"></a> [dns\_enable\_logging](#input\_dns\_enable\_logging) | Toggle DNS logging for VPC DNS. | `bool` | `true` | no |
 | <a name="input_enable_dns_inbound_forwarding"></a> [enable\_dns\_inbound\_forwarding](#input\_enable\_dns\_inbound\_forwarding) | Toggle inbound query forwarding for Base Hub VPC DNS. | `bool` | `true` | no |

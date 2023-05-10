@@ -47,7 +47,7 @@ module "env_nethub_projects" {
   create_project_sa       = false
   default_service_account = "delete"
 
-  #[prefix]-[project]-[env]
+  #[prefix]-[env]
   name            = "${each.value.name}-${each.value.environment_code}"
   org_id          = var.gcp_organization_id
   billing_account = var.gcp_billing_account

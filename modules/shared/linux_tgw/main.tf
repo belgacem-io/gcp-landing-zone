@@ -1,62 +1,61 @@
+/*
+ * Hub & Spoke Peering Transitivity with Gateway VMs
+ */
+
 module "service_account" {
   source  = "terraform-google-modules/service-accounts/google"
-  version = "~> 4.2"
+  version = "~> 4.1"
 
   project_id    = var.project_id
-  names         = ["squid-proxy"]
+  names         = ["linux-tgw"]
   project_roles = [
     "${var.project_id}=>roles/logging.logWriter",
     "${var.project_id}=>roles/monitoring.metricWriter",
   ]
 }
 
-module "proxy_template" {
+module "tgw_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
-  version = "~> 7.3"
+  version = "~> 8.0"
 
-  project_id         = var.project_id
-  region             = var.default_region
   can_ip_forward     = true
   disk_size_gb       = 10
-  name_prefix        = "${var.prefix}-tpl-squid"
+  name_prefix        = "${var.prefix}-tpl-linuxtgwt"
   network            = var.network_name
+  project_id         = var.project_id
+  region             = var.default_region
   subnetwork         = var.subnetwork_name
   subnetwork_project = var.project_id
   machine_type       = var.instance_type
-  service_account    = {
-    email  = module.service_account.emails_list[0]
+
+  service_account = {
+    email  = module.service_account.email
     scopes = ["cloud-platform"]
   }
+
   metadata = {
-    user-data = templatefile("${path.module}/files/squid.yaml", {
-      trusted_cidr_ranges       = var.source_trusted_cidr_ranges
-      safe_ports                = var.safe_ports
-      ssl_ports                 = var.ssl_ports
-      certificate_authority_key = var.private_ca.key
-      certificate_authority_cert= var.private_ca.cert
+    user-data = templatefile("${path.module}/files/gw.yaml", {
+      source_trusted_ip_ranges      = join(",", var.source_trusted_cidr_ranges),
+      destination_trusted_ip_ranges = join(",", var.destination_trusted_cidr_ranges),
     })
+    block-project-ssh-keys = "true"
   }
+
   source_image_family  = split("/", var.instance_image)[1]
   source_image_project = split("/", var.instance_image)[0]
 
   tags = var.network_tags
-
-  depends_on = [
-    module.service_account
-  ]
 }
 
-module "proxy_migs" {
-  source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "~> 7.3"
-  project_id        = var.project_id
-  region            = var.default_region
-  target_size       = var.min_replicas
-  #[prefix]-[resource]-[location]-[description]-[suffix]
-  hostname          = "${var.prefix}-mig-${var.default_region}-squid"
-  instance_template = module.proxy_template.self_link
-  update_policy     = var.update_policy
+module "migs" {
+  source  = "terraform-google-modules/vm/google//modules/mig"
+  version = "~> 8.0"
 
+  project_id                   = var.project_id
+  region                       = var.default_region
+  #[prefix]-[resource]-[location]-[description]-[suffix]
+  hostname                     = "${var.prefix}-mig-${var.default_region}-linuxtgwt"
+  instance_template            = module.tgw_template.self_link
   /* autoscaler */
   autoscaling_enabled          = var.autoscaling_enabled
   max_replicas                 = var.max_replicas
@@ -66,26 +65,29 @@ module "proxy_migs" {
   autoscaling_metric           = var.autoscaling_metric
   autoscaling_lb               = var.autoscaling_lb
   autoscaling_scale_in_control = var.autoscaling_scale_in_control
+
+  update_policy = var.update_policy
 }
 
-module "proxy_ilbs" {
+module "ilbs" {
   source  = "GoogleCloudPlatform/lb-internal/google"
   version = "~> 5.0"
 
-  project                 = var.project_id
   region                  = var.default_region
-  name                    = "${var.prefix}-ilb-${var.default_region}-squid"
+  #[prefix]-[resource]-[location]-[description]-[suffix]
+  name                    = "${var.prefix}-ilb-${var.default_region}-linuxtgwt"
   ports                   = null
   all_ports               = true
   global_access           = true
   network                 = var.network_name
   subnetwork              = var.subnetwork_name
-  target_service_accounts = module.service_account.emails_list
+  firewall_enable_logging = true
+  target_service_accounts = [module.service_account.email]
   source_tags             = null
   target_tags             = null
   create_backend_firewall = false
   backends                = [
-    { group = module.proxy_migs.instance_group, description = "" },
+    { group = module.migs.instance_group, description = "" },
   ]
 
   health_check = {
@@ -103,4 +105,5 @@ module "proxy_ilbs" {
     host                = null
     enable_log          = false
   }
+  project = var.project_id
 }

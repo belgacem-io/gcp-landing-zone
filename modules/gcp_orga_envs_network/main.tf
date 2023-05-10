@@ -3,7 +3,7 @@ locals {
   # Primary subnets for common services
   primary_env_nethub_private_subnets = [
     for subnet in var.private_subnet_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      #[prefix]-[resource]-[location]-[description]-[suffix]
       subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges , subnet)}"
       subnet_ip    = subnet
       project_name = var.project_name
@@ -12,7 +12,7 @@ locals {
 
   primary_env_nethub_data_subnets = [
     for subnet in var.data_subnet_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      #[prefix]-[resource]-[location]-[description]-[suffix]
       subnet_name  = "${var.prefix}-sub-data-${var.default_region}-${index(var.data_subnet_ranges , subnet)}"
       subnet_ip    = subnet
       project_name = var.project_name
@@ -21,7 +21,7 @@ locals {
 
   primary_env_nethub_private_svc_connect_subnets = [
     for subnet_range in var.private_svc_connect_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+      #[prefix]-[resource]-[location]-[description]-[suffix]
       subnet_name  = "${var.prefix}-sub-${var.default_region}-svcc-${index(var.private_svc_connect_ranges,subnet_range )}"
       subnet_ip    = subnet_range
       project_name = var.project_name
@@ -34,7 +34,7 @@ locals {
     for prj in var.business_project_subnets : [
       for subnet in prj.private_subnet_ranges :
       {
-        #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+        #[prefix]-[resource]-[location]-[description]-[suffix]
         subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(prj.private_subnet_ranges , subnet)}"
         subnet_ip    = subnet
         project_name = prj.project_name
@@ -45,7 +45,7 @@ locals {
     for prj in var.business_project_subnets : [
       for subnet in prj.data_subnet_ranges :
       {
-        #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+        #[prefix]-[resource]-[location]-[description]-[suffix]
         subnet_name  = "${var.prefix}-sub-${var.default_region}-data-${index(prj.data_subnet_ranges , subnet)}"
         subnet_ip    = subnet
         project_name = prj.project_name
@@ -60,7 +60,7 @@ locals {
       for subnet in prj.private_subnet_k8s_2nd_ranges :
       {
         # All secondary ranges are associated with the first subnet
-        #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+        #[prefix]-[resource]-[location]-[description]-[suffix]
         subnet_name   = "${ var.prefix }-sub-${var.default_region}-k8s-0"
         range_name    = "${ var.prefix }-subr-${var.default_region}-k8s-0-${index(prj.private_subnet_k8s_2nd_ranges , subnet)}"
         ip_cidr_range = subnet
@@ -77,10 +77,10 @@ locals {
 
 module "env_nethub" {
   source                        = "../shared/gcp_network"
+
   project_id                    = var.project_id
   environment_code              = var.environment_code
   prefix                        = var.prefix
-  org_id                        = var.org_id
   default_region                = var.default_region
   org_nethub_vpc_self_link      = var.org_nethub_vpc_self_link
   org_nethub_project_id         = var.org_nethub_project_id

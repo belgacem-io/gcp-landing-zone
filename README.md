@@ -81,12 +81,12 @@ Before stating, make sure that you've done the following:
 5. Setup your local environment
    ```sh
     make up
-    ./terraformd --insall
+    ./terraformd --install
    ```
    
 6. Init [bootstrap project](./main-bootstrap/README.md)
    ```sh
-    terraformd -chdir=main-bootstap init && terraformd -chdir=main-bootstap apply
+    terraformd -chdir=main-bootstrap init && terraformd -chdir=main-bootstrap apply
    ```
 7. Create and configure [infrastructure projects](./main-infra/README.md)
    ```sh

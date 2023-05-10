@@ -57,7 +57,7 @@ module "log_export_to_biqquery" {
   version                = "~> 7.4"
   destination_uri        = module.bigquery_destination.0.destination_uri
   filter                 = local.main_logs_filter
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   log_sink_name          = "${var.infra_observability_project.name}-bq-${var.default_region}-orglogs"
   parent_resource_id     = split("/", var.parent_id )[1]
   parent_resource_type   = startswith("organisations", var.parent_id) ? "organisation" : "folder"
@@ -91,7 +91,7 @@ module "storage_destination" {
   source                      = "terraform-google-modules/log-export/google//modules/storage"
   version                     = "~> 7.4"
   project_id                  = module.organization_observability.project_id
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   storage_bucket_name         = "${var.infra_observability_project.name}-bkt-${lower(var.log_export_storage_location)}-orglogs-${random_string.suffix.result}"
   log_sink_writer_identity    = module.log_export_to_storage.0.writer_identity
   uniform_bucket_level_access = true
@@ -109,7 +109,7 @@ module "log_export_to_storage" {
   version                = "~> 7.4"
   destination_uri        = module.storage_destination.0.destination_uri
   filter                 = ""
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   log_sink_name          = "${var.infra_observability_project.name}-sk-glb-orglogs"
   parent_resource_id     = split("/", var.parent_id )[1]
   parent_resource_type   = startswith("organizations", var.parent_id) ? "organization" : "folder"

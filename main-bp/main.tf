@@ -20,7 +20,7 @@ module "business_project" {
   billing_account                     = var.gcp_billing_account
   environment_code                    = each.value.environment_code
   org_id                              = var.gcp_organization_id
-  #[prefix]-[project]-[env]
+  #[prefix]-[env]
   project_name                        = "${each.value.name}-${each.value.environment_code}"
   parent_folder_id                    = module.fetch.folders_by_env_code[each.value.environment_code][each.value.department].name
   terraform_service_account           = var.gcp_terraform_sa_email

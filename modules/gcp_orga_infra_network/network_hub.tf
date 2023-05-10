@@ -2,8 +2,8 @@ locals {
   nethub_project_id  = try(data.google_projects.org_nethub.projects[0].project_id, null)
   org_public_subnets = [
     for subnet_range in var.public_subnet_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-${var.default_region}-public-${index(var.public_subnet_ranges,subnet_range )}"
+      #[prefix]-[resource]-[location]-[description]-[suffix]
+      subnet_name  = "public"
       subnet_ip    = subnet_range
       project_name = var.project_name
     }
@@ -11,8 +11,8 @@ locals {
 
   org_private_subnets = [
     for subnet_range in var.private_subnet_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges,subnet_range )}"
+      #[prefix]-[resource]-[location]-[description]-[suffix]
+      subnet_name  = "private"
       subnet_ip    = subnet_range
       project_name = var.project_name
     }
@@ -20,8 +20,8 @@ locals {
 
   org_private_svc_connect_subnets = [
     for subnet_range in var.private_svc_connect_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-svcc-${var.default_region}-${index(var.private_subnet_ranges,subnet_range )}"
+      #[prefix]-[resource]-[location]-[description]-[suffix]
+      subnet_name  = "svcc"
       subnet_ip    = subnet_range
       project_name = var.project_name
     }
@@ -29,8 +29,8 @@ locals {
 
   org_data_subnets = [
     for subnet_range in var.data_subnet_ranges : {
-      #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-${var.default_region}-data-${index(var.private_subnet_ranges,subnet_range )}"
+      #[prefix]-[resource]-[location]-[description]-[suffix]
+      subnet_name  = "data"
       subnet_ip    = subnet_range
       project_name = var.project_name
     }
@@ -46,7 +46,6 @@ module "nethub" {
 
   project_id                    = local.nethub_project_id
   environment_code              = "prod"
-  org_id                        = var.organization_id
   prefix                        = var.prefix
   bgp_asn_subnet                = var.enable_partner_interconnect ? "16550" : "64514"
   default_region                = var.default_region
@@ -70,7 +69,7 @@ module "nethub" {
 
   secondary_ranges = {}
 
-  # FIXME Security issue
-  allow_all_egress_ranges  = ["0.0.0.0/0"]
-  allow_all_ingress_ranges = ["0.0.0.0/0"]
+  allow_egress_ranges           = var.trusted_egress_ranges
+  allow_ingress_ranges          = var.trusted_ingress_ranges
+  internal_trusted_cidr_ranges  = var.trusted_private_ranges
 }

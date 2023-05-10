@@ -3,7 +3,7 @@
  *****************************************/
 
 resource "google_compute_firewall" "deny_all_egress" {
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-deny-all-egress"
   network   = module.main.network_name
   project   = var.project_id
@@ -31,7 +31,7 @@ resource "google_compute_firewall" "deny_all_egress" {
 
 
 resource "google_compute_firewall" "allow_private_api_egress" {
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-allow-private-google-api-egress"
   network   = module.main.network_name
   project   = var.project_id
@@ -61,6 +61,67 @@ resource "google_compute_firewall" "allow_private_api_egress" {
 }
 
 /******************************************
+  Configured firewall rules
+ *****************************************/
+resource "google_compute_firewall" "allow_limited_egress" {
+  count = var.allow_egress_ranges != null ? 1 : 0
+
+  #[prefix]-[resource]-[location]-[description]-[suffix]
+  name      = "${var.prefix}-fw-glb-allow-limited-egress"
+  network   = module.main.network_name
+  project   = var.project_id
+  direction = "EGRESS"
+  priority  = 1000
+
+  dynamic "log_config" {
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
+
+    content {
+      metadata = log_config.value.metadata
+    }
+  }
+
+  allow {
+    protocol = "all"
+  }
+
+  destination_ranges = var.allow_egress_ranges
+}
+
+resource "google_compute_firewall" "allow_limited_ingress" {
+  count = var.allow_ingress_ranges != null ? 1 : 0
+
+  #[prefix]-[resource]-[location]-[description]-[suffix]
+  name      = "${var.prefix}-fw-glb-allow-limited-ingress"
+  network   = module.main.network_name
+  project   = var.project_id
+  direction = "INGRESS"
+  priority  = 1000
+
+  dynamic "log_config" {
+    for_each = var.firewall_enable_logging == true ? [
+      {
+        metadata = "INCLUDE_ALL_METADATA"
+      }
+    ] : []
+
+    content {
+      metadata = log_config.value.metadata
+    }
+  }
+
+  allow {
+    protocol = "all"
+  }
+
+  source_ranges = var.allow_ingress_ranges
+}
+
+/******************************************
   Optional firewall rules
  *****************************************/
 
@@ -68,7 +129,7 @@ resource "google_compute_firewall" "allow_private_api_egress" {
 resource "google_compute_firewall" "allow_iap_ssh" {
   count = var.optional_fw_rules_enabled ? 1 : 0
 
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-ssh"
   network = module.main.network_name
   project = var.project_id
@@ -100,7 +161,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
 resource "google_compute_firewall" "allow_iap_rdp" {
   count = var.optional_fw_rules_enabled ? 1 : 0
 
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-rdp"
   network = module.main.network_name
   project = var.project_id
@@ -132,7 +193,7 @@ resource "google_compute_firewall" "allow_iap_rdp" {
 resource "google_compute_firewall" "allow_windows_activation" {
   count = var.windows_activation_enabled ? 1 : 0
 
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-allow-windows-activation"
   network   = module.main.network_name
   project   = var.project_id
@@ -165,7 +226,7 @@ resource "google_compute_firewall" "allow_windows_activation" {
 resource "google_compute_firewall" "allow_lb" {
   count = var.optional_fw_rules_enabled ? 1 : 0
 
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-lb-health"
   network = module.main.network_name
   project = var.project_id
@@ -191,62 +252,4 @@ resource "google_compute_firewall" "allow_lb" {
   }
 
   target_tags = ["allow-lb"]
-}
-
-resource "google_compute_firewall" "allow_all_egress" {
-  count = var.allow_all_egress_ranges != null ? 1 : 0
-
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-limited-egress"
-  network   = module.main.network_name
-  project   = var.project_id
-  direction = "EGRESS"
-  priority  = 1000
-
-  dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
-      {
-        metadata = "INCLUDE_ALL_METADATA"
-      }
-    ] : []
-
-    content {
-      metadata = log_config.value.metadata
-    }
-  }
-
-  allow {
-    protocol = "all"
-  }
-
-  destination_ranges = var.allow_all_egress_ranges
-}
-
-resource "google_compute_firewall" "allow_all_ingress" {
-  count = var.allow_all_ingress_ranges != null ? 1 : 0
-
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-limited-ingress"
-  network   = module.main.network_name
-  project   = var.project_id
-  direction = "INGRESS"
-  priority  = 1000
-
-  dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
-      {
-        metadata = "INCLUDE_ALL_METADATA"
-      }
-    ] : []
-
-    content {
-      metadata = log_config.value.metadata
-    }
-  }
-
-  allow {
-    protocol = "all"
-  }
-
-  source_ranges = var.allow_all_ingress_ranges
 }

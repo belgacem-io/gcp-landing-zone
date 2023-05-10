@@ -1,8 +1,3 @@
-variable "org_id" {
-  type        = string
-  description = "Organization ID"
-}
-
 variable "project_id" {
   type        = string
   description = "Project ID for Private Shared VPC."
@@ -29,6 +24,13 @@ variable "environment_code" {
   description = "A short form of the folder level resources (environment) within the Google Cloud organization."
 }
 
+variable "shared_vpc_host" {
+  type        = bool
+  default = true
+  description = "If the Network will be shared with others projects"
+}
+
+
 variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"
@@ -43,7 +45,7 @@ variable "nat_enabled" {
 variable "nat_bgp_asn" {
   type        = number
   description = "BGP ASN for first NAT cloud routes."
-  default     = 0
+  default     = 64514
 }
 
 variable "nat_num_addresses_region1" {
@@ -52,14 +54,8 @@ variable "nat_num_addresses_region1" {
   default     = 2
 }
 
-variable "bgp_asn_subnet" {
-  type        = number
-  description = "BGP ASN for Subnets cloud routers."
-}
-
 variable "public_subnets" {
   type = list(object({
-    project_name = string
     subnet_name  = string
     subnet_ip    = string
   }))
@@ -69,7 +65,6 @@ variable "public_subnets" {
 
 variable "private_subnets" {
   type = list(object({
-    project_name = string
     subnet_name  = string
     subnet_ip    = string
   }))
@@ -79,7 +74,6 @@ variable "private_subnets" {
 
 variable "data_subnets" {
   type = list(object({
-    project_name = string
     subnet_name  = string
     subnet_ip    = string
   }))
@@ -89,7 +83,6 @@ variable "data_subnets" {
 
 variable "private_svc_connect_subnets" {
   type = list(object({
-    project_name = string
     subnet_name  = string
     subnet_ip    = string
   }))
@@ -121,18 +114,19 @@ variable "dns_enable_inbound_forwarding" {
 variable "dns_enable_logging" {
   type        = bool
   description = "Toggle DNS logging for VPC DNS."
-  default     = true
+  default     = false
 }
 
 variable "firewall_enable_logging" {
   type        = bool
   description = "Toggle firewall logging for VPC Firewalls."
-  default     = true
+  default     = false
 }
 
 variable "domain" {
   type        = string
-  description = "The DNS name of peering managed zone, for instance 'example.com.'"
+  description = "The DNS name of peering managed zone, for instance 'example.com.'. Require when dns_enable_outbound_forwarding=true"
+  default = ""
 }
 
 variable "private_service_cidr" {
@@ -159,13 +153,13 @@ variable "optional_fw_rules_enabled" {
   default     = false
 }
 
-variable "allow_all_egress_ranges" {
+variable "allow_egress_ranges" {
   type        = list(string)
   description = "List of network ranges to which all egress traffic will be allowed"
   default     = null
 }
 
-variable "allow_all_ingress_ranges" {
+variable "allow_ingress_ranges" {
   type        = list(string)
   description = "List of network ranges from which all ingress traffic will be allowed"
   default     = null
@@ -197,26 +191,40 @@ variable "subnetworks_enable_logging" {
   default     = false
 }
 
-variable "network_internet_egress_tag" {
+variable "net_tag_internet_egress" {
   type        = string
   description = "Network tags for VMs with internet access."
-  default     = "egress-internet"
+  default     = "restricted-egress-internet"
+}
+
+variable "bgp_asn_subnet" {
+  type        = number
+  description = "BGP ASN for Subnets cloud routers."
+  default = 64514
 }
 
 variable "internal_trusted_cidr_ranges" {
   description = "Internal trusted ip ranges. Must be set to private ip ranges"
   type        = list(string)
-  default     = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
 }
 
 variable "org_nethub_project_id" {
   type        = string
   default     = null
-  description = "Organization hub network project. Required en spoke mode"
+  description = "Organization hub network project. Required in spoke mode"
 }
 
 variable "org_nethub_vpc_self_link" {
   type        = string
   default     = null
-  description = "Organization hub network VPC self link. Required en spoke mode"
+  description = "Organization hub network VPC self link. Required in spoke mode"
+}
+
+variable "org_private_ca" {
+  type        = object({
+    cert = string
+    key  = string
+  })
+  default     = null
+  description = "The Organization CertificateAuthority's certificate. Required in squid mode"
 }

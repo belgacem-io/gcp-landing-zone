@@ -33,6 +33,11 @@ variable "source_trusted_cidr_ranges" {
   type        = list(string)
 }
 
+variable "destination_trusted_cidr_ranges" {
+  description = "Your internal/external CIDR range requiring access from this proxy."
+  type        = list(string)
+}
+
 variable "instance_type" {
   description = "The instance type"
   type        = string
@@ -42,9 +47,8 @@ variable "instance_type" {
 variable "instance_image" {
   description = "The instance image. Must be debian base."
   type        = string
-  default     = "ubuntu-os-cloud/ubuntu-minimal-2004-lts"
+  default     = "ubuntu-os-cloud/ubuntu-minimal-1804-lts"
 }
-
 
 variable "max_replicas" {
   description = "The maximum number of instances that the autoscaler can scale up to. This is required when creating or updating an autoscaler. The maximum number of replicas should not be lower than minimal number of replicas."
@@ -106,27 +110,7 @@ variable "autoscaling_enabled" {
 variable "network_tags" {
   type        = list(string)
   description = "Network tags for VMs."
-  default = ["squid-gateway"]
-}
-
-variable "safe_ports" {
-  type        = list(string)
-  description = "List of safe ports."
-  default     = [
-    "80", # http
-    "8080", # http
-    "1080", # http
-    "21" # ftp
-  ]
-}
-
-variable "ssl_ports" {
-  type        = list(string)
-  description = "List of SSL ports."
-  default     = [
-    "443", # https
-    "8443" # https
-  ]
+  default = []
 }
 
 variable "update_policy" {
@@ -166,12 +150,4 @@ variable "authorized_members" {
   description = "List of members in the standard GCP form: user:{email}, serviceAccount:{email}, group:{email}"
   type        = list(string)
   default = []
-}
-
-variable "private_ca" {
-  type        = object({
-    cert = string
-    key  = string
-  })
-  description = "The Organization CertificateAuthority's certificate."
 }

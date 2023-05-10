@@ -3,6 +3,11 @@ variable "gcp_organization_id" {
   type        = string
 }
 
+variable "gcp_organization_prefix" {
+  description = "The organization prefix, will be used for resources naming."
+  type        = string
+}
+
 variable "gcp_parent_container_id" {
   type        = string
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
@@ -170,4 +175,19 @@ variable "gcp_infra_projects" {
       })
     })
   })
+}
+
+variable "trusted_egress_ranges" {
+  type        = list(string)
+  description = "List of network ranges to which all egress traffic will be allowed"
+}
+
+variable "trusted_ingress_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which all ingress traffic will be allowed"
+}
+
+variable "trusted_private_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which internal traffic will be allowed"
 }

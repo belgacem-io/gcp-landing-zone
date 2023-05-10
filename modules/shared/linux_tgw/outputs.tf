@@ -1,5 +1,5 @@
 output "ilb_id" {
-  value = module.proxy_ilbs.forwarding_rule
+  value = module.ilbs.forwarding_rule
 }
 
 output "proxy_service_accounts" {

@@ -8,7 +8,7 @@ module "dns-public-zone" {
 
   project_id = local.org_nethub_project_id
   type       = "public"
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   name       = "${var.prefix}-fz-glob"
   domain     = "${var.domain}."
 

@@ -28,7 +28,7 @@ module "mig" {
 
   project_id        = var.project_id
   region            = var.region
-  #[prefix]-[project]-[env]-[resource]-[location]-[description]-[suffix]
+  #[prefix]-[resource]-[location]-[description]-[suffix]
   hostname          = "${var.prefix}-mig-${var.instance_name}"
   instance_template = module.instance_template.self_link
 
