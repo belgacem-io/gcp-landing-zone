@@ -3,7 +3,7 @@
 *****************************************/
 
 module "fetch" {
-  source = "../modules/shared/gcp_fetch_organization"
+  source = "../modules/gcp_fetch_organization"
 
   organization_id = var.gcp_organization_id
 }

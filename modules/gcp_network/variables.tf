@@ -219,12 +219,3 @@ variable "org_nethub_vpc_self_link" {
   default     = null
   description = "Organization hub network VPC self link. Required in spoke mode"
 }
-
-variable "org_private_ca" {
-  type        = object({
-    cert = string
-    key  = string
-  })
-  default     = null
-  description = "The Organization CertificateAuthority's certificate. Required in squid mode"
-}

@@ -3,7 +3,7 @@
 *****************************************/
 
 module "fetch" {
-  source = "../modules/shared/gcp_fetch_organization"
+  source = "../modules/gcp_fetch_organization"
 
   parent_container_id = var.gcp_parent_container_id
 }
@@ -16,7 +16,7 @@ module "business_project" {
 
   for_each = local.business_projects_map
 
-  source                              = "../modules/gcp_orga_business_project"
+  source                              = "../modules/orga_business_project"
   billing_account                     = var.gcp_billing_account
   environment_code                    = each.value.environment_code
   org_id                              = var.gcp_organization_id

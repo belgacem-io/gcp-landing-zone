@@ -71,7 +71,7 @@ module "env_nethub_projects" {
 }
 
 module "env_nethub_networks" {
-  source = "../modules/gcp_orga_envs_network"
+  source = "../modules/orga_envs_network"
 
   for_each = var.gcp_organization_environments
 
@@ -101,7 +101,7 @@ module "env_nethub_networks" {
 }
 
 module "env_nethub_bastions" {
-  source = "../modules/shared/gcp_bastion_host"
+  source = "../modules/gcp_bastion_host"
 
   for_each = var.gcp_organization_environments
 

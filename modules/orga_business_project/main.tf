@@ -1,5 +1,5 @@
 module "business_project" {
-  source                              = "../shared/gcp_single_project"
+  source                              = "../gcp_single_project"
   org_id                              = var.org_id
   billing_account                     = var.billing_account
   folder_id                           = var.parent_folder_id

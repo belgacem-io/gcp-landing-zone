@@ -3,7 +3,7 @@
 *****************************************/
 
 module "infra_projects" {
-  source = "../modules/gcp_orga_infra_projects"
+  source = "../modules/orga_infra_projects"
 
   terraform_sa_email          = var.gcp_terraform_sa_email
   billing_account             = var.gcp_billing_account
@@ -34,7 +34,7 @@ module "infra_projects" {
 }
 
 module "infra_hub_networks" {
-  source = "../modules/gcp_orga_infra_network"
+  source = "../modules/orga_infra_network"
 
   domain                     = var.gcp_organization_domain
   organization_id            = var.gcp_organization_id
@@ -62,7 +62,7 @@ module "infra_hub_networks" {
 }
 
 module "infra_nethub_bastions" {
-  source = "../modules/shared/gcp_bastion_host"
+  source = "../modules/gcp_bastion_host"
 
   environment_code   = "prod"
   instance_name      = "prod-bastion"
