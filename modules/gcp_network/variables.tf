@@ -219,3 +219,15 @@ variable "org_nethub_vpc_self_link" {
   default     = null
   description = "Organization hub network VPC self link. Required in spoke mode"
 }
+
+variable "enable_transitive_network" {
+  type        = bool
+  default     = true
+  description = "In hub mode, if enabled, a transit gateway will be installed."
+}
+
+variable "enable_secure_web_proxy" {
+  type        = bool
+  default     = true
+  description = "In hub mode, if enabled, a secure web proxy will be installed."
+}
