@@ -13,7 +13,7 @@ module "vpc_tgw" {
   source_trusted_cidr_ranges      = var.internal_trusted_cidr_ranges
   destination_trusted_cidr_ranges = var.internal_trusted_cidr_ranges
   subnetwork_name                 = local.private_subnets[0].subnet_name
-  network_name                    = var.network_name
+  network_name                    = local.network_name
 
   depends_on = [
     module.main
@@ -28,7 +28,7 @@ resource "google_compute_route" "inter_vpc_routes" {
   for_each = (var.mode == "hub" && var.enable_transitive_network) ? toset(var.internal_trusted_cidr_ranges) : toset([])
 
   project      = var.project_id
-  network      = var.network_name
+  network      = local.network_name
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name         = "${var.prefix}-rt-glb-tgw-for-${replace(replace(each.value, "/", "-"), ".", "-")}"
   description  = "Inter VPCs route through TGW for range ${each.value}"

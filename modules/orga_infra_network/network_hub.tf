@@ -1,40 +1,5 @@
 locals {
   nethub_project_id  = try(data.google_projects.org_nethub.projects[0].project_id, null)
-  org_public_subnets = [
-    for subnet_range in var.public_subnet_ranges : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "public"
-      subnet_ip    = subnet_range
-      project_name = var.project_name
-    }
-  ]
-
-  org_private_subnets = [
-    for subnet_range in var.private_subnet_ranges : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "private"
-      subnet_ip    = subnet_range
-      project_name = var.project_name
-    }
-  ]
-
-  org_private_svc_connect_subnets = [
-    for subnet_range in var.private_svc_connect_ranges : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "svcc"
-      subnet_ip    = subnet_range
-      project_name = var.project_name
-    }
-  ]
-
-  org_data_subnets = [
-    for subnet_range in var.data_subnet_ranges : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "data"
-      subnet_ip    = subnet_range
-      project_name = var.project_name
-    }
-  ]
 }
 
 /******************************************
@@ -61,10 +26,10 @@ module "nethub" {
   network_name                  = var.network_name
   mode                          = "hub"
 
-  public_subnets              = local.org_public_subnets
-  private_subnets             = local.org_private_subnets
-  data_subnets                = local.org_data_subnets
-  private_svc_connect_subnets = local.org_private_svc_connect_subnets
+  public_subnets              = var.public_subnet_ranges
+  private_subnets             = var.private_subnet_ranges
+  data_subnets                = var.data_subnet_ranges
+  reserved_subnets            = var.reserved_subnets
   private_svc_connect_ip      = var.private_svc_connect_ip
 
   secondary_ranges = {}

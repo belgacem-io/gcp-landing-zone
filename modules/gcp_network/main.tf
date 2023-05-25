@@ -1,10 +1,11 @@
 locals {
   private_googleapis_cidr = "199.36.153.8/30"
+  network_name                           = "${var.prefix}-network-${var.default_region}-${var.network_name}"
   public_subnets          = [
     for subnet in var.public_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_name}-${index(var.public_subnets, subnet.subnet_name)}"
-      subnet_ip             = subnet.subnet_ip
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-public"
+      subnet_ip             = subnet
       subnet_region         = var.default_region
       subnet_private_access = false
       subnet_flow_logs      = var.subnetworks_enable_logging
@@ -14,8 +15,8 @@ locals {
   private_subnets = [
     for subnet in var.private_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_name}-${index(var.private_subnets, subnet.subnet_name)}"
-      subnet_ip             = subnet.subnet_ip
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-private"
+      subnet_ip             = subnet
       subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
@@ -25,8 +26,8 @@ locals {
   data_subnets = [
     for subnet in var.data_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_name}-${index(var.data_subnets, subnet.subnet_name)}"
-      subnet_ip             = subnet.subnet_ip
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-data"
+      subnet_ip             = subnet
       subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
@@ -34,19 +35,20 @@ locals {
     }
   ]
 
-  private_svc_connect_subnets = [
-    for subnet in var.private_svc_connect_subnets : {
+  reserved_subnets = [
+    for key,subnet in var.reserved_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_name}-${index(var.private_svc_connect_subnets, subnet.subnet_name)}"
-      subnet_ip             = subnet.subnet_ip
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${key}"
+      subnet_ip             = subnet.range
       subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
-      purpose               = "PRIVATE_SERVICE_CONNECT"
+      purpose               = subnet.purpose
+      role                  = subnet.role
     }
   ]
 
-  subnets = concat(local.public_subnets, local.private_subnets, local.data_subnets, local.private_svc_connect_subnets)
+  subnets = concat(local.public_subnets, local.private_subnets, local.data_subnets, local.reserved_subnets)
 }
 
 
@@ -60,7 +62,7 @@ module "main" {
 
   project_id                             = var.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  network_name                           = "${var.prefix}-network-${var.default_region}-${var.network_name}"
+  network_name                           = local.network_name
   shared_vpc_host                        = var.shared_vpc_host
   delete_default_internet_gateway_routes = true
 

@@ -33,6 +33,10 @@ module "infra_projects" {
   gcp_labels = var.gcp_labels
 }
 
+/******************************************
+  Network
+*****************************************/
+
 module "infra_hub_networks" {
   source = "../modules/orga_infra_network"
 
@@ -47,7 +51,7 @@ module "infra_hub_networks" {
   public_subnet_ranges       = var.gcp_infra_projects.nethub.network.cidr_blocks.public_subnet_ranges
   private_subnet_ranges      = var.gcp_infra_projects.nethub.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges         = var.gcp_infra_projects.nethub.network.cidr_blocks.data_subnet_ranges
-  private_svc_connect_ranges = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_subnet_ranges
+  reserved_subnets           = var.gcp_infra_projects.nethub.network.cidr_blocks.reserved_subnets
   private_svc_connect_ip     = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_connect_ip
   network_name               = var.gcp_infra_projects.nethub.network.name
   trusted_egress_ranges           = var.trusted_egress_ranges
@@ -61,6 +65,9 @@ module "infra_hub_networks" {
   ]
 }
 
+/******************************************
+  Bastion
+*****************************************/
 module "infra_nethub_bastions" {
   source = "../modules/gcp_bastion_host"
 

@@ -140,9 +140,14 @@ variable "data_subnet_ranges" {
   description = "The list of data subnets ranges being created"
 }
 
-variable "private_svc_connect_ranges" {
-  type        = list(string)
-  description = "The list of subnets to publish a managed service by using Private Service Connect."
+variable "reserved_subnets" {
+  type = map(object({
+    purpose = string
+    role    = string
+    range   = string
+  }))
+  description = "The list of reserved subnet for appliances like SVC and proxies."
+  default     = {}
 }
 
 variable "private_svc_connect_ip" {

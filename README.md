@@ -80,25 +80,24 @@ Before stating, make sure that you've done the following:
    ```
 5. Setup your local environment
    ```sh
-    make up
-    ./terraformd --install
+    source .auth/env
    ```
    
 6. Init [bootstrap project](./main-bootstrap/README.md)
    ```sh
-    terraformd -chdir=main-bootstrap init && terraformd -chdir=main-bootstrap apply
+    terraform -chdir=main-bootstrap init && terraform -chdir=main-bootstrap apply
    ```
 7. Create and configure [infrastructure projects](./main-infra/README.md)
    ```sh
-    terraformd -chdir=main-infra init
-    terraformd -chdir=main-infra apply -target module.infra_projects
-    terraformd -chdir=main-infra apply
+    terraform -chdir=main-infra init
+    terraform -chdir=main-infra apply -target module.infra_projects
+    terraform -chdir=main-infra apply
    ```
 8. Create and configure [environments projects](./main-env/README.md)
    ```sh
-    terraformd -chdir=main-env init && terraformd -chdir=main-env apply
+    terraform -chdir=main-env init && terraform -chdir=main-env apply
    ```
 9. Create and configure [business projects](./main-bp/README.md)
    ```sh
-    terraformd -chdir=main-bp init && terraformd -chdir=main-bp apply
+    terraform -chdir=main-bp init && terraform -chdir=main-bp apply
    ```

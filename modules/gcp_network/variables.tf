@@ -26,7 +26,7 @@ variable "environment_code" {
 
 variable "shared_vpc_host" {
   type        = bool
-  default = true
+  default     = true
   description = "If the Network will be shared with others projects"
 }
 
@@ -55,39 +55,32 @@ variable "nat_num_addresses_region1" {
 }
 
 variable "public_subnets" {
-  type = list(object({
-    subnet_name  = string
-    subnet_ip    = string
-  }))
+  type = list(string)
   description = "The list of public subnets being created"
   default     = []
 }
 
 variable "private_subnets" {
-  type = list(object({
-    subnet_name  = string
-    subnet_ip    = string
-  }))
+  type = list(string)
   description = "The list of private subnets being created"
   default     = []
 }
 
 variable "data_subnets" {
-  type = list(object({
-    subnet_name  = string
-    subnet_ip    = string
-  }))
+  type = list(string)
   description = "The list of data subnets being created"
   default     = []
 }
 
-variable "private_svc_connect_subnets" {
-  type = list(object({
-    subnet_name  = string
-    subnet_ip    = string
+
+variable "reserved_subnets" {
+  type = map(object({
+    purpose = string
+    role    = string
+    range   = string
   }))
-  description = "The list of subnets to publish a managed service by using Private Service Connect."
-  default     = []
+  description = "The list of reserved subnet for appliances like SVC and proxies."
+  default     = {}
 }
 
 variable "private_svc_connect_ip" {
@@ -126,7 +119,7 @@ variable "firewall_enable_logging" {
 variable "domain" {
   type        = string
   description = "The DNS name of peering managed zone, for instance 'example.com.'. Require when dns_enable_outbound_forwarding=true"
-  default = ""
+  default     = ""
 }
 
 variable "private_service_cidr" {
@@ -200,7 +193,7 @@ variable "net_tag_internet_egress" {
 variable "bgp_asn_subnet" {
   type        = number
   description = "BGP ASN for Subnets cloud routers."
-  default = 64514
+  default     = 64514
 }
 
 variable "internal_trusted_cidr_ranges" {
