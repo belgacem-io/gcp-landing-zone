@@ -48,7 +48,7 @@ variable "nat_bgp_asn" {
   default     = 64514
 }
 
-variable "nat_num_addresses_region1" {
+variable "nat_num_addresses" {
   type        = number
   description = "Number of external IPs to reserve for first Cloud NAT."
   default     = 2
@@ -113,13 +113,13 @@ variable "dns_enable_inbound_forwarding" {
   default     = true
 }
 
-variable "dns_enable_logging" {
+variable "enable_dns_logging" {
   type        = bool
   description = "Toggle DNS logging for VPC DNS."
   default     = false
 }
 
-variable "firewall_enable_logging" {
+variable "enable_firewall_logging" {
   type        = bool
   description = "Toggle firewall logging for VPC Firewalls."
   default     = false
@@ -143,16 +143,10 @@ variable "windows_activation_enabled" {
   default     = false
 }
 
-variable "nat_num_addresses" {
-  type        = number
-  description = "Number of external IPs to reserve for Cloud NAT."
-  default     = 2
-}
-
-variable "optional_fw_rules_enabled" {
+variable "enable_optional_fw_rules" {
   type        = bool
   description = "Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges."
-  default     = false
+  default     = true
 }
 
 variable "allow_egress_ranges" {

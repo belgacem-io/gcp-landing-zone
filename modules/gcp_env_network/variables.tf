@@ -5,12 +5,12 @@ variable "prefix" {
   type        = string
   description = "Prefix applied to service to all resources."
 }
-variable "org_nethub_vpc_self_link" {
+variable "infra_nethub_vpc_self_link" {
   type        = string
   description = "Organization hub network VPC self link"
 }
 
-variable "org_nethub_project_id" {
+variable "infra_nethub_project_id" {
   type        = string
   description = "Organization hub network project id"
 }

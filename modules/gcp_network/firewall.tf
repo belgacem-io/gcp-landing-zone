@@ -11,7 +11,7 @@ resource "google_compute_firewall" "deny_all_egress" {
   priority  = 65535
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -39,7 +39,7 @@ resource "google_compute_firewall" "allow_private_api_egress" {
   priority  = 65534
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -74,7 +74,7 @@ resource "google_compute_firewall" "allow_limited_egress" {
   priority  = 1000
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -103,7 +103,7 @@ resource "google_compute_firewall" "allow_limited_ingress" {
   priority  = 1000
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -127,7 +127,7 @@ resource "google_compute_firewall" "allow_limited_ingress" {
 
 // Allow SSH via IAP when using the allow-iap-ssh tag for Linux workloads.
 resource "google_compute_firewall" "allow_iap_ssh" {
-  count = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-ssh"
@@ -135,7 +135,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -159,7 +159,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
 
 // Allow RDP via IAP when using the allow-iap-rdp tag for Windows workloads.
 resource "google_compute_firewall" "allow_iap_rdp" {
-  count = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-iap-rdp"
@@ -167,7 +167,7 @@ resource "google_compute_firewall" "allow_iap_rdp" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -201,7 +201,7 @@ resource "google_compute_firewall" "allow_windows_activation" {
   priority  = 0
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }
@@ -224,7 +224,7 @@ resource "google_compute_firewall" "allow_windows_activation" {
 
 // Allow traffic for Internal & Global load balancing health check and load balancing IP ranges.
 resource "google_compute_firewall" "allow_lb" {
-  count = var.optional_fw_rules_enabled ? 1 : 0
+  count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name    = "${var.prefix}-fw-glb-allow-lb-health"
@@ -232,7 +232,7 @@ resource "google_compute_firewall" "allow_lb" {
   project = var.project_id
 
   dynamic "log_config" {
-    for_each = var.firewall_enable_logging == true ? [
+    for_each = var.enable_firewall_logging == true ? [
       {
         metadata = "INCLUDE_ALL_METADATA"
       }

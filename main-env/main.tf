@@ -2,17 +2,17 @@
   Org Network Hub
 *****************************************/
 
-data "google_projects" "org_nethub" {
+data "google_projects" "infra_nethub" {
   filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.gcp_infra_projects.nethub.name} lifecycleState=ACTIVE"
 }
 
-data "google_projects" "org_monitoring" {
+data "google_projects" "infra_monitoring" {
   filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.gcp_infra_projects.observability.name} lifecycleState=ACTIVE"
 }
 
-data "google_compute_network" "org_nethub" {
+data "google_compute_network" "infra_nethub" {
   name    = "vpc-prod-shared-hub"
-  project = data.google_projects.org_nethub.projects[0].project_id
+  project = data.google_projects.infra_nethub.projects[0].project_id
 }
 
 data "google_active_folder" "infra" {
@@ -37,7 +37,7 @@ locals {
   Create projects
 *****************************************/
 
-module "env_nethub_projects" {
+module "netenv_projects" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 14.1"
 
@@ -70,8 +70,8 @@ module "env_nethub_projects" {
   budget_amount               = 100
 }
 
-module "env_nethub_networks" {
-  source = "../modules/orga_envs_network"
+module "netenv_networks" {
+  source = "../modules/gcp_env_network"
 
   for_each = var.gcp_organization_environments
 
@@ -80,15 +80,15 @@ module "env_nethub_networks" {
   prefix                     = var.gcp_organization_prefix
   environment_code           = each.value.environment_code
   org_id                     = var.gcp_organization_id
-  project_id                 = module.env_nethub_projects[each.key].project_id
+  project_id                 = module.netenv_projects[each.key].project_id
   network_name               = each.value.network.name
   private_subnet_ranges      = each.value.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges         = each.value.network.cidr_blocks.data_subnet_ranges
   private_svc_connect_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
   project_name               = each.value.name
   private_svc_connect_ip     = each.value.network.cidr_blocks.private_svc_connect_ip
-  org_nethub_project_id      = data.google_projects.org_nethub.projects[0].project_id
-  org_nethub_vpc_self_link   = data.google_compute_network.org_nethub.self_link
+  infra_nethub_project_id      = data.google_projects.infra_nethub.projects[0].project_id
+  infra_nethub_vpc_self_link   = data.google_compute_network.infra_nethub.self_link
   trusted_egress_ranges      = var.trusted_egress_ranges
   trusted_ingress_ranges     = var.trusted_ingress_ranges
   trusted_private_ranges     = var.trusted_private_ranges
@@ -98,13 +98,13 @@ module "env_nethub_networks" {
 
 
   depends_on = [
-    data.google_projects.org_monitoring,
-    data.google_projects.org_nethub,
-    module.env_nethub_projects
+    data.google_projects.infra_monitoring,
+    data.google_projects.infra_nethub,
+    module.netenv_projects
   ]
 }
 
-module "env_nethub_bastions" {
+module "netenv_bastions" {
   source = "../modules/gcp_bastion_host"
 
   for_each = var.gcp_organization_environments
@@ -112,13 +112,13 @@ module "env_nethub_bastions" {
   prefix             = var.gcp_organization_prefix
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
-  project_id         = module.env_nethub_projects[each.key].project_id
+  project_id         = module.netenv_projects[each.key].project_id
   authorized_members = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
   region             = var.gcp_default_region
-  network_self_link  = module.env_nethub_networks[each.key].network_self_links
-  subnet_self_link   = module.env_nethub_networks[each.key].subnetwork_self_links[0]
+  network_self_link  = module.netenv_networks[each.key].network_self_links
+  subnet_self_link   = module.netenv_networks[each.key].subnetwork_self_links[0]
 
   depends_on = [
-    module.env_nethub_networks
+    module.netenv_networks
   ]
 }

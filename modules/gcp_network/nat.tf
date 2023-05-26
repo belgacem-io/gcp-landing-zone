@@ -17,7 +17,7 @@ resource "google_compute_router" "nat_router_region1" {
 }
 
 resource "google_compute_address" "nat_external_addresses_region1" {
-  count = var.nat_enabled ? var.nat_num_addresses_region1 : 0
+  count = var.nat_enabled ? var.nat_num_addresses : 0
 
   project = var.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]

@@ -19,9 +19,9 @@
 *****************************************/
 
 resource "google_organization_iam_audit_config" "org_config" {
-  count = var.org_org_admins !=null ? 1 : 0
+  count = var.gcp_group_org_admins !=null ? 1 : 0
 
-  org_id  = var.organization_id
+  org_id  = var.gcp_organization_id
   service = "allServices"
 
   audit_log_config {
@@ -36,19 +36,19 @@ resource "google_organization_iam_audit_config" "org_config" {
 }
 
 resource "google_project_iam_member" "audit_log_bq_user" {
-  count = var.org_audit_data_admins !=null ? 1 : 0
+  count = var.gcp_group_org_security_admins !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/bigquery.user"
-  member  = "group:${var.org_audit_data_admins}"
+  member  = "group:${var.gcp_group_org_security_admins}"
 }
 
 resource "google_project_iam_member" "audit_log_bq_data_viewer" {
-  count = var.org_audit_data_admins !=null ? 1 : 0
+  count = var.gcp_group_org_security_admins !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/bigquery.dataViewer"
-  member  = "group:${var.org_audit_data_admins}"
+  member  = "group:${var.gcp_group_org_security_admins}"
 }
 
 /******************************************
@@ -56,19 +56,19 @@ resource "google_project_iam_member" "audit_log_bq_data_viewer" {
 *****************************************/
 
 resource "google_project_iam_member" "billing_bq_user" {
-  count = var.org_billing_data_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_billing_admins !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/bigquery.user"
-  member  = "group:${var.org_billing_data_viewers}"
+  member  = "group:${var.gcp_group_org_billing_admins}"
 }
 
 resource "google_project_iam_member" "billing_bq_viewer" {
-  count = var.org_billing_data_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_billing_admins !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/bigquery.dataViewer"
-  member  = "group:${var.org_billing_data_viewers}"
+  member  = "group:${var.gcp_group_org_billing_admins}"
 }
 
 /******************************************
@@ -76,11 +76,11 @@ resource "google_project_iam_member" "billing_bq_viewer" {
 *****************************************/
 
 resource "google_organization_iam_member" "billing_viewer" {
-  count = var.org_billing_data_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_billing_viewers !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/billing.viewer"
-  member = "group:${var.org_billing_data_viewers}"
+  member = "group:${var.gcp_group_org_billing_viewers}"
 }
 
 /******************************************
@@ -88,59 +88,59 @@ resource "google_organization_iam_member" "billing_viewer" {
 *****************************************/
 
 resource "google_organization_iam_member" "organization_viewer" {
-  count = var.org_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_viewers !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/viewer"
-  member = "group:${var.org_viewers}"
+  member = "group:${var.gcp_group_org_viewers}"
 }
 
 resource "google_organization_iam_member" "security_reviewer" {
-  count = var.org_security_reviewers !=null ? 1 : 0
+  count = var.gcp_group_org_security_reviewers !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/iam.securityReviewer"
-  member = "group:${var.org_security_reviewers}"
+  member = "group:${var.gcp_group_org_security_reviewers}"
 }
 
 resource "google_organization_iam_member" "network_viewer" {
-  count = var.org_network_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_network_viewers !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/compute.networkViewer"
-  member = "group:${var.org_network_viewers}"
+  member = "group:${var.gcp_group_org_network_viewers}"
 }
 
 resource "google_project_iam_member" "audit_log_viewer" {
-  count = var.org_audit_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_security_reviewers !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/logging.viewer"
-  member  = "group:${var.org_audit_viewers}"
+  member  = "group:${var.gcp_group_org_security_reviewers}"
 }
 
 resource "google_project_iam_member" "audit_private_logviewer" {
-  count = var.org_audit_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_security_reviewers !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/logging.privateLogViewer"
-  member  = "group:${var.org_audit_viewers}"
+  member  = "group:${var.gcp_group_org_security_reviewers}"
 }
 
 resource "google_project_iam_member" "audit_bq_data_viewer" {
-  count = var.org_audit_viewers !=null ? 1 : 0
+  count = var.gcp_group_org_security_reviewers !=null ? 1 : 0
 
-  project = module.organization_observability.project_id
+  project = module.observability_project.project_id
   role    = "roles/bigquery.dataViewer"
-  member  = "group:${var.org_audit_viewers}"
+  member  = "group:${var.gcp_group_org_security_reviewers}"
 }
 
 resource "google_project_iam_member" "scc_admin" {
-  count = var.org_scc_admins !=null ? 1 : 0
+  count = var.gcp_group_org_security_admins !=null ? 1 : 0
 
-  project = module.organization_security.project_id
+  project = module.security_project.project_id
   role    = "roles/securitycenter.adminEditor"
-  member  = "group:${var.org_scc_admins}"
+  member  = "group:${var.gcp_group_org_security_admins}"
 }
 
 
@@ -149,25 +149,25 @@ resource "google_project_iam_member" "scc_admin" {
 *****************************************/
 
 resource "google_organization_iam_member" "org_admin_user" {
-  count = var.org_org_admins !=null ? 1 : 0
+  count = var.gcp_group_org_admins !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/resourcemanager.organizationAdmin"
-  member = "group:${var.org_org_admins}"
+  member = "group:${var.gcp_group_org_admins}"
 }
 
 resource "google_organization_iam_member" "billing_creator_user" {
-  count = var.org_billing_admins !=null ? 1 : 0
+  count = var.gcp_group_org_billing_admins !=null ? 1 : 0
 
-  org_id = var.organization_id
+  org_id = var.gcp_organization_id
   role   = "roles/billing.creator"
-  member = "group:${var.org_billing_admins}"
+  member = "group:${var.gcp_group_org_billing_admins}"
 }
 
 resource "google_billing_account_iam_member" "billing_admin_user" {
-  count = var.org_billing_admins !=null ? 1 : 0
+  count = var.gcp_group_org_billing_admins !=null ? 1 : 0
 
-  billing_account_id = var.billing_account
+  billing_account_id = var.gcp_billing_account
   role               = "roles/billing.admin"
-  member             = "group:${var.org_billing_admins}"
+  member             = "group:${var.gcp_group_org_billing_admins}"
 }

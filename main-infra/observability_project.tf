@@ -2,25 +2,25 @@
   Project creation
 *****************************************/
 
-module "organization_observability" {
+module "observability_project" {
   source                  = "terraform-google-modules/project-factory/google"
   version                 = "~> 14.1"
   random_project_id       = true
   create_project_sa       = false
   default_service_account = "delete"
-  name                    = var.infra_observability_project.name
-  org_id                  = var.organization_id
-  billing_account         = var.billing_account
+  name                    = var.gcp_infra_projects.observability.name
+  org_id                  = var.gcp_organization_id
+  billing_account         = var.gcp_billing_account
   folder_id               = google_folder.infra.id
   activate_apis           = ["logging.googleapis.com", "monitoring.googleapis.com"]
 
-  budget_alert_pubsub_topic   = var.budget_alert_pubsub_topic
+  budget_alert_pubsub_topic   = var.gcp_infra_projects.observability.budget.alert_pubsub_topic
   budget_alert_spent_percents = var.budget_alert_spent_percents
-  budget_amount               = var.infra_observability_project.budget.amount
+  budget_amount               = var.gcp_infra_projects.observability.budget.amount
 
   labels = {
     environment_code = "prod"
-    application_name = var.infra_observability_project.name
+    application_name = var.gcp_infra_projects.observability.name
   }
 
 }
@@ -58,9 +58,9 @@ module "log_export_to_biqquery" {
   destination_uri        = module.bigquery_destination.0.destination_uri
   filter                 = local.main_logs_filter
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  log_sink_name          = "${var.infra_observability_project.name}-bq-${var.default_region}-orglogs"
-  parent_resource_id     = split("/", var.parent_id )[1]
-  parent_resource_type   = startswith("organisations", var.parent_id) ? "organisation" : "folder"
+  log_sink_name          = "${var.gcp_infra_projects.observability.name}-bq-${var.gcp_default_region}-orglogs"
+  parent_resource_id     = split("/", var.gcp_parent_container_id )[1]
+  parent_resource_type   = startswith("organisations", var.gcp_parent_container_id) ? "organisation" : "folder"
   include_children       = true
   unique_writer_identity = true
   bigquery_options       = {
@@ -73,7 +73,7 @@ module "bigquery_destination" {
 
   source                     = "terraform-google-modules/log-export/google//modules/bigquery"
   version                    = "~> 7.4"
-  project_id                 = module.organization_observability.project_id
+  project_id                 = module.observability_project.project_id
   dataset_name               = "audit_logs"
   log_sink_writer_identity   = module.log_export_to_biqquery.0.writer_identity
   expiration_days            = var.audit_logs_table_expiration_days
@@ -90,9 +90,9 @@ module "storage_destination" {
 
   source                      = "terraform-google-modules/log-export/google//modules/storage"
   version                     = "~> 7.4"
-  project_id                  = module.organization_observability.project_id
+  project_id                  = module.observability_project.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  storage_bucket_name         = "${var.infra_observability_project.name}-bkt-${lower(var.log_export_storage_location)}-orglogs-${random_string.suffix.result}"
+  storage_bucket_name         = "${var.gcp_infra_projects.observability.name}-bkt-${lower(var.log_export_storage_location)}-orglogs-${random_string.suffix.result}"
   log_sink_writer_identity    = module.log_export_to_storage.0.writer_identity
   uniform_bucket_level_access = true
   location                    = var.log_export_storage_location
@@ -110,9 +110,9 @@ module "log_export_to_storage" {
   destination_uri        = module.storage_destination.0.destination_uri
   filter                 = ""
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  log_sink_name          = "${var.infra_observability_project.name}-sk-glb-orglogs"
-  parent_resource_id     = split("/", var.parent_id )[1]
-  parent_resource_type   = startswith("organizations", var.parent_id) ? "organization" : "folder"
+  log_sink_name          = "${var.gcp_infra_projects.observability.name}-sk-glb-orglogs"
+  parent_resource_id     = split("/", var.gcp_parent_container_id )[1]
+  parent_resource_type   = startswith("organizations", var.gcp_parent_container_id) ? "organization" : "folder"
   include_children       = true
   unique_writer_identity = true
 }
@@ -125,9 +125,9 @@ resource "google_bigquery_dataset" "billing_dataset" {
   count = var.enable_log_export_to_biqquery ? 1 : 0
 
   dataset_id    = "billing_data"
-  project       = module.organization_observability.project_id
+  project       = module.observability_project.project_id
   friendly_name = "GCP Billing Data"
-  location      = var.default_region
+  location      = var.gcp_default_region
 }
 
 /******************************************
@@ -135,6 +135,6 @@ resource "google_bigquery_dataset" "billing_dataset" {
 *****************************************/
 resource "google_monitoring_group" "europe" {
   display_name = "Europe metrics"
-  project      = module.organization_observability.project_id
+  project      = module.observability_project.project_id
   filter       = "resource.labels.zone = starts_with('europe-')"
 }

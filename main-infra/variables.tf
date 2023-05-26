@@ -63,6 +63,12 @@ variable "gcp_group_org_billing_admins" {
   default     = null
 }
 
+variable "gcp_group_org_billing_viewers" {
+  description = "Google Group for GCP Organization Billing viewers"
+  type        = string
+  default     = null
+}
+
 variable "gcp_group_org_network_admins" {
   description = "Google Group for GCP Organization Network Administrators"
   type        = string
@@ -198,4 +204,111 @@ variable "trusted_ingress_ranges" {
 variable "trusted_private_ranges" {
   type        = list(string)
   description = "List of network ranges from which internal traffic will be allowed"
+}
+
+variable "enable_log_export_to_biqquery" {
+  description = "Enable log export to bigquery"
+  type        = bool
+  default     = false
+}
+
+variable "enable_log_export_to_cs" {
+  description = "Enable log export to bigquery"
+  type        = bool
+  default     = true
+}
+
+variable "log_export_storage_lifecycle_rules" {
+  description = "Bucket lifecycle rules"
+  type        = any
+  default     = [
+    {
+      action = {
+        type = "Delete"
+      }
+      condition = {
+        age        = 365
+        with_state = "ANY"
+      }
+    },
+    {
+      action = {
+        type          = "SetStorageClass"
+        storage_class = "ARCHIVE"
+      }
+      condition = {
+        age        = 30
+        with_state = "ANY"
+      }
+    }
+  ]
+}
+
+variable "log_export_storage_retention_policy" {
+  description = "Configuration of the bucket's data retention policy for how long objects in the bucket should be retained."
+  type        = object({
+    is_locked             = bool
+    retention_period_days = number
+  })
+  default = null
+}
+
+variable "budget_alert_spent_percents" {
+  description = "A list of percentages of the budget to alert on when threshold is exceeded"
+  type        = list(number)
+  default     = [0.5, 0.75, 0.9, 0.95]
+}
+
+variable "audit_logs_table_expiration_days" {
+  description = "Period before tables expire for all audit logs in milliseconds. Default is 30 days."
+  type        = number
+  default     = 30
+}
+
+variable "audit_logs_table_delete_contents_on_destroy" {
+  description = "(Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present."
+  type        = bool
+  default     = false
+}
+
+variable "enable_scc_notification" {
+  description = "Enable Security Control Center notifications."
+  type        = bool
+  default     = false
+}
+
+variable "log_export_storage_location" {
+  description = "The location of the storage bucket used to export logs."
+  type        = string
+  default     = "EU"
+}
+
+variable "log_export_storage_force_destroy" {
+  description = "(Optional) If set to true, delete all contents when destroying the resource; otherwise, destroying the resource will fail if contents are present."
+  type        = bool
+  default     = false
+}
+
+variable "log_export_storage_versioning" {
+  description = "(Optional) Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted."
+  type        = bool
+  default     = false
+}
+
+variable "scc_notification_name" {
+  description = "Name of the Security Command Center Notification. It must be unique in the organization. Run `gcloud scc notifications describe <scc_notification_name> --organization=org_id` to check if it already exists."
+  type        = string
+  default     = "org-scc-notify"
+}
+
+variable "scc_notification_filter" {
+  description = "Filter used to create the Security Command Center Notification, you can see more details on how to create filters in https://cloud.google.com/security-command-center/docs/how-to-api-filter-notifications#create-filter"
+  type        = string
+  default     = "state = \"ACTIVE\""
+}
+
+variable "enable_partner_interconnect" {
+  description = "Enable Partner Interconnect in the environment."
+  type        = bool
+  default     = false
 }

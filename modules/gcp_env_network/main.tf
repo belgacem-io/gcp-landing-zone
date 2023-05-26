@@ -70,8 +70,8 @@ module "env_nethub" {
   environment_code              = var.environment_code
   prefix                        = var.prefix
   default_region                = var.default_region
-  org_nethub_vpc_self_link      = var.org_nethub_vpc_self_link
-  org_nethub_project_id         = var.org_nethub_project_id
+  org_nethub_vpc_self_link      = var.infra_nethub_vpc_self_link
+  org_nethub_project_id         = var.infra_nethub_project_id
   domain                        = "${var.domain}."
   bgp_asn_subnet                = "64514"
   windows_activation_enabled    = false

@@ -9,7 +9,7 @@ resource "google_dns_policy" "default_policy" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name                      = "${var.prefix}-dp-glb-dns-hub-default-policy"
   enable_inbound_forwarding = var.dns_enable_inbound_forwarding
-  enable_logging            = var.dns_enable_logging
+  enable_logging            = var.enable_dns_logging
   networks {
     network_url = module.main.network_self_link
   }
@@ -25,7 +25,7 @@ resource "google_dns_policy" "default_spoke_policy" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name                      = "${var.prefix}-dp-glb-network-spoke-default-policy"
   enable_inbound_forwarding = var.dns_enable_inbound_forwarding
-  enable_logging            = var.dns_enable_logging
+  enable_logging            = var.enable_dns_logging
   networks {
     network_url = module.main.network_self_link
   }
