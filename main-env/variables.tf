@@ -8,6 +8,11 @@ variable "gcp_parent_container_id" {
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
+variable "gcp_organization_prefix" {
+  description = "The organization prefix, will be used for resources naming."
+  type        = string
+}
+
 variable "gcp_organization_domain" {
   type        = string
   description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
@@ -49,7 +54,11 @@ variable "gcp_organization_environments" {
       cidr_blocks = object({
         private_subnet_ranges     = list(string)
         data_subnet_ranges        = list(string)
-        private_svc_subnet_ranges = list(string)
+        reserved_subnets          = map(object({
+          purpose = string
+          role    = string
+          range   = string
+        }))
         private_svc_connect_ip    = string
       })
     })
@@ -124,7 +133,11 @@ variable "gcp_infra_projects" {
           public_subnet_ranges      = list(string)
           private_subnet_ranges     = list(string)
           data_subnet_ranges        = list(string)
-          private_svc_subnet_ranges = list(string)
+          reserved_subnets          = map(object({
+          purpose = string
+          role    = string
+          range   = string
+        }))
           private_svc_connect_ip    = string
         })
       })
@@ -136,4 +149,19 @@ variable "gcp_alert_spent_percents" {
   description = "A list of percentages of the budget to alert on when threshold is exceeded"
   type        = list(number)
   default     = [0.5, 0.75, 0.9, 0.95]
+}
+
+variable "trusted_egress_ranges" {
+  type        = list(string)
+  description = "List of network ranges to which all egress traffic will be allowed"
+}
+
+variable "trusted_ingress_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which all ingress traffic will be allowed"
+}
+
+variable "trusted_private_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which internal traffic will be allowed"
 }

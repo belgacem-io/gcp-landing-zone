@@ -4,8 +4,8 @@ locals {
   public_subnets          = [
     for subnet in var.public_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-public"
-      subnet_ip             = subnet
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_suffix}"
+      subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = false
       subnet_flow_logs      = var.subnetworks_enable_logging
@@ -15,8 +15,8 @@ locals {
   private_subnets = [
     for subnet in var.private_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-private"
-      subnet_ip             = subnet
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_suffix}"
+      subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging
@@ -26,8 +26,8 @@ locals {
   data_subnets = [
     for subnet in var.data_subnets : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-data"
-      subnet_ip             = subnet
+      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${subnet.subnet_suffix}"
+      subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = true
       subnet_flow_logs      = var.subnetworks_enable_logging

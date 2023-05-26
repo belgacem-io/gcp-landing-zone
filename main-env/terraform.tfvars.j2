@@ -1,4 +1,5 @@
 gcp_organization_id     = "{{ env("ORGANISATION_ID") }}"
+gcp_organization_prefix   = "{{ env("ORGANISATION_PREFIX") }}"
 gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
 gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
 gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
@@ -19,6 +20,11 @@ gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAcco
 #gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_DOMAIN") }}"
 #gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_DOMAIN") }}"
 #gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_DOMAIN") }}"
+##################################### Network ###################
+trusted_egress_ranges           = ["0.0.0.0/0"]
+trusted_ingress_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+trusted_private_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
 gcp_organization_environments    = {
@@ -30,8 +36,8 @@ gcp_organization_environments    = {
       cidr_blocks = {
         private_subnet_ranges = ["172.18.0.0/24"]
         data_subnet_ranges = ["172.18.1.0/24"]
-        private_svc_subnet_ranges = ["172.18.2.0/24"]
-        private_svc_connect_ip = "172.18.3.5"
+        private_svc_connect_ip = null
+        reserved_subnets       =  {}
       }
     }
     children         = [
@@ -53,8 +59,8 @@ gcp_organization_environments    = {
       cidr_blocks = {
         private_subnet_ranges = ["172.18.4.0/24"]
         data_subnet_ranges = ["172.18.5.0/24"]
-        private_svc_subnet_ranges = ["172.18.6.0/24"]
-        private_svc_connect_ip = "172.18.7.5"
+        private_svc_connect_ip = null
+        reserved_subnets       =  {}
       }
     }
     children         = [
@@ -162,8 +168,8 @@ gcp_infra_projects = {
         public_subnet_ranges = ["172.16.0.0/24"]
         private_subnet_ranges = ["172.16.1.0/24"]
         data_subnet_ranges = ["172.16.2.0/24"]
-        private_svc_subnet_ranges = ["172.16.3.0/24"]
-        private_svc_connect_ip = "172.16.4.5"
+        private_svc_connect_ip = null
+        reserved_subnets       =  {}
       }
     }
   }

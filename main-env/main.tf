@@ -77,6 +77,7 @@ module "env_nethub_networks" {
 
   default_region             = var.gcp_default_region
   domain                     = "${ each.value.environment_code }.${var.gcp_organization_domain}"
+  prefix                     = var.gcp_organization_prefix
   environment_code           = each.value.environment_code
   org_id                     = var.gcp_organization_id
   project_id                 = module.env_nethub_projects[each.key].project_id
@@ -88,6 +89,9 @@ module "env_nethub_networks" {
   private_svc_connect_ip     = each.value.network.cidr_blocks.private_svc_connect_ip
   org_nethub_project_id      = data.google_projects.org_nethub.projects[0].project_id
   org_nethub_vpc_self_link   = data.google_compute_network.org_nethub.self_link
+  trusted_egress_ranges      = var.trusted_egress_ranges
+  trusted_ingress_ranges     = var.trusted_ingress_ranges
+  trusted_private_ranges     = var.trusted_private_ranges
   business_project_subnets   = [
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
@@ -105,6 +109,7 @@ module "env_nethub_bastions" {
 
   for_each = var.gcp_organization_environments
 
+  prefix             = var.gcp_organization_prefix
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.env_nethub_projects[each.key].project_id

@@ -1,3 +1,8 @@
+resource "google_folder" "infra" {
+  display_name = var.infra_folder_name
+  parent       = var.parent_id
+}
+
 /******************************************
   Create projects
 *****************************************/
@@ -54,9 +59,9 @@ module "infra_hub_networks" {
   reserved_subnets           = var.gcp_infra_projects.nethub.network.cidr_blocks.reserved_subnets
   private_svc_connect_ip     = var.gcp_infra_projects.nethub.network.cidr_blocks.private_svc_connect_ip
   network_name               = var.gcp_infra_projects.nethub.network.name
-  trusted_egress_ranges           = var.trusted_egress_ranges
-  trusted_ingress_ranges          = var.trusted_ingress_ranges
-  trusted_private_ranges  = var.trusted_private_ranges
+  trusted_egress_ranges      = var.trusted_egress_ranges
+  trusted_ingress_ranges     = var.trusted_ingress_ranges
+  trusted_private_ranges     = var.trusted_private_ranges
 
   gcp_labels = var.gcp_labels
 

@@ -4,30 +4,18 @@ locals {
   primary_env_nethub_private_subnets = [
     for subnet in var.private_subnet_ranges : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(var.private_subnet_ranges , subnet)}"
-      subnet_ip    = subnet
-      project_name = var.project_name
+      subnet_suffix  = "private-${index(var.private_subnet_ranges , subnet)}"
+      subnet_range   = subnet
     }
   ]
 
   primary_env_nethub_data_subnets = [
     for subnet in var.data_subnet_ranges : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-data-${var.default_region}-${index(var.data_subnet_ranges , subnet)}"
-      subnet_ip    = subnet
-      project_name = var.project_name
+      subnet_suffix  = "data-${index(var.data_subnet_ranges , subnet)}"
+      subnet_range   = subnet
     }
   ]
-
-  primary_env_nethub_private_svc_connect_subnets = [
-    for subnet_range in var.private_svc_connect_ranges : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name  = "${var.prefix}-sub-${var.default_region}-svcc-${index(var.private_svc_connect_ranges,subnet_range )}"
-      subnet_ip    = subnet_range
-      project_name = var.project_name
-    }
-  ]
-
 
   ## Primary subnets for business projects
   primary_business_project_private_subnets = flatten([
@@ -35,9 +23,9 @@ locals {
       for subnet in prj.private_subnet_ranges :
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]
-        subnet_name  = "${var.prefix}-sub-${var.default_region}-private-${index(prj.private_subnet_ranges , subnet)}"
-        subnet_ip    = subnet
-        project_name = prj.project_name
+        subnet_suffix  = "${var.prefix}-sub-${var.default_region}-private-${index(prj.private_subnet_ranges , subnet)}"
+        subnet_range   = subnet
+        project_name   = prj.project_name
       } if var.environment_code == prj.environment_code
     ]
   ])
@@ -46,9 +34,9 @@ locals {
       for subnet in prj.data_subnet_ranges :
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]
-        subnet_name  = "${var.prefix}-sub-${var.default_region}-data-${index(prj.data_subnet_ranges , subnet)}"
-        subnet_ip    = subnet
-        project_name = prj.project_name
+        subnet_suffix  = "${var.prefix}-sub-${var.default_region}-data-${index(prj.data_subnet_ranges , subnet)}"
+        subnet_range   = subnet
+        project_name   = prj.project_name
       } if var.environment_code == prj.environment_code
     ]
   ])
@@ -99,14 +87,14 @@ module "env_nethub" {
   public_subnets              = []
   private_subnets             = concat(local.primary_env_nethub_private_subnets, local.primary_business_project_private_subnets)
   data_subnets                = concat(local.primary_env_nethub_data_subnets, local.primary_business_project_data_subnets)
-  private_svc_connect_subnets = local.primary_env_nethub_private_svc_connect_subnets
+  reserved_subnets            = var.reserved_subnets
   secondary_ranges            = {
     for subnet_name in distinct(local.secondary_business_project_subnets.*.subnet_name) :
     subnet_name =>
     [for s_range in local.secondary_business_project_subnets : s_range if s_range.subnet_name == subnet_name]
   }
 
-  # FIXME Security issue
-  allow_all_egress_ranges  = ["0.0.0.0/0"]
-  allow_all_ingress_ranges = ["0.0.0.0/0"]
+  allow_egress_ranges           = var.trusted_egress_ranges
+  allow_ingress_ranges          = var.trusted_ingress_ranges
+  internal_trusted_cidr_ranges  = var.trusted_private_ranges
 }

@@ -47,9 +47,14 @@ variable "data_subnet_ranges" {
   type = list(string)
 }
 
-variable "private_svc_connect_ranges" {
-  type        = list(string)
-  description = "CIDR range for private service networking. Used for Cloud SQL and other managed services."
+variable "reserved_subnets" {
+  type = map(object({
+    purpose = string
+    role    = string
+    range   = string
+  }))
+  description = "The list of reserved subnet for appliances like SVC and proxies."
+  default     = {}
 }
 
 variable "private_svc_connect_ip" {
@@ -71,4 +76,19 @@ variable "business_project_subnets" {
 variable "network_name" {
   type        = string
   description = "The network name."
+}
+
+variable "trusted_egress_ranges" {
+  type        = list(string)
+  description = "List of network ranges to which all egress traffic will be allowed"
+}
+
+variable "trusted_ingress_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which all ingress traffic will be allowed"
+}
+
+variable "trusted_private_ranges" {
+  type        = list(string)
+  description = "List of network ranges from which internal traffic will be allowed"
 }

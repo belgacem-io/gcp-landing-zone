@@ -1,5 +1,5 @@
 locals {
-  nethub_project_id  = try(data.google_projects.org_nethub.projects[0].project_id, null)
+  nethub_project_id = try(data.google_projects.org_nethub.projects[0].project_id, null)
 }
 
 /******************************************
@@ -26,15 +26,27 @@ module "nethub" {
   network_name                  = var.network_name
   mode                          = "hub"
 
-  public_subnets              = var.public_subnet_ranges
-  private_subnets             = var.private_subnet_ranges
-  data_subnets                = var.data_subnet_ranges
-  reserved_subnets            = var.reserved_subnets
-  private_svc_connect_ip      = var.private_svc_connect_ip
+  public_subnets = [
+    for range in var.public_subnet_ranges : {
+      subnet_suffix = "public", subnet_range = range
+    }
+  ]
+  private_subnets = [
+    for range in var.private_subnet_ranges :{
+      subnet_suffix = "private", subnet_range = range
+    }
+  ]
+  data_subnets = [
+    for range in var.data_subnet_ranges : {
+      subnet_suffix = "data", subnet_range = range
+    }
+  ]
+  reserved_subnets       = var.reserved_subnets
+  private_svc_connect_ip = var.private_svc_connect_ip
 
   secondary_ranges = {}
 
-  allow_egress_ranges           = var.trusted_egress_ranges
-  allow_ingress_ranges          = var.trusted_ingress_ranges
-  internal_trusted_cidr_ranges  = var.trusted_private_ranges
+  allow_egress_ranges          = var.trusted_egress_ranges
+  allow_ingress_ranges         = var.trusted_ingress_ranges
+  internal_trusted_cidr_ranges = var.trusted_private_ranges
 }

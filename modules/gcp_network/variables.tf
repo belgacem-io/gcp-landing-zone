@@ -55,19 +55,28 @@ variable "nat_num_addresses_region1" {
 }
 
 variable "public_subnets" {
-  type = list(string)
+  type = list(object({
+    subnet_suffix = string
+    subnet_range  = string
+  }))
   description = "The list of public subnets being created"
   default     = []
 }
 
 variable "private_subnets" {
-  type = list(string)
+  type = list(object({
+    subnet_suffix = string
+    subnet_range  = string
+  }))
   description = "The list of private subnets being created"
   default     = []
 }
 
 variable "data_subnets" {
-  type = list(string)
+  type = list(object({
+    subnet_suffix = string
+    subnet_range  = string
+  }))
   description = "The list of data subnets being created"
   default     = []
 }
