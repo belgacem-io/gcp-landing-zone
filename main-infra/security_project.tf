@@ -32,13 +32,13 @@ module "security_project" {
 
 resource "google_pubsub_topic" "scc_notification_topic" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.gcp_infra_projects.security.name}-pst-glob-sccnotif"
+  name    = "${var.gcp_organization_prefix}-prod-pst-glob-sccnotif"
   project = module.security_project.project_id
 }
 
 resource "google_pubsub_subscription" "scc_notification_subscription" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.gcp_infra_projects.security.name}-ps-glb-sccnotif"
+  name    = "${var.gcp_organization_prefix}-prod-ps-glb-sccnotif"
   topic   = google_pubsub_topic.scc_notification_topic.name
   project = module.security_project.project_id
 }
