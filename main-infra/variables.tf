@@ -132,8 +132,12 @@ variable "gcp_business_projects" {
     network = object({
       cidr_blocks = object({
         private_subnet_ranges         = list(string)
-        private_subnet_k8s_2nd_ranges = list(string)
         data_subnet_ranges            = list(string)
+        reserved_subnets      = map(object({
+          purpose = string
+          role    = string
+          range   = string
+        }))
       })
     })
   }))

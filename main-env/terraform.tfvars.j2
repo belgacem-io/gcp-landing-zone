@@ -32,7 +32,7 @@ gcp_organization_environments    = {
     environment_code = "dev"
     name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      name      = "{{ env("ORGANISATION_PREFIX") }}-netenv-dev-vpc-glob",
+      name      = "netenv",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.0.0/24"]
         data_subnet_ranges = ["172.18.1.0/24"]
@@ -55,7 +55,7 @@ gcp_organization_environments    = {
     environment_code = "prod"
     name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
     network          = {
-      name      = "{{ env("ORGANISATION_PREFIX") }}-netenv-prod-vpc-glob",
+      name      = "netenv",
       cidr_blocks = {
         private_subnet_ranges = ["172.18.4.0/24"]
         data_subnet_ranges = ["172.18.5.0/24"]
@@ -89,8 +89,8 @@ gcp_business_projects            = [
     network          = {
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.0/27"]
-        private_subnet_k8s_2nd_ranges = []
-        data_subnet_ranges = ["10.1.0.0/27"]
+        data_subnet_ranges    = ["10.1.0.0/27"]
+        reserved_subnets      = {}
       }
     }
   },
@@ -106,8 +106,8 @@ gcp_business_projects            = [
     network          = {
       cidr_blocks = {
         private_subnet_ranges = ["10.0.0.32/27"]
-        private_subnet_k8s_2nd_ranges = []
-        data_subnet_ranges = ["10.1.0.32/27"]
+        data_subnet_ranges    = ["10.1.0.32/27"]
+        reserved_subnets      = {}
       }
     }
   },
@@ -123,8 +123,8 @@ gcp_business_projects            = [
     network          = {
       cidr_blocks = {
         private_subnet_ranges         = ["10.0.0.64/27"]
-        private_subnet_k8s_2nd_ranges = []
         data_subnet_ranges            = ["10.1.0.64/27"]
+        reserved_subnets              = {}
       }
     }
   }
@@ -163,7 +163,7 @@ gcp_infra_projects = {
       email_addresses_to_notify = []
     }
     network = {
-      name        = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod-vpc-glob",
+      name        = "nethub",
       cidr_blocks = {
         public_subnet_ranges = ["172.16.0.0/24"]
         private_subnet_ranges = ["172.16.1.0/24"]

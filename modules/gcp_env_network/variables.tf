@@ -69,7 +69,6 @@ variable "business_project_subnets" {
     environment_code              = string
     private_subnet_ranges         = list(string)
     data_subnet_ranges            = list(string)
-    private_subnet_k8s_2nd_ranges = list(string)
   }))
 }
 

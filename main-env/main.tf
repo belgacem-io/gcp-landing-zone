@@ -1,12 +1,12 @@
 /******************************************
-  Org Network Hub
+  Data
 *****************************************/
 
 data "google_projects" "infra_nethub" {
   filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.gcp_infra_projects.nethub.name} lifecycleState=ACTIVE"
 }
 
-data "google_projects" "infra_monitoring" {
+data "google_projects" "infra_observability" {
   filter = "parent.id:${split("/", data.google_active_folder.infra.name)[1]} labels.application_name=${var.gcp_infra_projects.observability.name} lifecycleState=ACTIVE"
 }
 
@@ -28,11 +28,13 @@ locals {
         project_name                  = project.name
         private_subnet_ranges         = project.network.cidr_blocks.private_subnet_ranges
         data_subnet_ranges            = project.network.cidr_blocks.data_subnet_ranges
-        private_subnet_k8s_2nd_ranges = project.network.cidr_blocks.private_subnet_k8s_2nd_ranges
+        reserved_subnets              = project.network.cidr_blocks.reserved_subnets
       }) if project.environment_code == env.environment_code
     ]
   ])
 }
+
+
 /******************************************
   Create projects
 *****************************************/
@@ -70,6 +72,10 @@ module "netenv_projects" {
   budget_amount               = 100
 }
 
+/******************************************
+  Create Networks
+*****************************************/
+
 module "netenv_networks" {
   source = "../modules/gcp_env_network"
 
@@ -77,18 +83,18 @@ module "netenv_networks" {
 
   default_region             = var.gcp_default_region
   domain                     = "${ each.value.environment_code }.${var.gcp_organization_domain}"
-  prefix                     = var.gcp_organization_prefix
+  prefix                     = "${ var.gcp_organization_prefix }-${each.value.environment_code}"
   environment_code           = each.value.environment_code
   org_id                     = var.gcp_organization_id
   project_id                 = module.netenv_projects[each.key].project_id
   network_name               = each.value.network.name
   private_subnet_ranges      = each.value.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges         = each.value.network.cidr_blocks.data_subnet_ranges
-  private_svc_connect_ranges = each.value.network.cidr_blocks.private_svc_subnet_ranges
+  reserved_subnets           = each.value.network.cidr_blocks.reserved_subnets
   project_name               = each.value.name
   private_svc_connect_ip     = each.value.network.cidr_blocks.private_svc_connect_ip
-  infra_nethub_project_id      = data.google_projects.infra_nethub.projects[0].project_id
-  infra_nethub_vpc_self_link   = data.google_compute_network.infra_nethub.self_link
+  infra_nethub_project_id    = data.google_projects.infra_nethub.projects[0].project_id
+  infra_nethub_vpc_self_link = data.google_compute_network.infra_nethub.self_link
   trusted_egress_ranges      = var.trusted_egress_ranges
   trusted_ingress_ranges     = var.trusted_ingress_ranges
   trusted_private_ranges     = var.trusted_private_ranges
@@ -98,18 +104,22 @@ module "netenv_networks" {
 
 
   depends_on = [
-    data.google_projects.infra_monitoring,
+    data.google_projects.infra_observability,
     data.google_projects.infra_nethub,
     module.netenv_projects
   ]
 }
+
+/******************************************
+  Create Bastions
+*****************************************/
 
 module "netenv_bastions" {
   source = "../modules/gcp_bastion_host"
 
   for_each = var.gcp_organization_environments
 
-  prefix             = var.gcp_organization_prefix
+  prefix             = "${ var.gcp_organization_prefix }-${each.value.environment_code}"
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.netenv_projects[each.key].project_id

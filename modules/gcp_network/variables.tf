@@ -204,13 +204,13 @@ variable "internal_trusted_cidr_ranges" {
   type        = list(string)
 }
 
-variable "org_nethub_project_id" {
+variable "infra_nethub_project_id" {
   type        = string
   default     = null
   description = "Organization hub network project. Required in spoke mode"
 }
 
-variable "org_nethub_vpc_self_link" {
+variable "infra_nethub_vpc_self_link" {
   type        = string
   default     = null
   description = "Organization hub network VPC self link. Required in spoke mode"
