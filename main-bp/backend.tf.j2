@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
     bucket  = "{{ env("IAC_SERVICE_BACKEND_BUCKET") }}"
-    prefix  = "terraform/main-bootstrap/state"
+    prefix  = "terraform/main-bp/state"
   }
 }

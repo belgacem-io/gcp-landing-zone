@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = ""
+    bucket  = "{{ env("IAC_SERVICE_BACKEND_BUCKET") }}"
     prefix  = "terraform/main-infra/state"
   }
 }

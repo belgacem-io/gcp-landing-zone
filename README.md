@@ -96,7 +96,7 @@ Before stating, make sure that you've done the following:
    ```
 
 ### Generate a test example
-1. Create an '.auth/env.test' file and add required variables
+1. Add local env variables to '.auth/env' file
    ```sh 
    ##################################### tfvars generator ###################
    export REGION=europe-west9
