@@ -102,15 +102,13 @@ variable "sa_org_iam_permissions" {
   description = "List of permissions granted to Terraform service account across the GCP organization."
   type        = list(string)
   default = [
-    "roles/billing.user",
     "roles/compute.networkAdmin",
     "roles/compute.xpnAdmin",
     "roles/iam.securityAdmin",
     "roles/iam.serviceAccountAdmin",
     "roles/logging.configWriter",
-    "roles/orgpolicy.policyAdmin",
     "roles/resourcemanager.folderAdmin",
-    "roles/resourcemanager.organizationViewer",
+    "roles/compute.xpnAdmin"
   ]
 }
 

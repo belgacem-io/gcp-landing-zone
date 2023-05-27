@@ -186,6 +186,14 @@ resource "google_organization_iam_member" "tf_sa_org_perms" {
   member = "serviceAccount:${var.iac_service_account_email}"
 }
 
+resource "google_folder_iam_member" "tf_sa_folder_perms" {
+  for_each = local.is_organization ? toset([]) : toset(var.sa_org_iam_permissions)
+
+  folder = local.parent_id
+  role   = each.value
+  member = "serviceAccount:${var.iac_service_account_email}"
+}
+
 resource "google_billing_account_iam_member" "tf_billing_user" {
   count = var.grant_billing_user ? 1 : 0
 
