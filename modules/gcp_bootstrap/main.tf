@@ -29,6 +29,21 @@ resource "random_id" "suffix" {
 }
 
 /*************************************************
+  Enable APIs.
+*************************************************/
+
+resource "google_project_service" "enableapi" {
+  for_each = toset(local.activate_apis)
+  project = var.project_id
+  service = each.value
+  timeouts {
+    create = "30m"
+    update = "40m"
+  }
+  disable_dependent_services = true
+}
+
+/*************************************************
   Make sure group_org_admins has projectCreator.
 *************************************************/
 

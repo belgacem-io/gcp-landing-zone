@@ -91,7 +91,10 @@ variable "activate_apis" {
     "admin.googleapis.com",
     "appengine.googleapis.com",
     "storage-api.googleapis.com",
-    "monitoring.googleapis.com"
+    "monitoring.googleapis.com",
+    "billingbudgets.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "pubsub.googleapis.com",
   ]
 }
 
