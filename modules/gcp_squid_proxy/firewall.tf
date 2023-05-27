@@ -11,7 +11,7 @@ resource "google_compute_firewall" "allow_squid_to_internet" {
   priority                = 100
   direction               = "EGRESS"
   source_ranges           = ["0.0.0.0/0"]
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
 
   allow {
     protocol = "tcp"
@@ -59,7 +59,7 @@ resource "google_compute_firewall" "allow_trusted_vpc_to_squid" {
   direction               = "INGRESS"
   priority                = 1000
   source_ranges           = var.source_trusted_cidr_ranges
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
 
   allow {
     protocol = "all"
@@ -86,7 +86,7 @@ resource "google_compute_firewall" "allow_squid_to_trusted_vpc" {
   direction = "EGRESS"
   priority  = 1000
   destination_ranges      = var.source_trusted_cidr_ranges
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
 
   allow {
     protocol = "all"
@@ -125,7 +125,7 @@ module "iap_tunneling" {
   fw_name_allow_ssh_from_iap = "${var.prefix}-iap-glb-allow-squid-iap"
   project                    = var.project_id
   network                    = var.network_name
-  service_accounts           = module.service_account.emails_list
+  service_accounts           = [google_service_account.sa.email]
   instances                  = []
   members                    = var.authorized_members
 }

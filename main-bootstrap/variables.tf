@@ -13,6 +13,10 @@ variable "gcp_bootstrap_project_id" {
   description = "The bootstrap project id."
 }
 
+variable "gcp_organization_prefix" {
+  description = "The organization prefix, will be used for resources naming."
+  type        = string
+}
 variable "gcp_organization_domain" {
   type        = string
   description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"

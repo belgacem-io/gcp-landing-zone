@@ -26,7 +26,7 @@ resource "google_compute_firewall" "allow_trusted_vpc_to_tgw" {
   }
 
   source_ranges           = var.source_trusted_cidr_ranges
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
 }
 
 resource "google_compute_firewall" "allow_tgw_to_trusted_vpc" {
@@ -54,7 +54,7 @@ resource "google_compute_firewall" "allow_tgw_to_trusted_vpc" {
   }
 
   destination_ranges      = var.source_trusted_cidr_ranges
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
 }
 
 /******************************************
@@ -76,7 +76,7 @@ module "iap_tunneling" {
   fw_name_allow_ssh_from_iap = "${var.prefix}-iap-glb-allow-tgw-ipa"
   project                    = var.project_id
   network                    = var.network_name
-  service_accounts           = module.service_account.emails_list
+  service_accounts           = [google_service_account.sa.email]
   instances                  = []
   members                    = var.authorized_members
 }

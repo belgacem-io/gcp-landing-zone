@@ -3,5 +3,5 @@ output "ilb_id" {
 }
 
 output "proxy_service_accounts" {
-  value = module.service_account.emails_list
+  value = google_service_account.sa.email
 }

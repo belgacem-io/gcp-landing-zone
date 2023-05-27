@@ -11,7 +11,7 @@ data "google_projects" "infra_observability" {
 }
 
 data "google_compute_network" "infra_nethub" {
-  name    = "${var.gcp_organization_prefix}-network-${var.gcp_default_region}-nethub"
+  name    = "${var.gcp_organization_prefix}-prod-network-${var.gcp_default_region}-nethub"
   project = data.google_projects.infra_nethub.projects[0].project_id
 }
 

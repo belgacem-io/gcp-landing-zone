@@ -75,13 +75,13 @@
 | <a name="input_enable_optional_fw_rules"></a> [enable\_optional\_fw\_rules](#input\_enable\_optional\_fw\_rules) | Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges. | `bool` | `true` | no |
 | <a name="input_enable_secure_web_proxy"></a> [enable\_secure\_web\_proxy](#input\_enable\_secure\_web\_proxy) | In hub mode, if enabled, a secure web proxy will be installed. | `bool` | `true` | no |
 | <a name="input_enable_transitive_network"></a> [enable\_transitive\_network](#input\_enable\_transitive\_network) | In hub mode, if enabled, a transit gateway will be installed. | `bool` | `true` | no |
+| <a name="input_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#input\_infra\_nethub\_project\_id) | Organization hub network project. Required in spoke mode | `string` | `null` | no |
+| <a name="input_infra_nethub_vpc_self_link"></a> [infra\_nethub\_vpc\_self\_link](#input\_infra\_nethub\_vpc\_self\_link) | Organization hub network VPC self link. Required in spoke mode | `string` | `null` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | Network deployment mode, should be set to `hub` or `spoke`. | `string` | `null` | no |
 | <a name="input_nat_bgp_asn"></a> [nat\_bgp\_asn](#input\_nat\_bgp\_asn) | BGP ASN for first NAT cloud routes. | `number` | `64514` | no |
 | <a name="input_nat_enabled"></a> [nat\_enabled](#input\_nat\_enabled) | Toggle creation of NAT cloud router. | `bool` | `false` | no |
 | <a name="input_nat_num_addresses"></a> [nat\_num\_addresses](#input\_nat\_num\_addresses) | Number of external IPs to reserve for first Cloud NAT. | `number` | `2` | no |
 | <a name="input_net_tag_internet_egress"></a> [net\_tag\_internet\_egress](#input\_net\_tag\_internet\_egress) | Network tags for VMs with internet access. | `string` | `"restricted-egress-internet"` | no |
-| <a name="input_infra_nethub_project_id"></a> [org\_nethub\_project\_id](#input\_org\_nethub\_project\_id) | Organization hub network project. Required in spoke mode | `string` | `null` | no |
-| <a name="input_infra_nethub_vpc_self_link"></a> [org\_nethub\_vpc\_self\_link](#input\_org\_nethub\_vpc\_self\_link) | Organization hub network VPC self link. Required in spoke mode | `string` | `null` | no |
 | <a name="input_private_service_cidr"></a> [private\_service\_cidr](#input\_private\_service\_cidr) | CIDR range for private service networking. Used for Cloud SQL and other managed services. | `string` | `null` | no |
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | The list of private subnets being created | <pre>list(object({<br>    subnet_suffix = string<br>    subnet_range  = string<br>  }))</pre> | `[]` | no |
 | <a name="input_private_svc_connect_ip"></a> [private\_svc\_connect\_ip](#input\_private\_svc\_connect\_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | `null` | no |

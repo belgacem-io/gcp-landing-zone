@@ -51,5 +51,5 @@ organizational policy.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_infra_nethub_project_id"></a> [org\_nethub\_project\_id](#output\_org\_nethub\_project\_id) | n/a |
+| <a name="output_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#output\_infra\_nethub\_project\_id) | n/a |
 <!-- END_TF_DOCS -->

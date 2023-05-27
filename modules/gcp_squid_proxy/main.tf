@@ -1,13 +1,17 @@
-module "service_account" {
-  source  = "terraform-google-modules/service-accounts/google"
-  version = "~> 4.2"
+resource "google_service_account" "sa" {
+  project      = var.project_id
+  account_id   = "${var.prefix}-glb-squid-proxy"
+  display_name = "Squid Proxy"
+}
 
-  project_id    = var.project_id
-  names         = ["squid-proxy"]
-  project_roles = [
-    "${var.project_id}=>roles/logging.logWriter",
-    "${var.project_id}=>roles/monitoring.metricWriter",
-  ]
+resource "google_project_iam_member" "member" {
+  for_each = toset([
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter"
+  ])
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.sa.email}"
 }
 
 module "proxy_template" {
@@ -23,7 +27,7 @@ module "proxy_template" {
   subnetwork_project = var.project_id
   machine_type       = var.instance_type
   service_account    = {
-    email  = module.service_account.emails_list[0]
+    email  = google_service_account.sa.email
     scopes = ["cloud-platform"]
   }
   metadata = {
@@ -39,7 +43,7 @@ module "proxy_template" {
   tags = var.network_tags
 
   depends_on = [
-    module.service_account
+    google_service_account.sa
   ]
 }
 
@@ -77,7 +81,7 @@ module "proxy_ilbs" {
   global_access           = true
   network                 = var.network_name
   subnetwork              = var.subnetwork_name
-  target_service_accounts = module.service_account.emails_list
+  target_service_accounts = [google_service_account.sa.email]
   source_tags             = null
   target_tags             = null
   create_backend_firewall = false

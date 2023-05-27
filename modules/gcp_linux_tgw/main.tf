@@ -1,17 +1,20 @@
 /*
  * Hub & Spoke Peering Transitivity with Gateway VMs
  */
+resource "google_service_account" "sa" {
+  project      = var.project_id
+  account_id   = "${var.prefix}-glb-linux-tgw"
+  display_name = "Squid Proxy"
+}
 
-module "service_account" {
-  source  = "terraform-google-modules/service-accounts/google"
-  version = "~> 4.1"
-
-  project_id    = var.project_id
-  names         = ["linux-tgw"]
-  project_roles = [
-    "${var.project_id}=>roles/logging.logWriter",
-    "${var.project_id}=>roles/monitoring.metricWriter",
-  ]
+resource "google_project_iam_member" "member" {
+  for_each = toset([
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter"
+  ])
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.sa.email}"
 }
 
 module "tgw_template" {
@@ -29,7 +32,7 @@ module "tgw_template" {
   machine_type       = var.instance_type
 
   service_account = {
-    email  = module.service_account.email
+    email  = google_service_account.sa.email
     scopes = ["cloud-platform"]
   }
 
@@ -82,7 +85,7 @@ module "ilbs" {
   network                 = var.network_name
   subnetwork              = var.subnetwork_name
   firewall_enable_logging = true
-  target_service_accounts = [module.service_account.email]
+  target_service_accounts = [google_service_account.sa.email]
   source_tags             = null
   target_tags             = null
   create_backend_firewall = false
