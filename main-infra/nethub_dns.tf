@@ -9,7 +9,7 @@ module "dns-public-zone" {
   project_id = module.nethub_project.project_id
   type       = "public"
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name       = "${var.gcp_organization_prefix}-prod-fz-glob"
+  name       = "${var.gcp_organization_name}-prod-fz-glob"
   domain     = "${var.gcp_organization_domain}."
 
   depends_on = [

@@ -1,5 +1,5 @@
 gcp_organization_id       = "{{ env("ORGANISATION_ID") }}"
-gcp_organization_prefix   = "{{ env("ORGANISATION_PREFIX") }}"
+gcp_organization_name   = "{{ env("ORGANIZATION_NAME") }}"
 gcp_parent_container_id   = "{{ env("CONTAINER_ID") }}"
 gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
 gcp_billing_account       = "{{ env("BILLING_ACCOUNT_ID") }}"
@@ -31,7 +31,7 @@ trusted_private_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/1
 gcp_organization_environments    = {
   experiment  = {
     environment_code = "dev"
-    name             = "{{ env("ORGANISATION_PREFIX") }}-netenv"
+    name             = "{{ env("ORGANIZATION_NAME") }}-netenv"
     network          = {
       name      = "netenv",
       cidr_blocks = {
@@ -80,7 +80,7 @@ gcp_organization_environments    = {
 # The set of accounts to create. Defaults to an empty list.
 gcp_business_projects            = [
   {
-    name             = "{{ env("ORGANISATION_PREFIX") }}-app1"
+    name             = "{{ env("ORGANIZATION_NAME") }}-app1"
     department       = "Department_HR"
     environment_code = "dev"
     budget           = {
@@ -139,7 +139,7 @@ gcp_labels = {
 gcp_infra_projects = {
   folder = "Infrastructure"
   security = {
-    name   = "{{ env("ORGANISATION_PREFIX") }}-security-prod"
+    name   = "{{ env("ORGANIZATION_NAME") }}-security-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -148,7 +148,7 @@ gcp_infra_projects = {
   }
 
   observability = {
-    name   = "{{ env("ORGANISATION_PREFIX") }}-observability-prod"
+    name   = "{{ env("ORGANIZATION_NAME") }}-observability-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -158,7 +158,7 @@ gcp_infra_projects = {
   }
 
   nethub = {
-    name    = "{{ env("ORGANISATION_PREFIX") }}-nethub-prod"
+    name    = "{{ env("ORGANIZATION_NAME") }}-nethub-prod"
     budget  = {
       amount                    = 100,
       time_unit                 = "MONTHLY",

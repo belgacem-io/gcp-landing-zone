@@ -8,8 +8,8 @@ variable "gcp_parent_container_id" {
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
-variable "gcp_organization_prefix" {
-  description = "The organization prefix, will be used for resources naming."
+variable "gcp_organization_name" {
+  description = "The organization name, will be used for resources naming."
   type        = string
 }
 

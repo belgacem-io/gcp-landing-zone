@@ -107,7 +107,7 @@ Before stating, make sure that you've done the following:
    export REGION=europe-west9
    export ORGANISATION_ID=25135412153
    export ORGANISATION_DOMAIN=example.com
-   export ORGANISATION_PREFIX=xx
+   export ORGANIZATION_NAME=xx
    export CONTAINER_ID=folders/2565982345
    export BILLING_ACCOUNT_ID=AAAAA-BBBBB-CCCCC
    export IAC_SERVICE_ACCOUNT=lz-automation@xx-myproject-prod-xxx.iam.gserviceaccount.com

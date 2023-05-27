@@ -11,7 +11,7 @@ data "google_projects" "infra_observability" {
 }
 
 data "google_compute_network" "infra_nethub" {
-  name    = "${var.gcp_organization_prefix}-prod-network-${var.gcp_default_region}-nethub"
+  name    = "${var.gcp_organization_name}-prod-network-${var.gcp_default_region}-nethub"
   project = data.google_projects.infra_nethub.projects[0].project_id
 }
 
@@ -83,7 +83,7 @@ module "netenv_networks" {
 
   default_region             = var.gcp_default_region
   domain                     = "${ each.value.environment_code }.${var.gcp_organization_domain}"
-  prefix                     = "${ var.gcp_organization_prefix }-${each.value.environment_code}"
+  prefix                     = "${ var.gcp_organization_name }-${each.value.environment_code}"
   environment_code           = each.value.environment_code
   org_id                     = var.gcp_organization_id
   project_id                 = module.netenv_projects[each.key].project_id
@@ -119,7 +119,7 @@ module "netenv_bastions" {
 
   for_each = var.gcp_organization_environments
 
-  prefix             = "${ var.gcp_organization_prefix }-${each.value.environment_code}"
+  prefix             = "${ var.gcp_organization_name }-${each.value.environment_code}"
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.netenv_projects[each.key].project_id
