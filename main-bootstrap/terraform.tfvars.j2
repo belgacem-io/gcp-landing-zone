@@ -11,8 +11,8 @@ gcp_default_region_azs = [
 ]
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "{{ env("AUTOMATION_SA") }}"
-gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("AUTOMATION_SA") }}"
+gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
+gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("IAC_SERVICE_ACCOUNT") }}"
 gcp_bootstrap_project_id         = "{{ env("PROJECT_ID") }}"
 gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_DOMAIN") }}"
 #gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_DOMAIN") }}"

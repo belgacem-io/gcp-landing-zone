@@ -65,9 +65,39 @@ Before stating, make sure that you've done the following:
    ```sh
    ##################################### GCP Credentials ###################
    export GOOGLE_APPLICATION_CREDENTIALS=/wks/.auth/application_default_credentials.json
-   export PROJECT_ID=xx-bootstrap-prod-375008
-   export PROJECT_NAME=xx-bootstrap-prod
-   
+   export PROJECT_ID=xx-myproject-prod-xxx
+   export PROJECT_NAME=xx-myproject-prod
+   ```
+5. Setup your local environment
+   ```sh
+    source .auth/env
+   ```
+6. Setup backend modules
+   ```sh
+    source .auth/env
+   ```   
+7. Init [bootstrap project](./main-bootstrap/README.md)
+   ```sh
+    terraform -chdir=main-bootstrap init && terraform -chdir=main-bootstrap apply
+   ```
+8. Create and configure [infrastructure projects](./main-infra/README.md)
+   ```sh
+    terraform -chdir=main-infra init
+    terraform -chdir=main-infra apply -target module.nethub_project -target module.security_project -target module.observability_project
+    terraform -chdir=main-infra apply
+   ```
+9. Create and configure [environments projects](./main-env/README.md)
+   ```sh
+    terraform -chdir=main-env init && terraform -chdir=main-env apply
+   ```
+10. Create and configure [business projects](./main-bp/README.md)
+   ```sh
+    terraform -chdir=main-bp init && terraform -chdir=main-bp apply
+   ```
+
+### Generate a test example
+1. Create an '.auth/env.test' file and add required variables
+   ```sh 
    ##################################### tfvars generator ###################
    export REGION=europe-west9
    export ORGANISATION_ID=25135412153
@@ -75,29 +105,29 @@ Before stating, make sure that you've done the following:
    export ORGANISATION_PREFIX=xx
    export CONTAINER_ID=folders/2565982345
    export BILLING_ACCOUNT_ID=AAAAA-BBBBB-CCCCC
-   export AUTOMATION_SA=lz-automation@xx-bootstrap-prod-375008.iam.gserviceaccount.com
+   export IAC_SERVICE_ACCOUNT=lz-automation@xx-myproject-prod-xxx.iam.gserviceaccount.com
+   export IAC_SERVICE_BACKEND_BUCKET=xx-prod-bkt-xxxxx-tfstate-xxxx
    #export TF_LOG=INFO
    ```
-5. Setup your local environment
-   ```sh
-    source .auth/env
+2. Deploy docker container
+   ```sh 
+   # Deploy docker container
+   make up
    ```
-   
-6. Init [bootstrap project](./main-bootstrap/README.md)
+
+3. Generate sample files
    ```sh
-    terraform -chdir=main-bootstrap init && terraform -chdir=main-bootstrap apply
+   make gen
    ```
-7. Create and configure [infrastructure projects](./main-infra/README.md)
-   ```sh
-    terraform -chdir=main-infra init
-    terraform -chdir=main-infra apply -target module.nethub_project -target module.security_project -target module.observability_project
-    terraform -chdir=main-infra apply
+
+### Generate terraform docs
+1. Deploy docker container
+   ```sh 
+   # Deploy docker container
+   make up
    ```
-8. Create and configure [environments projects](./main-env/README.md)
+
+2. Generate terraform docs
    ```sh
-    terraform -chdir=main-env init && terraform -chdir=main-env apply
-   ```
-9. Create and configure [business projects](./main-bp/README.md)
-   ```sh
-    terraform -chdir=main-bp init && terraform -chdir=main-bp apply
+   make docs
    ```
