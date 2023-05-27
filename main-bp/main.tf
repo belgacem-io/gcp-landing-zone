@@ -23,11 +23,11 @@ module "business_project" {
   environment_code        = each.value.environment_code
   org_id                  = var.gcp_organization_id
   #[prefix]-[env]
-  project_name            = "${var.gcp_organization_name}${each.value.name}-${each.value.environment_code}"
+  project_name            = "${var.gcp_organization_name}-${each.value.name}-${each.value.environment_code}"
   folder_id               = module.fetch.folders_by_env_code[each.value.environment_code][each.value.department].name
-  netenv_project_id       = module.fetch.nethubs_by_env_code[each.value.environment_code].project_id
+  netenv_project_id       = module.fetch.netenv_projects_by_env_code[each.value.environment_code].project_id
   netenv_subnet_self_link = [
-    for self_link in module.fetch.nethubs_shared_vpc_by_env_code[each.value.environment_code].subnetworks_self_links :
+    for self_link in module.fetch.netenv_networks_by_env_code[each.value.environment_code].subnetworks_self_links :
     self_link if length(regexall("${each.value.environment_code}-${each.value.name}-.*", self_link)) > 0
   ]
   activate_apis = [

@@ -21,6 +21,7 @@ module "security_project" {
 
   labels = {
     environment_code = "prod"
+    project_role = "security"
     application_name = var.gcp_infra_projects.security.name
   }
 

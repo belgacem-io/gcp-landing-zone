@@ -23,7 +23,7 @@ locals {
   ])
 
   business_projects_map = {
-    for project in local.business_projects : "${project.environment_code}-${project.name}" => project
+    for project in local.business_projects : "${project.name}-${project.environment_code}" => project
     if lookup(local.departments_map, "${project.environment_code}-${project.department}", null) !=  null
   }
 }

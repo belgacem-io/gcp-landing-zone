@@ -20,6 +20,7 @@ module "project" {
   labels = {
     environment_code = var.environment_code
     application_name = var.project_name
+    project_role = "app"
   }
   budget_alert_pubsub_topic   = var.alert_pubsub_topic
   budget_alert_spent_percents = var.alert_spent_percents

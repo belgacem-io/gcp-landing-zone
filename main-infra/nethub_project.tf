@@ -26,6 +26,7 @@ module "nethub_project" {
 
   labels = {
     environment_code = "prod"
+    project_role = "nethub"
     application_name = var.gcp_infra_projects.nethub.name
   }
 }

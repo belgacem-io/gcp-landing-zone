@@ -20,6 +20,7 @@ module "observability_project" {
 
   labels = {
     environment_code = "prod"
+    project_role = "observability"
     application_name = var.gcp_infra_projects.observability.name
   }
 

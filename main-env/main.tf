@@ -66,6 +66,7 @@ module "netenv_projects" {
   labels = {
     environment_code = each.value.environment_code
     application_name = each.value.name
+    project_role = "netenv"
   }
   budget_alert_pubsub_topic   = var.gcp_infra_projects.observability.budget.alert_pubsub_topic
   budget_alert_spent_percents = var.gcp_alert_spent_percents
