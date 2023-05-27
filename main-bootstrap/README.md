@@ -40,7 +40,6 @@ Before stating, make sure that you've done the following:
 | <a name="input_gcp_billing_account"></a> [gcp\_billing\_account](#input\_gcp\_billing\_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
 | <a name="input_gcp_bootstrap_project_id"></a> [gcp\_bootstrap\_project\_id](#input\_gcp\_bootstrap\_project\_id) | The bootstrap project id. | `string` | n/a | yes |
 | <a name="input_gcp_default_region"></a> [gcp\_default\_region](#input\_gcp\_default\_region) | Default region for resources. | `string` | n/a | yes |
-| <a name="input_gcp_default_region_azs"></a> [gcp\_default\_region\_azs](#input\_gcp\_default\_region\_azs) | Default availability zones for region 1. | `list(string)` | n/a | yes |
 | <a name="input_gcp_organization_domain"></a> [gcp\_organization\_domain](#input\_gcp\_organization\_domain) | The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_gcp_organization_id"></a> [gcp\_organization\_id](#input\_gcp\_organization\_id) | The organization id for the associated services | `string` | n/a | yes |
 | <a name="input_gcp_organization_name"></a> [gcp\_organization\_name](#input\_gcp\_organization\_name) | The organization name, will be used for resources naming. | `string` | n/a | yes |
@@ -54,7 +53,6 @@ Before stating, make sure that you've done the following:
 | <a name="input_gcp_group_org_security_admins"></a> [gcp\_group\_org\_security\_admins](#input\_gcp\_group\_org\_security\_admins) | Google Group for GCP Organization Security Administrators | `string` | `null` | no |
 | <a name="input_gcp_group_org_security_reviewers"></a> [gcp\_group\_org\_security\_reviewers](#input\_gcp\_group\_org\_security\_reviewers) | Google Group for GCP Organization Security reviewer | `string` | `null` | no |
 | <a name="input_gcp_group_org_viewers"></a> [gcp\_group\_org\_viewers](#input\_gcp\_group\_org\_viewers) | Google Group for GCP Organization read only users | `string` | `null` | no |
-| <a name="input_gcp_terraform_sa_org_iam_permissions"></a> [gcp\_terraform\_sa\_org\_iam\_permissions](#input\_gcp\_terraform\_sa\_org\_iam\_permissions) | List of permissions granted to Terraform service account across the GCP organization. | `list(string)` | <pre>[<br>  "roles/billing.user",<br>  "roles/compute.networkAdmin",<br>  "roles/compute.xpnAdmin",<br>  "roles/iam.securityAdmin",<br>  "roles/iam.serviceAccountAdmin",<br>  "roles/logging.configWriter",<br>  "roles/orgpolicy.policyAdmin",<br>  "roles/resourcemanager.folderAdmin",<br>  "roles/securitycenter.admin",<br>  "roles/iam.securityAdmin",<br>  "roles/monitoring.admin"<br>]</pre> | no |
 
 ## Outputs
 

@@ -4,11 +4,6 @@ gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
 gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
 gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
 gcp_default_region     = "{{ env("REGION") }}"
-gcp_default_region_azs = [
-  "{{ env("REGION") }}-a",
-  "{{ env("REGION") }}-b",
-  "{{ env("REGION") }}-c"
-]
 
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
@@ -21,14 +16,3 @@ gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_DOMA
 #gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_DOMAIN") }}"
 #gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_DOMAIN") }}"
 #gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_DOMAIN") }}"
-gcp_terraform_sa_org_iam_permissions = [
-  "roles/compute.networkAdmin",
-  "roles/compute.xpnAdmin",
-  "roles/iam.securityAdmin",
-  "roles/iam.serviceAccountAdmin",
-  "roles/logging.configWriter",
-  "roles/resourcemanager.folderAdmin",
-  "roles/securitycenter.admin",
-  "roles/iam.securityAdmin",
-  "roles/monitoring.admin"
-]
