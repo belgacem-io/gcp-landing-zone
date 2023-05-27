@@ -78,7 +78,7 @@ gcp_organization_environments    = {
 # The set of accounts to create. Defaults to an empty list.
 gcp_business_projects            = [
   {
-    name             = "{{ env("ORGANIZATION_NAME") }}-app1"
+    name             = "app1"
     department       = "Department_HR"
     environment_code = "dev"
     budget           = {
@@ -95,7 +95,7 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "{{ env("ORGANIZATION_NAME") }}-app2"
+    name             = "app2"
     department       = "Department_Marketing"
     environment_code = "dev"
     budget           = {
@@ -112,7 +112,7 @@ gcp_business_projects            = [
     }
   },
   {
-    name             = "{{ env("ORGANIZATION_NAME") }}-app1"
+    name             = "app1"
     department       = "Department_HR"
     environment_code = "prod"
     budget           = {
