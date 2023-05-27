@@ -71,15 +71,20 @@ Before stating, make sure that you've done the following:
 5. Setup your local environment
    ```sh
     source .auth/env
-   ```
-6. Setup backend modules
-   ```sh
-    source .auth/env
-   ```   
-7. Init [bootstrap project](./main-bootstrap/README.md)
+   ``` 
+6. Configure [bootstrap project](./main-bootstrap/README.md)
    ```sh
     terraform -chdir=main-bootstrap init && terraform -chdir=main-bootstrap apply
    ```
+7. for each main-xxx module, add a 'backend.tf' file with the following content
+   ```hcl
+    terraform {
+       backend "gcs" {
+       bucket  = "<generated bucket name >"
+       prefix  = "terraform/main-xxx/state"
+       }
+   }
+   ``` 
 8. Create and configure [infrastructure projects](./main-infra/README.md)
    ```sh
     terraform -chdir=main-infra init
