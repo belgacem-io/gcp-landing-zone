@@ -1,7 +1,7 @@
 locals {
 
   # Primary subnets for common services
-  primary_env_nethub_private_subnets = [
+  primary_netenv_private_subnets = [
     for subnet in var.private_subnet_ranges : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
       subnet_suffix  = "private-${index(var.private_subnet_ranges , subnet)}"
@@ -9,7 +9,7 @@ locals {
     }
   ]
 
-  primary_env_nethub_data_subnets = [
+  primary_netenv_data_subnets = [
     for subnet in var.data_subnet_ranges : {
       #[prefix]-[resource]-[location]-[description]-[suffix]
       subnet_suffix  = "data-${index(var.data_subnet_ranges , subnet)}"
@@ -46,14 +46,14 @@ locals {
  Env Network hub shared VPC
 *****************************************/
 
-module "env_nethub" {
+module "netenv" {
   source                        = "../gcp_network"
 
   project_id                    = var.project_id
   environment_code              = var.environment_code
   prefix                        = var.prefix
   default_region                = var.default_region
-  infra_nethub_vpc_self_link    = var.infra_nethub_vpc_self_link
+  infra_nethub_network_self_link    = var.infra_nethub_network_self_link
   infra_nethub_project_id       = var.infra_nethub_project_id
   domain                        = "${var.domain}."
   bgp_asn_subnet                = "64514"
@@ -64,8 +64,8 @@ module "env_nethub" {
   mode = "spoke"
 
   public_subnets              = []
-  private_subnets             = concat(local.primary_env_nethub_private_subnets, local.primary_business_project_private_subnets)
-  data_subnets                = concat(local.primary_env_nethub_data_subnets, local.primary_business_project_data_subnets)
+  private_subnets             = concat(local.primary_netenv_private_subnets, local.primary_business_project_private_subnets)
+  data_subnets                = concat(local.primary_netenv_data_subnets, local.primary_business_project_data_subnets)
   reserved_subnets            = var.reserved_subnets
   secondary_ranges            = {}
 

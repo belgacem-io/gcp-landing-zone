@@ -210,7 +210,7 @@ variable "infra_nethub_project_id" {
   description = "Organization hub network project. Required in spoke mode"
 }
 
-variable "infra_nethub_vpc_self_link" {
+variable "infra_nethub_network_self_link" {
   type        = string
   default     = null
   description = "Organization hub network VPC self link. Required in spoke mode"

@@ -28,8 +28,8 @@ output "folders_by_env_code" {
   value = local.folders_by_env_code
 }
 
-output "org_nethub_project" {
-  value = local.projects_by_name["orga-network-hub"]
+output "infra_nethub_project" {
+  value = local.projects_by_name["${var.organization_name}-prod-network-${var.default_region}-${var.infra_nethub_network_name}"]
 }
 
 output "nethubs_by_env_code" {

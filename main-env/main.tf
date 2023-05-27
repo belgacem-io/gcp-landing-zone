@@ -94,7 +94,7 @@ module "netenv_networks" {
   project_name               = each.value.name
   private_svc_connect_ip     = each.value.network.cidr_blocks.private_svc_connect_ip
   infra_nethub_project_id    = data.google_projects.infra_nethub.projects[0].project_id
-  infra_nethub_vpc_self_link = data.google_compute_network.infra_nethub.self_link
+  infra_nethub_network_self_link = data.google_compute_network.infra_nethub.self_link
   trusted_egress_ranges      = var.trusted_egress_ranges
   trusted_ingress_ranges     = var.trusted_ingress_ranges
   trusted_private_ranges     = var.trusted_private_ranges
@@ -123,7 +123,7 @@ module "netenv_bastions" {
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.netenv_projects[each.key].project_id
-  authorized_members = ["group:${each.value.environment_code}-env-nethub-devops@belgacem.io"]
+  authorized_members = []
   region             = var.gcp_default_region
   network_self_link  = module.netenv_networks[each.key].network_self_links
   subnet_self_link   = module.netenv_networks[each.key].subnetwork_self_links[0]

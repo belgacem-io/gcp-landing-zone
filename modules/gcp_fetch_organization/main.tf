@@ -40,7 +40,7 @@ locals {
     for k, v in data.google_project.projects :
     v.labels.environment_code => v if can(v.labels["environment_code"])
     && can(v.labels["application_name"])
-    && try(v.labels.application_name, "") == "network-hub"
+    && try(v.labels.application_name, "") == var.infra_nethub_network_name
   }
 
   nethubs_subnets_by_env_code = {
@@ -80,7 +80,7 @@ locals {
 data "google_compute_network" "nethub_vpc" {
   for_each = local.nethubs_by_env_code
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name     = "${var.}-vpc-${each.key}-shared-hub"
+  name     = "${var.organization_name}-${each.key}-network-${var.default_region}-nethub"
   project  = each.value.project_id
 
   depends_on = [

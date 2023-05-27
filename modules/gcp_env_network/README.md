@@ -9,7 +9,7 @@
 | <a name="input_domain"></a> [domain](#input\_domain) | The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period. | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | n/a | `string` | n/a | yes |
 | <a name="input_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#input\_infra\_nethub\_project\_id) | Organization hub network project id | `string` | n/a | yes |
-| <a name="input_infra_nethub_vpc_self_link"></a> [infra\_nethub\_vpc\_self\_link](#input\_infra\_nethub\_vpc\_self\_link) | Organization hub network VPC self link | `string` | n/a | yes |
+| <a name="input_infra_nethub_network_self_link"></a> [infra\_nethub\_vpc\_self\_link](#input\_infra\_nethub\_vpc\_self\_link) | Organization hub network VPC self link | `string` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |

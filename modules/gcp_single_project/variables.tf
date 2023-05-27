@@ -55,12 +55,12 @@ variable "budget_amount" {
   default     = 1000
 }
 
-variable "env_nethub_project_id" {
+variable "netenv_project_id" {
   type        = string
   description = "Environment hub network project id"
 }
 
-variable "env_nethub_vpc_subnetwork_self_link" {
+variable "netenv_subnet_self_link" {
   type = any
 }
 
