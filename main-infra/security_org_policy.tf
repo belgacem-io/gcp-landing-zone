@@ -6,6 +6,7 @@ module "orga_policies" {
   domains_to_allow = [
     var.gcp_organization_domain
   ]
-  skip_default_network_policy = true
+  # FIXME must be enabled
+  skip_default_network_policy = false
 
 }

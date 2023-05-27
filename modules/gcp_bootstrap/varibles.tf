@@ -95,6 +95,7 @@ variable "activate_apis" {
     "billingbudgets.googleapis.com",
     "iamcredentials.googleapis.com",
     "pubsub.googleapis.com",
+    "orgpolicy.googleapis.com"
   ]
 }
 
