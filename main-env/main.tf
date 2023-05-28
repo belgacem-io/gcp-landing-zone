@@ -83,7 +83,7 @@ module "netenv_networks" {
   for_each = var.gcp_org_environments
 
   default_region             = var.gcp_default_region
-  private_domain             = "${ each.value.environment_code }.${var.gcp_org_private_domain}"
+  private_domain             = var.gcp_org_private_domain
   public_domain              = var.gcp_org_public_domain
   prefix                     = "${ var.gcp_org_name }-${each.value.environment_code}"
   environment_code           = each.value.environment_code

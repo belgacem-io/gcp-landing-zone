@@ -109,8 +109,7 @@ module "dns-private-zone" {
 /******************************************
  DNS Spoke peering
 *****************************************/
-
-module "dns-peering-zone" {
+module "dns-peering-zone-hub2spoke" {
   source  = "terraform-google-modules/cloud-dns/google"
   version = "~> 4.2"
 
@@ -119,7 +118,7 @@ module "dns-peering-zone" {
   project_id = var.project_id
   type       = "peering"
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name       = "${var.prefix}-pz-glb-dns-peering"
+  name       = "${var.prefix}-pz-glb-peering-hub2spoke"
   domain     = "${var.private_domain}."
 
   private_visibility_config_networks = [
