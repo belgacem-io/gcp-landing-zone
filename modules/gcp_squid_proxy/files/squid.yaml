@@ -1,22 +1,35 @@
 #cloud-config
 write_files:
+  # Squid Proxy installation script
   - path: /opt/scripts/squid.sh
     permissions: "0644"
     owner: root
     content: |
       ${indent(6, squid_install_content)}
 
+  # CalmAV installation and integration script
   - path: /opt/scripts/clamav.sh
     permissions: "0644"
     owner: root
     content: |
       ${indent(6, clamav_install_content)}
 
+  # Squidguard installation script, NOT used yet
   - path: /opt/scripts/squidguard.sh
     permissions: "0644"
     owner: root
     content: |
       ${indent(6, squidguard_install_content)}
+
+  # systemd-resolved configuration, use GCP Global DNS resolver
+  - path: /etc/systemd/resolved.conf
+    permissions: "0644"
+    owner: root
+    content: |
+      [Resolve]
+      DNS=169.254.169.254
+      FallbackDNS=127.0.0.53
+      Domains=~.
 
 #cloud-config
 runcmd:
@@ -26,5 +39,7 @@ runcmd:
   -  cat /opt/scripts/squid.sh | bash
   # Install clamav and clamav squid Adapter
   - cat /opt/scripts/clamav.sh | bash
+  # Restart services
   - systemctl restart squid
   - sysctl -p
+  - systemctl restart systemd-resolved

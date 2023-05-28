@@ -4,7 +4,7 @@
 resource "google_service_account" "sa" {
   project      = var.project_id
   account_id   = "${var.prefix}-glb-linux-tgw"
-  display_name = "Squid Proxy"
+  display_name = "Transit Gateway"
 }
 
 resource "google_project_iam_member" "member" {
