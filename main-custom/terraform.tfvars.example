@@ -1,5 +1,5 @@
-gcp_organization_id     = "983256491121"
-gcp_organization_domain   = "company.cloud"
+gcp_org_id     = "983256491121"
+gcp_org_public_domain   = "company.cloud"
 gcp_billing_account     = "01A47A-F9BAF1-1EE048"
 gcp_default_region     = "europe-west4"
 gcp_default_region_azs = [
@@ -20,7 +20,7 @@ gcp_group_org_network_admins     = "gcp-network-admins@company.cloud"
 gcp_group_org_network_viewers    = "gcp-organization-viewers@company.cloud"
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
-gcp_organization_environments    = {
+gcp_org_environments    = {
   experiment  = {
     environment_code = "exp"
     network          = {

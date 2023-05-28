@@ -34,10 +34,16 @@ variable "default_region" {
   description = "First subnet region. The shared vpc modules only configures two regions."
 }
 
-variable "domain" {
+variable "public_domain" {
   type        = string
-  description = "The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period."
+  description = "The Public domain of your organization"
 }
+
+variable "private_domain" {
+  type        = string
+  description = "The Private domain of your organization"
+}
+
 
 variable "private_subnet_ranges" {
   type = list(string)

@@ -44,11 +44,11 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_netenv_project_id"></a> [env\_nethub\_project\_id](#input\_env\_nethub\_project\_id) | Environment hub network project id | `string` | n/a | yes |
-| <a name="input_netenv_subnet_self_link"></a> [env\_nethub\_vpc\_subnetwork\_self\_link](#input\_env\_nethub\_vpc\_subnetwork\_self\_link) | n/a | `any` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | The environment the single project belongs to | `string` | n/a | yes |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | The folder id where project will be created | `string` | n/a | yes |
 | <a name="input_monitoring_project_id"></a> [monitoring\_project\_id](#input\_monitoring\_project\_id) | Monitoring project id | `string` | n/a | yes |
+| <a name="input_netenv_project_id"></a> [netenv\_project\_id](#input\_netenv\_project\_id) | Environment hub network project id | `string` | n/a | yes |
+| <a name="input_netenv_subnet_self_link"></a> [netenv\_subnet\_self\_link](#input\_netenv\_subnet\_self\_link) | n/a | `any` | n/a | yes |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | The organization id for the associated services | `string` | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | project name | `string` | n/a | yes |
 | <a name="input_activate_apis"></a> [activate\_apis](#input\_activate\_apis) | The api to activate for the GCP project | `list(string)` | `[]` | no |

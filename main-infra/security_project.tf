@@ -9,7 +9,7 @@ module "security_project" {
   create_project_sa           = false
   default_service_account     = "delete"
   name                        = var.gcp_infra_projects.security.name
-  org_id                      = var.gcp_organization_id
+  org_id                      = var.gcp_org_id
   billing_account             = var.gcp_billing_account
   folder_id                   = google_folder.infra.folder_id
   activate_apis               = ["logging.googleapis.com", 
@@ -33,13 +33,13 @@ module "security_project" {
 
 resource "google_pubsub_topic" "scc_notification_topic" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.gcp_organization_name}-prod-pst-glob-sccnotif"
+  name    = "${var.gcp_org_name}-prod-pst-glob-sccnotif"
   project = module.security_project.project_id
 }
 
 resource "google_pubsub_subscription" "scc_notification_subscription" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.gcp_organization_name}-prod-ps-glb-sccnotif"
+  name    = "${var.gcp_org_name}-prod-ps-glb-sccnotif"
   topic   = google_pubsub_topic.scc_notification_topic.name
   project = module.security_project.project_id
 }
@@ -48,7 +48,7 @@ resource "google_scc_notification_config" "scc_notification_config" {
   count = var.enable_scc_notification ? 1 : 0
 
   config_id    = var.scc_notification_name
-  organization = var.gcp_organization_id
+  organization = var.gcp_org_id
   description  = "SCC Notification for all active findings"
   pubsub_topic = google_pubsub_topic.scc_notification_topic.id
 

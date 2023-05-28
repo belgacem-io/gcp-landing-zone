@@ -9,7 +9,7 @@ module "observability_project" {
   create_project_sa       = false
   default_service_account = "delete"
   name                    = var.gcp_infra_projects.observability.name
-  org_id                  = var.gcp_organization_id
+  org_id                  = var.gcp_org_id
   billing_account         = var.gcp_billing_account
   folder_id               = google_folder.infra.id
   activate_apis           = ["logging.googleapis.com", "monitoring.googleapis.com"]
@@ -59,7 +59,7 @@ module "log_export_to_biqquery" {
   destination_uri        = module.bigquery_destination.0.destination_uri
   filter                 = local.main_logs_filter
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  log_sink_name          = "${var.gcp_organization_name}-prod-bq-${var.gcp_default_region}-orglogs"
+  log_sink_name          = "${var.gcp_org_name}-prod-bq-${var.gcp_default_region}-orglogs"
   parent_resource_id     = split("/", var.gcp_parent_container_id )[1]
   parent_resource_type   = startswith("organisations", var.gcp_parent_container_id) ? "organisation" : "folder"
   include_children       = true
@@ -93,7 +93,7 @@ module "storage_destination" {
   version                     = "~> 7.4"
   project_id                  = module.observability_project.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  storage_bucket_name         = "${var.gcp_organization_name}-prod-bkt-${lower(var.log_export_storage_location)}-orglogs-${random_string.suffix.result}"
+  storage_bucket_name         = "${var.gcp_org_name}-prod-bkt-${lower(var.log_export_storage_location)}-orglogs-${random_string.suffix.result}"
   log_sink_writer_identity    = module.log_export_to_storage.0.writer_identity
   uniform_bucket_level_access = true
   location                    = var.log_export_storage_location
@@ -111,7 +111,7 @@ module "log_export_to_storage" {
   destination_uri        = module.storage_destination.0.destination_uri
   filter                 = ""
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  log_sink_name          = "${var.gcp_organization_name}-prod-sk-glb-orglogs"
+  log_sink_name          = "${var.gcp_org_name}-prod-sk-glb-orglogs"
   parent_resource_id     = split("/", var.gcp_parent_container_id )[1]
   parent_resource_type   = startswith("organizations", var.gcp_parent_container_id) ? "organization" : "folder"
   include_children       = true

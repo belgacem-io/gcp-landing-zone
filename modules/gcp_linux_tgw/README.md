@@ -30,6 +30,6 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ilb_id"></a> [ilb\_id](#output\_ilb\_id) | n/a |
-| <a name="output_proxy_service_accounts"></a> [proxy\_service\_accounts](#output\_proxy\_service\_accounts) | n/a |
+| <a name="output_gateway_id"></a> [gateway\_id](#output\_gateway\_id) | n/a |
+| <a name="output_gateway_ip_address"></a> [gateway\_ip\_address](#output\_gateway\_ip\_address) | n/a |
 <!-- END_TF_DOCS -->

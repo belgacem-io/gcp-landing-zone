@@ -1,7 +1,8 @@
-gcp_organization_id     = "{{ env("ORGANISATION_ID") }}"
-gcp_organization_name   = "{{ env("ORGANIZATION_NAME") }}"
+gcp_org_id     = "{{ env("ORGANISATION_ID") }}"
+gcp_org_name   = "{{ env("ORGANIZATION_NAME") }}"
 gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
-gcp_organization_domain   = "{{ env("ORGANISATION_DOMAIN") }}"
+gcp_org_public_domain   = "{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+gcp_org_private_domain   = "{{ env("ORGANISATION_PRIVATE_DOMAIN") }}"
 gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
 gcp_default_region     = "{{ env("REGION") }}"
 gcp_default_region_azs = [
@@ -13,13 +14,13 @@ gcp_default_region_azs = [
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
 gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("IAC_SERVICE_ACCOUNT") }}"
-#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_DOMAIN") }}"
-#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_DOMAIN") }}"
+#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
 ##################################### Network ###################
 trusted_egress_ranges           = ["0.0.0.0/0"]
 trusted_ingress_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
@@ -27,7 +28,7 @@ trusted_private_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/1
 
 ##################################### GCP Organization ###################
 # The tree of organizational units to construct. Defaults to an empty tree.
-gcp_organization_environments    = {
+gcp_org_environments    = {
   experiment  = {
     environment_code = "dev"
     name             = "{{ env("ORGANIZATION_NAME") }}-netenv"

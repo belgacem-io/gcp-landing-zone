@@ -49,17 +49,18 @@ locals {
 module "netenv" {
   source                        = "../gcp_network"
 
-  project_id                    = var.project_id
-  environment_code              = var.environment_code
-  prefix                        = var.prefix
-  default_region                = var.default_region
+  project_id                        = var.project_id
+  environment_code                  = var.environment_code
+  prefix                            = var.prefix
+  default_region                    = var.default_region
   infra_nethub_network_self_link    = var.infra_nethub_network_self_link
-  infra_nethub_project_id       = var.infra_nethub_project_id
-  domain                        = "${var.domain}."
-  bgp_asn_subnet                = "64514"
-  enable_optional_fw_rules      = false
-  nat_enabled                   = false
-  network_name                  = var.network_name
+  infra_nethub_project_id           = var.infra_nethub_project_id
+  private_domain                    = var.private_domain
+  public_domain                     = var.public_domain
+  bgp_asn_subnet                    = "64514"
+  enable_optional_fw_rules          = false
+  enable_nat                        = false
+  network_name                      = var.network_name
 
   mode = "spoke"
 

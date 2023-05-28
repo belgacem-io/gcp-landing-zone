@@ -8,7 +8,7 @@ locals {
       subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = false
-      subnet_flow_logs      = var.subnetworks_enable_logging
+      subnet_flow_logs      = var.enable_subnetworks_logging
       purpose               = "PRIVATE"
     }
   ]
@@ -19,7 +19,7 @@ locals {
       subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = true
-      subnet_flow_logs      = var.subnetworks_enable_logging
+      subnet_flow_logs      = var.enable_subnetworks_logging
       purpose               = "PRIVATE"
     }
   ]
@@ -30,7 +30,7 @@ locals {
       subnet_ip             = subnet.subnet_range
       subnet_region         = var.default_region
       subnet_private_access = true
-      subnet_flow_logs      = var.subnetworks_enable_logging
+      subnet_flow_logs      = var.enable_subnetworks_logging
       purpose               = "PRIVATE"
     }
   ]
@@ -42,7 +42,7 @@ locals {
       subnet_ip             = subnet.range
       subnet_region         = var.default_region
       subnet_private_access = true
-      subnet_flow_logs      = var.subnetworks_enable_logging
+      subnet_flow_logs      = var.enable_subnetworks_logging
       purpose               = subnet.purpose
       role                  = subnet.role
     }
@@ -70,7 +70,7 @@ module "main" {
   secondary_ranges = var.secondary_ranges
 
   routes = concat(
-    var.nat_enabled ? [
+    var.enable_nat ? [
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]
         name              = "${var.prefix}-rt-glb-1000-all-default-private-api"
@@ -80,7 +80,7 @@ module "main" {
         priority          = "1000"
       }
     ] : [],
-    var.nat_enabled && var.windows_activation_enabled ?
+    var.enable_nat && var.enable_windows_activation ?
     [
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]

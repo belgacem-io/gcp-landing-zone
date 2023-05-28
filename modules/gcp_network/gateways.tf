@@ -33,7 +33,7 @@ resource "google_compute_route" "inter_vpc_routes" {
   name         = "${var.prefix}-rt-glb-tgw-for-${replace(replace(each.value, "/", "-"), ".", "-")}"
   description  = "Inter VPCs route through TGW for range ${each.value}"
   dest_range   = each.value
-  next_hop_ilb = module.vpc_tgw.0.ilb_id
+  next_hop_ilb = module.vpc_tgw.0.gateway_id
 
   depends_on = [
     module.vpc_tgw

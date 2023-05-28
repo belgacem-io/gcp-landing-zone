@@ -4,7 +4,7 @@
 
 locals {
   departments = flatten([
-    for key, env in var.gcp_organization_environments : [
+    for key, env in var.gcp_org_environments : [
       for bu in env.children : {
         name             = bu.name
         parent           = key
@@ -17,7 +17,7 @@ locals {
   }
 
   business_projects = flatten([
-    for key, env in var.gcp_organization_environments : [
+    for key, env in var.gcp_org_environments : [
       for project in var.gcp_business_projects : project if project.environment_code == env.environment_code
     ]
   ])

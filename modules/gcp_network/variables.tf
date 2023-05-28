@@ -36,7 +36,7 @@ variable "default_region" {
   description = "Default region 1 for subnets and Cloud Routers"
 }
 
-variable "nat_enabled" {
+variable "enable_nat" {
   type        = bool
   description = "Toggle creation of NAT cloud router."
   default     = false
@@ -107,7 +107,13 @@ variable "secondary_ranges" {
   default     = {}
 }
 
-variable "dns_enable_inbound_forwarding" {
+variable "enable_dns_inbound_forwarding" {
+  type        = bool
+  description = "Toggle inbound query forwarding for VPC DNS."
+  default     = true
+}
+
+variable "enable_dns_peering" {
   type        = bool
   description = "Toggle inbound query forwarding for VPC DNS."
   default     = true
@@ -125,10 +131,20 @@ variable "enable_firewall_logging" {
   default     = false
 }
 
-variable "domain" {
+variable "enable_public_domain" {
+  type        = bool
+  description = "If true, a public domain zone will be created."
+  default = true
+}
+
+variable "public_domain" {
   type        = string
-  description = "The DNS name of peering managed zone, for instance 'example.com.'. Require when dns_enable_outbound_forwarding=true"
-  default     = ""
+  description = "The organization's public domain (DNS), for instance 'example.com.'."
+}
+
+variable "private_domain" {
+  type        = string
+  description = "The organization's private domain (DNS), for instance 'example.com.'."
 }
 
 variable "private_service_cidr" {
@@ -137,7 +153,7 @@ variable "private_service_cidr" {
   default     = null
 }
 
-variable "windows_activation_enabled" {
+variable "enable_windows_activation" {
   type        = bool
   description = "Enable Windows license activation for Windows workloads."
   default     = false
@@ -167,7 +183,7 @@ variable "bgp_asn_dns" {
   default     = 64667
 }
 
-variable "dns_enable_outbound_forwarding" {
+variable "enable_dns_outbound_forwarding" {
   type        = bool
   description = "Toggle outbound query forwarding for VPC DNS. if true dns_outbound_server_addresses must be set"
   default     = false
@@ -181,16 +197,10 @@ variable "dns_outbound_server_addresses" {
   }))
   default = null
 }
-variable "subnetworks_enable_logging" {
+variable "enable_subnetworks_logging" {
   type        = bool
   description = "Toggle subnetworks flow logging for VPC Subnetworks."
   default     = false
-}
-
-variable "net_tag_internet_egress" {
-  type        = string
-  description = "Network tags for VMs with internet access."
-  default     = "restricted-egress-internet"
 }
 
 variable "bgp_asn_subnet" {

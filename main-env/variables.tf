@@ -1,4 +1,4 @@
-variable "gcp_organization_id" {
+variable "gcp_org_id" {
   description = "The organization id for the associated services"
   type        = string
 }
@@ -8,16 +8,20 @@ variable "gcp_parent_container_id" {
   description = "Can be either an organisation or a folder. Format : organizations/1235 or folders/12562."
 }
 
-variable "gcp_organization_name" {
+variable "gcp_org_name" {
   description = "The organization name, will be used for resources naming."
   type        = string
 }
 
-variable "gcp_organization_domain" {
+variable "gcp_org_public_domain" {
   type        = string
-  description = "The domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
+  description = "The public domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com"
 }
 
+variable "gcp_org_private_domain" {
+  type        = string
+  description = "The private domain of the current organization. Can be different from the organization name. exp:  company.local, cloud.company.local"
+}
 
 variable "gcp_billing_account" {
   description = "The ID of the billing account to associate this project with"
@@ -45,7 +49,7 @@ variable "gcp_default_region_azs" {
   type        = list(string)
 }
 
-variable "gcp_organization_environments" {
+variable "gcp_org_environments" {
   type = map(object({
     environment_code = string,
     name             = string

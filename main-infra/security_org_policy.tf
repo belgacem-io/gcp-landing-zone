@@ -4,7 +4,7 @@ module "orga_policies" {
   resource_type = startswith("organization", var.gcp_parent_container_id) ? "organization" : "folder"
 
   domains_to_allow = [
-    var.gcp_organization_domain
+    var.gcp_org_public_domain
   ]
   # FIXME must be enabled
   skip_default_network_policy = false

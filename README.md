@@ -106,7 +106,7 @@ Before stating, make sure that you've done the following:
    ##################################### tfvars generator ###################
    export REGION=europe-west9
    export ORGANISATION_ID=25135412153
-   export ORGANISATION_DOMAIN=example.com
+   export ORGANISATION_PUBLIC_DOMAIN=example.com
    export ORGANIZATION_NAME=xx
    export CONTAINER_ID=folders/2565982345
    export BILLING_ACCOUNT_ID=AAAAA-BBBBB-CCCCC

@@ -11,7 +11,7 @@ data "google_projects" "infra_observability" {
 }
 
 data "google_compute_network" "infra_nethub" {
-  name    = "${var.gcp_organization_name}-prod-network-${var.gcp_default_region}-nethub"
+  name    = "${var.gcp_org_name}-prod-network-${var.gcp_default_region}-nethub"
   project = data.google_projects.infra_nethub.projects[0].project_id
 }
 
@@ -22,7 +22,7 @@ data "google_active_folder" "infra" {
 
 locals {
   business_project_subnets = flatten([
-    for key, env in var.gcp_organization_environments : [
+    for key, env in var.gcp_org_environments : [
       for project in var.gcp_business_projects : merge(project, {
         environment_key               = key
         project_name                  = project.name
@@ -43,7 +43,7 @@ module "netenv_projects" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 14.1"
 
-  for_each = var.gcp_organization_environments
+  for_each = var.gcp_org_environments
 
   random_project_id       = true
   create_project_sa       = false
@@ -51,7 +51,7 @@ module "netenv_projects" {
 
   #[prefix]-[env]
   name            = "${each.value.name}-${each.value.environment_code}"
-  org_id          = var.gcp_organization_id
+  org_id          = var.gcp_org_id
   billing_account = var.gcp_billing_account
   folder_id       = google_folder.environments[each.key].id
   activate_apis   = [
@@ -80,13 +80,14 @@ module "netenv_projects" {
 module "netenv_networks" {
   source = "../modules/gcp_env_network"
 
-  for_each = var.gcp_organization_environments
+  for_each = var.gcp_org_environments
 
   default_region             = var.gcp_default_region
-  domain                     = "${ each.value.environment_code }.${var.gcp_organization_domain}"
-  prefix                     = "${ var.gcp_organization_name }-${each.value.environment_code}"
+  private_domain             = "${ each.value.environment_code }.${var.gcp_org_private_domain}"
+  public_domain              = var.gcp_org_public_domain
+  prefix                     = "${ var.gcp_org_name }-${each.value.environment_code}"
   environment_code           = each.value.environment_code
-  org_id                     = var.gcp_organization_id
+  org_id                     = var.gcp_org_id
   project_id                 = module.netenv_projects[each.key].project_id
   network_name               = each.value.network.name
   private_subnet_ranges      = each.value.network.cidr_blocks.private_subnet_ranges
@@ -118,9 +119,9 @@ module "netenv_networks" {
 module "netenv_bastions" {
   source = "../modules/gcp_bastion_host"
 
-  for_each = var.gcp_organization_environments
+  for_each = var.gcp_org_environments
 
-  prefix             = "${ var.gcp_organization_name }-${each.value.environment_code}"
+  prefix             = "${ var.gcp_org_name }-${each.value.environment_code}"
   environment_code   = each.value.environment_code
   instance_name      = "${each.value.environment_code}-bastion"
   project_id         = module.netenv_projects[each.key].project_id

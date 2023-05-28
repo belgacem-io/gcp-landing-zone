@@ -9,7 +9,7 @@ module "nethub_project" {
   create_project_sa       = false
   default_service_account = "delete"
   name                    = var.gcp_infra_projects.nethub.name
-  org_id                  = var.gcp_organization_id
+  org_id                  = var.gcp_org_id
   billing_account         = var.gcp_billing_account
   folder_id               = google_folder.infra.id
   activate_apis           = [

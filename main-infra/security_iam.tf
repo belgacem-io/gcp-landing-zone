@@ -21,7 +21,7 @@
 resource "google_organization_iam_audit_config" "org_config" {
   count = var.gcp_group_org_admins !=null ? 1 : 0
 
-  org_id  = var.gcp_organization_id
+  org_id  = var.gcp_org_id
   service = "allServices"
 
   audit_log_config {
@@ -78,7 +78,7 @@ resource "google_project_iam_member" "billing_bq_viewer" {
 resource "google_organization_iam_member" "billing_viewer" {
   count = var.gcp_group_org_billing_viewers !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/billing.viewer"
   member = "group:${var.gcp_group_org_billing_viewers}"
 }
@@ -90,7 +90,7 @@ resource "google_organization_iam_member" "billing_viewer" {
 resource "google_organization_iam_member" "organization_viewer" {
   count = var.gcp_group_org_viewers !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/viewer"
   member = "group:${var.gcp_group_org_viewers}"
 }
@@ -98,7 +98,7 @@ resource "google_organization_iam_member" "organization_viewer" {
 resource "google_organization_iam_member" "security_reviewer" {
   count = var.gcp_group_org_security_reviewers !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/iam.securityReviewer"
   member = "group:${var.gcp_group_org_security_reviewers}"
 }
@@ -106,7 +106,7 @@ resource "google_organization_iam_member" "security_reviewer" {
 resource "google_organization_iam_member" "network_viewer" {
   count = var.gcp_group_org_network_viewers !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/compute.networkViewer"
   member = "group:${var.gcp_group_org_network_viewers}"
 }
@@ -151,7 +151,7 @@ resource "google_project_iam_member" "scc_admin" {
 resource "google_organization_iam_member" "org_admin_user" {
   count = var.gcp_group_org_admins !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/resourcemanager.organizationAdmin"
   member = "group:${var.gcp_group_org_admins}"
 }
@@ -159,7 +159,7 @@ resource "google_organization_iam_member" "org_admin_user" {
 resource "google_organization_iam_member" "billing_creator_user" {
   count = var.gcp_group_org_billing_admins !=null ? 1 : 0
 
-  org_id = var.gcp_organization_id
+  org_id = var.gcp_org_id
   role   = "roles/billing.creator"
   member = "group:${var.gcp_group_org_billing_admins}"
 }

@@ -4,7 +4,7 @@
 
 locals {
   departments = flatten([
-    for key, env in var.gcp_organization_environments : [
+    for key, env in var.gcp_org_environments : [
       for bu in env.children : {
         name             = bu.name
         parent           = key
@@ -17,7 +17,7 @@ locals {
   }
 
   business_projects = flatten([
-    for key, env in var.gcp_organization_environments : [
+    for key, env in var.gcp_org_environments : [
       for project in var.gcp_business_projects : merge(project, {
         environment_code = env.environment_code
         environment_key  = key
@@ -32,7 +32,7 @@ locals {
 }
 
 resource "google_folder" "environments" {
-  for_each = var.gcp_organization_environments
+  for_each = var.gcp_org_environments
 
   display_name = "${title( each.value.environment_code )}_Environment"
   parent       = var.gcp_parent_container_id

@@ -27,5 +27,8 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_gateway_id"></a> [gateway\_id](#output\_gateway\_id) | n/a |
+| <a name="output_gateway_ip_address"></a> [gateway\_ip\_address](#output\_gateway\_ip\_address) | n/a |
 <!-- END_TF_DOCS -->

@@ -191,7 +191,7 @@ resource "google_compute_firewall" "allow_iap_rdp" {
 
 // Allow access to kms.windows.googlecloud.com for Windows license activation
 resource "google_compute_firewall" "allow_windows_activation" {
-  count = var.windows_activation_enabled ? 1 : 0
+  count = var.enable_windows_activation ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-allow-windows-activation"
