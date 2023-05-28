@@ -21,16 +21,6 @@ write_files:
     content: |
       ${indent(6, squidguard_install_content)}
 
-  # systemd-resolved configuration, use GCP Global DNS resolver
-  - path: /etc/systemd/resolved.conf
-    permissions: "0644"
-    owner: root
-    content: |
-      [Resolve]
-      DNS=169.254.169.254
-      FallbackDNS=127.0.0.53
-      Domains=~.
-
 #cloud-config
 runcmd:
   - add-apt-repository universe
@@ -42,4 +32,3 @@ runcmd:
   # Restart services
   - systemctl restart squid
   - sysctl -p
-  - systemctl restart systemd-resolved
