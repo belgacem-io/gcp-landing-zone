@@ -315,9 +315,3 @@ variable "scc_notification_filter" {
   type        = string
   default     = "state = \"ACTIVE\""
 }
-
-variable "enable_partner_interconnect" {
-  description = "Enable Partner Interconnect in the environment."
-  type        = bool
-  default     = false
-}

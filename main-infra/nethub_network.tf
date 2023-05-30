@@ -8,7 +8,6 @@ module "nethub_network" {
   project_id                    = module.nethub_project.project_id
   environment_code              = "prod"
   prefix                        = "${var.gcp_org_name}-prod"
-  bgp_asn_subnet                = var.enable_partner_interconnect ? "16550" : "64514"
   default_region                = var.gcp_default_region
   public_domain                 = var.gcp_org_public_domain
   private_domain                = var.gcp_org_private_domain

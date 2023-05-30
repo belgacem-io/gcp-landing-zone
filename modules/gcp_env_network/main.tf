@@ -57,7 +57,6 @@ module "netenv" {
   infra_nethub_project_id           = var.infra_nethub_project_id
   private_domain                    = var.private_domain
   public_domain                     = var.public_domain
-  bgp_asn_subnet                    = "64514"
   enable_optional_fw_rules          = false
   enable_nat                        = false
   network_name                      = var.network_name

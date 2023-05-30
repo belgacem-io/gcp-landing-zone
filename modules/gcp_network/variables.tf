@@ -177,36 +177,10 @@ variable "allow_ingress_ranges" {
   default     = null
 }
 
-variable "bgp_asn_dns" {
-  type        = number
-  description = "BGP Autonomous System Number (ASN)."
-  default     = 64667
-}
-
-variable "enable_dns_outbound_forwarding" {
-  type        = bool
-  description = "Toggle outbound query forwarding for VPC DNS. if true dns_outbound_server_addresses must be set"
-  default     = false
-}
-
-variable "dns_outbound_server_addresses" {
-  description = "List of IPv4 address of target name servers for the forwarding zone configuration. See https://cloud.google.com/dns/docs/overview#dns-forwarding-zones for details on target name servers in the context of Cloud DNS forwarding zones."
-  type        = list(object({
-    ipv4_address    = string,
-    forwarding_path = string
-  }))
-  default = null
-}
 variable "enable_subnetworks_logging" {
   type        = bool
   description = "Toggle subnetworks flow logging for VPC Subnetworks."
   default     = false
-}
-
-variable "bgp_asn_subnet" {
-  type        = number
-  description = "BGP ASN for Subnets cloud routers."
-  default     = 64514
 }
 
 variable "internal_trusted_cidr_ranges" {
