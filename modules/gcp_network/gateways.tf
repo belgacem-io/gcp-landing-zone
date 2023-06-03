@@ -30,7 +30,7 @@ resource "google_compute_route" "inter_vpc_routes" {
   project      = var.project_id
   network      = local.network_name
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name         = "${var.prefix}-rt-glb-tgw-for-${replace(replace(each.value, "/", "-"), ".", "-")}"
+  name         = "${var.prefix}-rt-glb-${var.network_name}-tgw-for-${replace(replace(each.value, "/", "-"), ".", "-")}"
   description  = "Inter VPCs route through TGW for range ${each.value}"
   dest_range   = each.value
   next_hop_ilb = module.vpc_tgw.0.gateway_id

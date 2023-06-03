@@ -81,17 +81,6 @@ variable "data_subnets" {
   default     = []
 }
 
-
-variable "reserved_subnets" {
-  type = map(object({
-    purpose = string
-    role    = string
-    range   = string
-  }))
-  description = "The list of reserved subnet for appliances like SVC and proxies."
-  default     = {}
-}
-
 variable "private_svc_connect_ip" {
   description = "The internal IP to be used for the private service connect. Required for hub mode"
   type        = string
@@ -134,12 +123,18 @@ variable "enable_firewall_logging" {
 variable "enable_public_domain" {
   type        = bool
   description = "If true, a public domain zone will be created."
-  default = true
+  default = false
 }
 
 variable "public_domain" {
   type        = string
   description = "The organization's public domain (DNS), for instance 'example.com.'."
+}
+
+variable "enable_private_domain" {
+  type        = bool
+  description = "If true, a private domain zone will be created."
+  default = true
 }
 
 variable "private_domain" {
@@ -194,10 +189,13 @@ variable "infra_nethub_project_id" {
   description = "Organization hub network project. Required in spoke mode"
 }
 
-variable "infra_nethub_network_self_link" {
-  type        = string
-  default     = null
-  description = "Organization hub network VPC self link. Required in spoke mode"
+variable "infra_nethub_networks" {
+  type        = map(object({
+    self_link   = string
+    has_private_dns = bool
+  }))
+  default     = {}
+  description = "Organization hub networks VPC self links. Required in spoke mode"
 }
 
 variable "enable_transitive_network" {

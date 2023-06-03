@@ -35,20 +35,7 @@ locals {
     }
   ]
 
-  reserved_subnets = [
-    for key,subnet in var.reserved_subnets : {
-      #[prefix]-[resource]-[location]-[description]-[suffix]
-      subnet_name           = "${var.prefix}-subnet-${var.default_region}-${key}"
-      subnet_ip             = subnet.range
-      subnet_region         = var.default_region
-      subnet_private_access = true
-      subnet_flow_logs      = var.enable_subnetworks_logging
-      purpose               = subnet.purpose
-      role                  = subnet.role
-    }
-  ]
-
-  subnets = concat(local.public_subnets, local.private_subnets, local.data_subnets, local.reserved_subnets)
+  subnets = concat(local.public_subnets, local.private_subnets, local.data_subnets)
 }
 
 
@@ -73,7 +60,7 @@ module "main" {
     var.enable_nat ? [
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]
-        name              = "${var.prefix}-rt-glb-1000-all-default-private-api"
+        name              = "${var.prefix}-rt-glb-${var.network_name}-1000-all-default-private-api"
         description       = "Route through IGW to allow private google api access."
         destination_range = "199.36.153.8/30"
         next_hop_internet = "true"
@@ -84,7 +71,7 @@ module "main" {
     [
       {
         #[prefix]-[resource]-[location]-[description]-[suffix]
-        name              = "${var.prefix}-rt-glb-1000-all-default-windows-kms"
+        name              = "${var.prefix}-rt-glb-${var.network_name}-1000-all-default-windows-kms"
         description       = "Route through IGW to allow Windows KMS activation for GCP."
         destination_range = "35.190.247.13/32"
         next_hop_internet = "true"

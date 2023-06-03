@@ -12,9 +12,3 @@ variable "default_region" {
   type        = string
   description = "Default region 1 for subnets and Cloud Routers"
 }
-
-variable "infra_nethub_network_name" {
-  description = "The network name for the nethub project."
-  type        = string
-}
-

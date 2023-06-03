@@ -160,11 +160,22 @@ variable "gcp_infra_projects" {
         time_unit                 = string,
         email_addresses_to_notify = list(string)
       })
-      network = object({
-        name        = string,
-        cidr_blocks = object({
-          private_subnet_ranges = list(string)
-          data_subnet_ranges    = list(string)
+      networks = object({
+        dmz = object({
+          name        = string
+          cidr_blocks = object({
+            public_subnet_ranges          = list(string)
+            private_subnet_ranges         = list(string)
+            data_subnet_ranges            = list(string)
+          })
+        })
+        corp = object({
+          name        = string
+          cidr_blocks = object({
+            private_subnet_ranges         = list(string)
+            data_subnet_ranges            = list(string)
+            private_svc_connect_ip        = string
+          })
         })
       })
     })

@@ -7,21 +7,19 @@
 | <a name="input_data_subnet_ranges"></a> [data\_subnet\_ranges](#input\_data\_subnet\_ranges) | n/a | `list(string)` | n/a | yes |
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | First subnet region. The shared vpc modules only configures two regions. | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | n/a | `string` | n/a | yes |
-| <a name="input_infra_nethub_network_self_link"></a> [infra\_nethub\_network\_self\_link](#input\_infra\_nethub\_network\_self\_link) | Organization hub network VPC self link | `string` | n/a | yes |
+| <a name="input_infra_nethub_networks"></a> [infra\_nethub\_networks](#input\_infra\_nethub\_networks) | Organization hub networks | <pre>map(object({<br>    self_link   = string<br>    has_private_dns = bool<br>  }))</pre> | n/a | yes |
 | <a name="input_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#input\_infra\_nethub\_project\_id) | Organization hub network project id | `string` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_private_domain"></a> [private\_domain](#input\_private\_domain) | The Private domain of your organization | `string` | n/a | yes |
 | <a name="input_private_subnet_ranges"></a> [private\_subnet\_ranges](#input\_private\_subnet\_ranges) | n/a | `list(string)` | n/a | yes |
-| <a name="input_private_svc_connect_ip"></a> [private\_svc\_connect\_ip](#input\_private\_svc\_connect\_ip) | The internal IP to be used for the private service connect. Required for hub mode | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Environment hub network project id | `string` | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Subnet prefix for env nethub project | `string` | n/a | yes |
 | <a name="input_public_domain"></a> [public\_domain](#input\_public\_domain) | The Public domain of your organization | `string` | n/a | yes |
 | <a name="input_trusted_egress_ranges"></a> [trusted\_egress\_ranges](#input\_trusted\_egress\_ranges) | List of network ranges to which all egress traffic will be allowed | `list(string)` | n/a | yes |
 | <a name="input_trusted_ingress_ranges"></a> [trusted\_ingress\_ranges](#input\_trusted\_ingress\_ranges) | List of network ranges from which all ingress traffic will be allowed | `list(string)` | n/a | yes |
 | <a name="input_trusted_private_ranges"></a> [trusted\_private\_ranges](#input\_trusted\_private\_ranges) | List of network ranges from which internal traffic will be allowed | `list(string)` | n/a | yes |
-| <a name="input_reserved_subnets"></a> [reserved\_subnets](#input\_reserved\_subnets) | The list of reserved subnet for appliances like SVC and proxies. | <pre>map(object({<br>    purpose = string<br>    role    = string<br>    range   = string<br>  }))</pre> | `{}` | no |
 
 ## Outputs
 

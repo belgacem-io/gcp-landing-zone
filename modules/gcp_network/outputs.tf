@@ -27,3 +27,13 @@ output "subnets_secondary_ranges" {
   value       = module.main.subnets_secondary_ranges
   description = "The secondary ranges associated with these subnets"
 }
+
+output "private_zone_name" {
+  value       = var.mode == "hub" && var.enable_private_domain ? module.dns-private-zone.0.name : null
+  description = "The private DNS zone name."
+}
+
+output "secure_web_proxy_ip_address" {
+  value       = (var.mode == "hub" && var.enable_secure_web_proxy) ? module.secure_web_proxy.0.gateway_ip_address : null
+  description = "The Secure web proxy IP address."
+}
