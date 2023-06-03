@@ -1,5 +1,5 @@
 /******************************************
-  Base Network VPC
+  DMZ Network
 *****************************************/
 
 module "nethub_network_dmz" {
@@ -47,6 +47,10 @@ module "nethub_network_dmz" {
   ]
 }
 
+/******************************************
+  Corp Network.
+ *****************************************/
+
 module "nethub_network_corp" {
   source = "../modules/gcp_network"
 
@@ -88,5 +92,25 @@ module "nethub_network_corp" {
 
   depends_on = [
     module.nethub_project
+  ]
+}
+
+/******************************************
+  Secure web proxy DNS record.
+ *****************************************/
+
+resource "google_dns_record_set" "secure_web_proxy" {
+  name = "proxy.${var.gcp_org_private_domain}."
+  project    = module.nethub_project.project_id
+  type = "A"
+  ttl  = 300
+
+  managed_zone = module.nethub_network_corp.private_zone_name
+
+  rrdatas = [module.nethub_network_dmz.secure_web_proxy_ip_address]
+
+  depends_on = [
+      module.nethub_network_corp,
+      module.nethub_network_dmz
   ]
 }

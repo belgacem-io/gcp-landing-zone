@@ -64,7 +64,7 @@ resource "google_compute_firewall" "allow_private_api_egress" {
   Configured firewall rules
  *****************************************/
 resource "google_compute_firewall" "allow_limited_egress" {
-  count = var.allow_egress_ranges != null ? 1 : 0
+  count = var.allow_egress_ranges != null && length(var.allow_egress_ranges) > 0 ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-${var.network_name}-allow-limited-egress"
@@ -93,7 +93,7 @@ resource "google_compute_firewall" "allow_limited_egress" {
 }
 
 resource "google_compute_firewall" "allow_limited_ingress" {
-  count = var.allow_ingress_ranges != null ? 1 : 0
+  count = var.allow_ingress_ranges != null && length(var.allow_ingress_ranges) > 0 ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
   name      = "${var.prefix}-fw-glb-${var.network_name}-allow-limited-ingress"
