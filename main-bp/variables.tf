@@ -58,12 +58,6 @@ variable "gcp_org_environments" {
       cidr_blocks = object({
         private_subnet_ranges = list(string)
         data_subnet_ranges    = list(string)
-        reserved_subnets      = map(object({
-          purpose = string
-          role    = string
-          range   = string
-        }))
-        private_svc_connect_ip = string
       })
     })
     children = list(object({
@@ -91,11 +85,6 @@ variable "gcp_business_projects" {
       cidr_blocks = object({
         private_subnet_ranges         = list(string)
         data_subnet_ranges            = list(string)
-        reserved_subnets      = map(object({
-          purpose = string
-          role    = string
-          range   = string
-        }))
       })
     })
   }))
@@ -135,18 +124,22 @@ variable "gcp_infra_projects" {
         time_unit                 = string,
         email_addresses_to_notify = list(string)
       })
-      network = object({
-        name        = string,
-        cidr_blocks = object({
-          public_subnet_ranges  = list(string)
-          private_subnet_ranges = list(string)
-          data_subnet_ranges    = list(string)
-          reserved_subnets      = map(object({
-            purpose = string
-            role    = string
-            range   = string
-          }))
-          private_svc_connect_ip = string
+      networks = object({
+        dmz = object({
+          name        = string
+          cidr_blocks = object({
+            public_subnet_ranges          = list(string)
+            private_subnet_ranges         = list(string)
+            data_subnet_ranges            = list(string)
+          })
+        })
+        corp = object({
+          name        = string
+          cidr_blocks = object({
+            private_subnet_ranges         = list(string)
+            data_subnet_ranges            = list(string)
+            private_svc_connect_ip        = string
+          })
         })
       })
     })

@@ -53,7 +53,7 @@ module "netenv" {
   environment_code                  = var.environment_code
   prefix                            = var.prefix
   default_region                    = var.default_region
-  infra_nethub_network_self_link    = var.infra_nethub_network_self_link
+  infra_nethub_networks_self_links  = var.infra_nethub_networks_self_links
   infra_nethub_project_id           = var.infra_nethub_project_id
   private_domain                    = var.private_domain
   public_domain                     = var.public_domain
@@ -66,7 +66,6 @@ module "netenv" {
   public_subnets              = []
   private_subnets             = concat(local.primary_netenv_private_subnets, local.primary_business_project_private_subnets)
   data_subnets                = concat(local.primary_netenv_data_subnets, local.primary_business_project_data_subnets)
-  reserved_subnets            = var.reserved_subnets
   secondary_ranges            = {}
 
   allow_egress_ranges           = var.trusted_egress_ranges

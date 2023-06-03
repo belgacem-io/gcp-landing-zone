@@ -81,17 +81,6 @@ variable "data_subnets" {
   default     = []
 }
 
-
-variable "reserved_subnets" {
-  type = map(object({
-    purpose = string
-    role    = string
-    range   = string
-  }))
-  description = "The list of reserved subnet for appliances like SVC and proxies."
-  default     = {}
-}
-
 variable "private_svc_connect_ip" {
   description = "The internal IP to be used for the private service connect. Required for hub mode"
   type        = string
@@ -194,10 +183,10 @@ variable "infra_nethub_project_id" {
   description = "Organization hub network project. Required in spoke mode"
 }
 
-variable "infra_nethub_network_self_link" {
-  type        = string
-  default     = null
-  description = "Organization hub network VPC self link. Required in spoke mode"
+variable "infra_nethub_networks_self_links" {
+  type        = map(string)
+  default     = {}
+  description = "Organization hub networks VPC self links. Required in spoke mode"
 }
 
 variable "enable_transitive_network" {

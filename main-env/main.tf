@@ -24,11 +24,10 @@ locals {
   business_project_subnets = flatten([
     for key, env in var.gcp_org_environments : [
       for project in var.gcp_business_projects : merge(project, {
-        environment_key               = key
-        project_name                  = project.name
-        private_subnet_ranges         = project.network.cidr_blocks.private_subnet_ranges
-        data_subnet_ranges            = project.network.cidr_blocks.data_subnet_ranges
-        reserved_subnets              = project.network.cidr_blocks.reserved_subnets
+        environment_key       = key
+        project_name          = project.name
+        private_subnet_ranges = project.network.cidr_blocks.private_subnet_ranges
+        data_subnet_ranges    = project.network.cidr_blocks.data_subnet_ranges
       }) if project.environment_code == env.environment_code
     ]
   ])
@@ -66,7 +65,7 @@ module "netenv_projects" {
   labels = {
     environment_code = each.value.environment_code
     application_name = each.value.name
-    project_role = "netenv"
+    project_role     = "netenv"
   }
   budget_alert_pubsub_topic   = var.gcp_infra_projects.observability.budget.alert_pubsub_topic
   budget_alert_spent_percents = var.gcp_alert_spent_percents
@@ -82,25 +81,24 @@ module "netenv_networks" {
 
   for_each = var.gcp_org_environments
 
-  default_region             = var.gcp_default_region
-  private_domain             = var.gcp_org_private_domain
-  public_domain              = var.gcp_org_public_domain
-  prefix                     = "${ var.gcp_org_name }-${each.value.environment_code}"
-  environment_code           = each.value.environment_code
-  org_id                     = var.gcp_org_id
-  project_id                 = module.netenv_projects[each.key].project_id
-  network_name               = each.value.network.name
-  private_subnet_ranges      = each.value.network.cidr_blocks.private_subnet_ranges
-  data_subnet_ranges         = each.value.network.cidr_blocks.data_subnet_ranges
-  reserved_subnets           = each.value.network.cidr_blocks.reserved_subnets
-  project_name               = each.value.name
-  private_svc_connect_ip     = each.value.network.cidr_blocks.private_svc_connect_ip
-  infra_nethub_project_id    = data.google_projects.infra_nethub.projects[0].project_id
-  infra_nethub_network_self_link = data.google_compute_network.infra_nethub.self_link
-  trusted_egress_ranges      = var.trusted_egress_ranges
-  trusted_ingress_ranges     = var.trusted_ingress_ranges
-  trusted_private_ranges     = var.trusted_private_ranges
-  business_project_subnets   = [
+  default_region                   = var.gcp_default_region
+  private_domain                   = var.gcp_org_private_domain
+  public_domain                    = var.gcp_org_public_domain
+  prefix                           = "${ var.gcp_org_name }-${each.value.environment_code}"
+  environment_code                 = each.value.environment_code
+  org_id                           = var.gcp_org_id
+  project_id                       = module.netenv_projects[each.key].project_id
+  network_name                     = each.value.network.name
+  private_subnet_ranges            = each.value.network.cidr_blocks.private_subnet_ranges
+  data_subnet_ranges               = each.value.network.cidr_blocks.data_subnet_ranges
+  project_name                     = each.value.name
+  private_svc_connect_ip           = each.value.network.cidr_blocks.private_svc_connect_ip
+  infra_nethub_project_id          = data.google_projects.infra_nethub.projects[0].project_id
+  infra_nethub_networks_self_links = data.google_compute_network.infra_nethub.self_link
+  trusted_egress_ranges            = var.trusted_egress_ranges
+  trusted_ingress_ranges           = var.trusted_ingress_ranges
+  trusted_private_ranges           = var.trusted_private_ranges
+  business_project_subnets         = [
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
 

@@ -4,7 +4,7 @@
 
 resource "google_compute_firewall" "deny_all_egress" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-deny-all-egress"
+  name      = "${var.prefix}-fw-glb-${var.network_name}-deny-all-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
@@ -32,7 +32,7 @@ resource "google_compute_firewall" "deny_all_egress" {
 
 resource "google_compute_firewall" "allow_private_api_egress" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-private-google-api-egress"
+  name      = "${var.prefix}-fw-glb-${var.network_name}-allow-private-google-api-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
@@ -67,7 +67,7 @@ resource "google_compute_firewall" "allow_limited_egress" {
   count = var.allow_egress_ranges != null ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-limited-egress"
+  name      = "${var.prefix}-fw-glb-${var.network_name}-allow-limited-egress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
@@ -96,7 +96,7 @@ resource "google_compute_firewall" "allow_limited_ingress" {
   count = var.allow_ingress_ranges != null ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-limited-ingress"
+  name      = "${var.prefix}-fw-glb-${var.network_name}-allow-limited-ingress"
   network   = module.main.network_name
   project   = var.project_id
   direction = "INGRESS"
@@ -130,7 +130,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
   count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-iap-ssh"
+  name    = "${var.prefix}-fw-glb-${var.network_name}-allow-iap-ssh"
   network = module.main.network_name
   project = var.project_id
 
@@ -162,7 +162,7 @@ resource "google_compute_firewall" "allow_iap_rdp" {
   count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-iap-rdp"
+  name    = "${var.prefix}-fw-glb-${var.network_name}-allow-iap-rdp"
   network = module.main.network_name
   project = var.project_id
 
@@ -194,7 +194,7 @@ resource "google_compute_firewall" "allow_windows_activation" {
   count = var.enable_windows_activation ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name      = "${var.prefix}-fw-glb-allow-windows-activation"
+  name      = "${var.prefix}-fw-glb-${var.network_name}-allow-windows-activation"
   network   = module.main.network_name
   project   = var.project_id
   direction = "EGRESS"
@@ -227,7 +227,7 @@ resource "google_compute_firewall" "allow_lb" {
   count = var.enable_optional_fw_rules ? 1 : 0
 
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name    = "${var.prefix}-fw-glb-allow-lb-health"
+  name    = "${var.prefix}-fw-glb-${var.network_name}-allow-lb-health"
   network = module.main.network_name
   project = var.project_id
 

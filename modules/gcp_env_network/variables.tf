@@ -5,8 +5,8 @@ variable "prefix" {
   type        = string
   description = "Prefix applied to service to all resources."
 }
-variable "infra_nethub_network_self_link" {
-  type        = string
+variable "infra_nethub_networks_self_links" {
+  type        = map(string)
   description = "Organization hub network VPC self link"
 }
 
@@ -51,16 +51,6 @@ variable "private_subnet_ranges" {
 
 variable "data_subnet_ranges" {
   type = list(string)
-}
-
-variable "reserved_subnets" {
-  type = map(object({
-    purpose = string
-    role    = string
-    range   = string
-  }))
-  description = "The list of reserved subnet for appliances like SVC and proxies."
-  default     = {}
 }
 
 variable "private_svc_connect_ip" {

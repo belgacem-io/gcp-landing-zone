@@ -7,7 +7,7 @@ resource "google_dns_policy" "default_policy" {
 
   project                   = var.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name                      = "${var.prefix}-dp-glb-dns-hub-default-policy"
+  name                      = "${var.prefix}-dp-glb-${var.network_name}-hub-default-policy"
   enable_inbound_forwarding = var.enable_dns_inbound_forwarding
   enable_logging            = var.enable_dns_logging
   networks {
@@ -23,14 +23,13 @@ resource "google_dns_policy" "default_spoke_policy" {
 
   project                   = var.project_id
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name                      = "${var.prefix}-dp-glb-network-spoke-default-policy"
+  name                      = "${var.prefix}-dp-glb-${var.network_name}-spoke-default-policy"
   enable_inbound_forwarding = var.enable_dns_inbound_forwarding
   enable_logging            = var.enable_dns_logging
   networks {
     network_url = module.main.network_self_link
   }
 }
-
 
 
 /******************************************
@@ -43,7 +42,7 @@ module "private_service_connect" {
   count = var.mode == "hub" && var.private_svc_connect_ip !=null ? 1 : 0
 
   forwarding_rule_name         = "privategoogleapi"
-  private_service_connect_name = "${var.environment_code}-gip-psconnect"
+  private_service_connect_name = "${var.environment_code}-pscip--${var.network_name}"
   project_id                   = var.project_id
   network_self_link            = module.main.network_self_link
   private_service_connect_ip   = var.private_svc_connect_ip
@@ -57,13 +56,13 @@ module "private_service_connect" {
 module "dns-private-zone" {
   count = var.mode == "hub" ? 1 : 0
 
-  source  = "terraform-google-modules/cloud-dns/google"
-  version = "~> 4.2"
-  project_id = var.project_id
-  type       = "private"
+  source        = "terraform-google-modules/cloud-dns/google"
+  version       = "~> 4.2"
+  project_id    = var.project_id
+  type          = "private"
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name       = "${var.prefix}-pvz-glb-${var.mode}"
-  domain     = "${var.private_domain}."
+  name          = "${var.prefix}-pvz-glb-${var.network_name}-${var.mode}"
+  domain        = "${var.private_domain}."
   force_destroy = true
 
   private_visibility_config_networks = [
@@ -71,7 +70,7 @@ module "dns-private-zone" {
   ]
 
   recordsets = var.enable_secure_web_proxy ? [
-     {
+    {
       name    = "proxy"
       type    = "A"
       ttl     = 300
@@ -93,16 +92,16 @@ module "dns-peering-zone-hub2spoke" {
   source  = "terraform-google-modules/cloud-dns/google"
   version = "~> 4.2"
 
-  count = ( var.mode == "spoke" && var.enable_dns_peering ) ? 1 : 0
+  for_each = ( var.mode == "spoke" && var.enable_dns_peering ) ? var.infra_nethub_networks_self_links : {}
 
   project_id = var.project_id
   type       = "peering"
   #[prefix]-[resource]-[location]-[description]-[suffix]
-  name       = "${var.prefix}-pz-glb-peering-hub2spoke"
+  name       = "${var.prefix}-pz-glb-${var.network_name}-peering-hub2spoke-${each.key}"
   domain     = "${var.private_domain}."
 
   private_visibility_config_networks = [
     module.main.network_self_link
   ]
-  target_network = var.infra_nethub_network_self_link
+  target_network = each.value
 }
