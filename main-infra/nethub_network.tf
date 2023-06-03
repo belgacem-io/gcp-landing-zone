@@ -12,7 +12,10 @@ module "nethub_network_dmz" {
   public_domain                 = var.gcp_org_public_domain
   private_domain                = var.gcp_org_private_domain
   enable_nat                    = true
-  enable_secure_web_proxy       = false
+  enable_dns_inbound_forwarding = false
+  enable_secure_web_proxy       = true
+  enable_public_domain          = false
+  enable_private_domain         = false
   enable_transitive_network     = false
   network_name                  = var.gcp_infra_projects.nethub.networks.dmz.name
   mode                          = "hub"
@@ -57,6 +60,7 @@ module "nethub_network_corp" {
   enable_dns_inbound_forwarding = true
   enable_secure_web_proxy       = false
   enable_public_domain          = false
+  enable_private_domain         = true
   enable_transitive_network     = true
   network_name                  = var.gcp_infra_projects.nethub.networks.corp.name
   mode                          = "hub"

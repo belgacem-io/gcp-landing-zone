@@ -123,12 +123,18 @@ variable "enable_firewall_logging" {
 variable "enable_public_domain" {
   type        = bool
   description = "If true, a public domain zone will be created."
-  default = true
+  default = false
 }
 
 variable "public_domain" {
   type        = string
   description = "The organization's public domain (DNS), for instance 'example.com.'."
+}
+
+variable "enable_private_domain" {
+  type        = bool
+  description = "If true, a private domain zone will be created."
+  default = true
 }
 
 variable "private_domain" {
@@ -183,8 +189,11 @@ variable "infra_nethub_project_id" {
   description = "Organization hub network project. Required in spoke mode"
 }
 
-variable "infra_nethub_networks_self_links" {
-  type        = map(string)
+variable "infra_nethub_networks" {
+  type        = map(object({
+    self_link   = string
+    has_private_dns = bool
+  }))
   default     = {}
   description = "Organization hub networks VPC self links. Required in spoke mode"
 }

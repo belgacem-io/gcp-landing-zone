@@ -5,15 +5,20 @@ variable "prefix" {
   type        = string
   description = "Prefix applied to service to all resources."
 }
-variable "infra_nethub_networks_self_links" {
-  type        = map(string)
-  description = "Organization hub network VPC self link"
-}
 
 variable "infra_nethub_project_id" {
   type        = string
   description = "Organization hub network project id"
 }
+
+variable "infra_nethub_networks" {
+  type        = map(object({
+    self_link   = string
+    has_private_dns = bool
+  }))
+  description = "Organization hub networks"
+}
+
 variable "project_id" {
   type        = string
   description = "Environment hub network project id"
@@ -51,11 +56,6 @@ variable "private_subnet_ranges" {
 
 variable "data_subnet_ranges" {
   type = list(string)
-}
-
-variable "private_svc_connect_ip" {
-  type        = string
-  description = "The internal IP to be used for the private service connect. Required for hub mode"
 }
 
 variable "business_project_subnets" {

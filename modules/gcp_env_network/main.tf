@@ -53,7 +53,7 @@ module "netenv" {
   environment_code                  = var.environment_code
   prefix                            = var.prefix
   default_region                    = var.default_region
-  infra_nethub_networks_self_links  = var.infra_nethub_networks_self_links
+  infra_nethub_networks             = var.infra_nethub_networks
   infra_nethub_project_id           = var.infra_nethub_project_id
   private_domain                    = var.private_domain
   public_domain                     = var.public_domain

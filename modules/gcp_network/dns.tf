@@ -54,7 +54,7 @@ module "private_service_connect" {
  *****************************************/
 
 module "dns-private-zone" {
-  count = var.mode == "hub" ? 1 : 0
+  count = var.mode == "hub" && var.enable_private_domain ? 1 : 0
 
   source        = "terraform-google-modules/cloud-dns/google"
   version       = "~> 4.2"
@@ -88,11 +88,14 @@ module "dns-private-zone" {
 /******************************************
  DNS Spoke peering
 *****************************************/
+locals {
+  infra_nethub_networks_with_private_dns = {for key,net in var.infra_nethub_networks: key => net if net.has_private_dns}
+}
 module "dns-peering-zone-hub2spoke" {
   source  = "terraform-google-modules/cloud-dns/google"
   version = "~> 4.2"
 
-  for_each = ( var.mode == "spoke" && var.enable_dns_peering ) ? var.infra_nethub_networks_self_links : {}
+  for_each = ( var.mode == "spoke" && var.enable_dns_peering ) ? local.infra_nethub_networks_with_private_dns : {}
 
   project_id = var.project_id
   type       = "peering"
@@ -103,5 +106,5 @@ module "dns-peering-zone-hub2spoke" {
   private_visibility_config_networks = [
     module.main.network_self_link
   ]
-  target_network = each.value
+  target_network = each.value.self_link
 }

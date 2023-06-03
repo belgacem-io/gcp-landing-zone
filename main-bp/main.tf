@@ -7,7 +7,6 @@ module "fetch" {
   organization_name         = var.gcp_org_name
   default_region            = var.gcp_default_region
   parent_container_id       = var.gcp_parent_container_id
-  infra_nethub_network_name = var.gcp_infra_projects.nethub.network.name
 }
 
 /******************************************

@@ -71,12 +71,13 @@
 | <a name="input_enable_firewall_logging"></a> [enable\_firewall\_logging](#input\_enable\_firewall\_logging) | Toggle firewall logging for VPC Firewalls. | `bool` | `false` | no |
 | <a name="input_enable_nat"></a> [enable\_nat](#input\_enable\_nat) | Toggle creation of NAT cloud router. | `bool` | `false` | no |
 | <a name="input_enable_optional_fw_rules"></a> [enable\_optional\_fw\_rules](#input\_enable\_optional\_fw\_rules) | Toggle creation of optional firewall rules: IAP SSH, IAP RDP and Internal & Global load balancing health check and load balancing IP ranges. | `bool` | `true` | no |
-| <a name="input_enable_public_domain"></a> [enable\_public\_domain](#input\_enable\_public\_domain) | If true, a public domain zone will be created. | `bool` | `true` | no |
+| <a name="input_enable_private_domain"></a> [enable\_private\_domain](#input\_enable\_private\_domain) | If true, a private domain zone will be created. | `bool` | `true` | no |
+| <a name="input_enable_public_domain"></a> [enable\_public\_domain](#input\_enable\_public\_domain) | If true, a public domain zone will be created. | `bool` | `false` | no |
 | <a name="input_enable_secure_web_proxy"></a> [enable\_secure\_web\_proxy](#input\_enable\_secure\_web\_proxy) | In hub mode, if enabled, a secure web proxy will be installed. | `bool` | `true` | no |
 | <a name="input_enable_subnetworks_logging"></a> [enable\_subnetworks\_logging](#input\_enable\_subnetworks\_logging) | Toggle subnetworks flow logging for VPC Subnetworks. | `bool` | `false` | no |
 | <a name="input_enable_transitive_network"></a> [enable\_transitive\_network](#input\_enable\_transitive\_network) | In hub mode, if enabled, a transit gateway will be installed. | `bool` | `true` | no |
 | <a name="input_enable_windows_activation"></a> [enable\_windows\_activation](#input\_enable\_windows\_activation) | Enable Windows license activation for Windows workloads. | `bool` | `false` | no |
-| <a name="input_infra_nethub_networks_self_links"></a> [infra\_nethub\_networks\_self\_links](#input\_infra\_nethub\_networks\_self\_links) | Organization hub networks VPC self links. Required in spoke mode | `map(string)` | `{}` | no |
+| <a name="input_infra_nethub_networks"></a> [infra\_nethub\_networks](#input\_infra\_nethub\_networks) | Organization hub networks VPC self links. Required in spoke mode | <pre>map(object({<br>    self_link   = string<br>    has_private_dns = bool<br>  }))</pre> | `{}` | no |
 | <a name="input_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#input\_infra\_nethub\_project\_id) | Organization hub network project. Required in spoke mode | `string` | `null` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | Network deployment mode, should be set to `hub` or `spoke`. | `string` | `null` | no |
 | <a name="input_nat_bgp_asn"></a> [nat\_bgp\_asn](#input\_nat\_bgp\_asn) | BGP ASN for first NAT cloud routes. | `number` | `64514` | no |

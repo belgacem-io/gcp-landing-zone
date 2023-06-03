@@ -11,7 +11,9 @@ data "google_projects" "infra_observability" {
 }
 
 data "google_compute_network" "infra_nethub" {
-  name    = "${var.gcp_org_name}-prod-network-${var.gcp_default_region}-nethub"
+  for_each = var.gcp_infra_projects.nethub.networks
+
+  name    = "${var.gcp_org_name}-prod-network-${var.gcp_default_region}-${each.key}"
   project = data.google_projects.infra_nethub.projects[0].project_id
 }
 
@@ -92,13 +94,18 @@ module "netenv_networks" {
   private_subnet_ranges            = each.value.network.cidr_blocks.private_subnet_ranges
   data_subnet_ranges               = each.value.network.cidr_blocks.data_subnet_ranges
   project_name                     = each.value.name
-  private_svc_connect_ip           = each.value.network.cidr_blocks.private_svc_connect_ip
   infra_nethub_project_id          = data.google_projects.infra_nethub.projects[0].project_id
-  infra_nethub_networks_self_links = data.google_compute_network.infra_nethub.self_link
-  trusted_egress_ranges            = var.trusted_egress_ranges
-  trusted_ingress_ranges           = var.trusted_ingress_ranges
-  trusted_private_ranges           = var.trusted_private_ranges
-  business_project_subnets         = [
+  infra_nethub_networks            = {
+    for key, net in data.google_compute_network.infra_nethub :
+    key => {
+        self_link       = net.self_link
+        has_private_dns = key == var.gcp_infra_projects.nethub.networks.corp.name
+    }
+  }
+  trusted_egress_ranges    = var.trusted_egress_ranges
+  trusted_ingress_ranges   = var.trusted_ingress_ranges
+  trusted_private_ranges   = var.trusted_private_ranges
+  business_project_subnets = [
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
 
