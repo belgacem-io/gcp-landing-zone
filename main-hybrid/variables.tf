@@ -92,11 +92,6 @@ variable "gcp_business_projects" {
   description = "The set of projects to create. Defaults to an empty list."
 }
 
-variable "gcp_labels" {
-  type        = map(string)
-  description = "Map of tags"
-}
-
 variable "gcp_infra_projects" {
   type = object({
     folder   = string
@@ -186,4 +181,9 @@ variable "enable_partner_interconnect" {
   description = "Enable Partner Interconnect in the environment."
   type        = bool
   default     = false
+}
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

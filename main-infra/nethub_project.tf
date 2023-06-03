@@ -24,10 +24,10 @@ module "nethub_project" {
   budget_alert_spent_percents = var.budget_alert_spent_percents
   budget_amount               = var.gcp_infra_projects.nethub.budget.amount
 
-  labels = {
+  labels = merge(var.gcp_labels,{
     environment_code = "prod"
     project_role = "nethub"
     application_name = var.gcp_infra_projects.nethub.name
-  }
+  })
 }
 

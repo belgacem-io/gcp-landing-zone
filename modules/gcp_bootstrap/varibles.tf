@@ -199,3 +199,8 @@ variable "kms_prevent_destroy" {
   type        = bool
   default     = true
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

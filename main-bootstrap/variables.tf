@@ -89,3 +89,8 @@ variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
 }
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

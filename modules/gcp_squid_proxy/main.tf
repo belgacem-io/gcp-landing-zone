@@ -43,6 +43,8 @@ module "proxy_template" {
 
   tags = var.network_tags
 
+  labels = var.labels
+
   depends_on = [
     google_service_account.sa
   ]

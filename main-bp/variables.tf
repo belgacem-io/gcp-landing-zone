@@ -92,11 +92,6 @@ variable "gcp_business_projects" {
   description = "The set of projects to create. Defaults to an empty list."
 }
 
-variable "gcp_labels" {
-  type        = map(string)
-  description = "Map of tags"
-}
-
 variable "gcp_infra_projects" {
   type = object({
     folder   = string
@@ -165,4 +160,9 @@ variable "trusted_ingress_ranges" {
 variable "trusted_private_ranges" {
   type        = list(string)
   description = "List of network ranges from which internal traffic will be allowed"
+}
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

@@ -64,11 +64,11 @@ module "netenv_projects" {
     "billingbudgets.googleapis.com"
   ]
 
-  labels = {
+  labels = merge(var.gcp_labels,{
     environment_code = each.value.environment_code
     application_name = each.value.name
     project_role     = "netenv"
-  }
+  })
   budget_alert_pubsub_topic   = var.gcp_infra_projects.observability.budget.alert_pubsub_topic
   budget_alert_spent_percents = var.gcp_alert_spent_percents
   budget_amount               = 100
@@ -109,6 +109,10 @@ module "netenv_networks" {
     for subnet in local.business_project_subnets :  subnet if subnet.environment_key == each.key
   ]
 
+  labels = merge(var.gcp_labels,{
+    environment_code = each.value.environment_code
+  })
+
 
   depends_on = [
     data.google_projects.infra_observability,
@@ -134,6 +138,10 @@ module "netenv_bastions" {
   region             = var.gcp_default_region
   network_self_link  = module.netenv_networks[each.key].network_self_links
   subnet_self_link   = module.netenv_networks[each.key].subnetwork_self_links[0]
+
+  labels = merge(var.gcp_labels,{
+    environment_code = each.value.environment_code
+  })
 
   depends_on = [
     module.netenv_networks

@@ -87,3 +87,8 @@ variable "trusted_private_ranges" {
   type        = list(string)
   description = "List of network ranges from which internal traffic will be allowed"
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

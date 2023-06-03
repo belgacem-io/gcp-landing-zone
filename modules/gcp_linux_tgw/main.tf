@@ -48,6 +48,8 @@ module "tgw_template" {
   source_image_project = split("/", var.instance_image)[0]
 
   tags = var.network_tags
+
+  labels = var.labels
 }
 
 module "migs" {

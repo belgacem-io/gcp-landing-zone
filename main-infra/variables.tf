@@ -139,11 +139,6 @@ variable "gcp_business_projects" {
   description = "The set of projects to create. Defaults to an empty list."
 }
 
-variable "gcp_labels" {
-  type        = map(string)
-  description = "Map of tags"
-}
-
 variable "gcp_infra_projects" {
   type = object({
     folder   = string
@@ -307,4 +302,9 @@ variable "scc_notification_filter" {
   description = "Filter used to create the Security Command Center Notification, you can see more details on how to create filters in https://cloud.google.com/security-command-center/docs/how-to-api-filter-notifications#create-filter"
   type        = string
   default     = "state = \"ACTIVE\""
+}
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

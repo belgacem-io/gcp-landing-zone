@@ -20,6 +20,8 @@ module "instance_template" {
   metadata = {
     enable-oslogin = "TRUE"
   }
+
+  labels = var.labels
 }
 
 module "mig" {

@@ -42,6 +42,10 @@ module "nethub_network_dmz" {
   allow_ingress_ranges         = var.trusted_ingress_ranges
   internal_trusted_cidr_ranges = var.trusted_private_ranges
 
+  labels = merge(var.gcp_labels,{
+    environment_code = "prod"
+  })
+
   depends_on = [
     module.nethub_project
   ]
@@ -89,6 +93,10 @@ module "nethub_network_corp" {
   allow_egress_ranges          = []
   allow_ingress_ranges         = var.trusted_ingress_ranges
   internal_trusted_cidr_ranges = var.trusted_private_ranges
+
+  labels = merge(var.gcp_labels,{
+    environment_code = "prod"
+  })
 
   depends_on = [
     module.nethub_project

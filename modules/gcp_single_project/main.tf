@@ -17,11 +17,11 @@ module "project" {
   vpc_service_control_attach_enabled = var.vpc_service_control_attach_enabled
   vpc_service_control_perimeter_name = var.vpc_service_control_perimeter_name
 
-  labels = {
+  labels = merge(var.labels,{
     environment_code = var.environment_code
     application_name = var.project_name
     project_role = "app"
-  }
+  })
   budget_alert_pubsub_topic   = var.alert_pubsub_topic
   budget_alert_spent_percents = var.alert_spent_percents
   budget_amount               = var.budget_amount

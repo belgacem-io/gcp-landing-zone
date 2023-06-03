@@ -151,3 +151,8 @@ variable "authorized_members" {
   type        = list(string)
   default = []
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

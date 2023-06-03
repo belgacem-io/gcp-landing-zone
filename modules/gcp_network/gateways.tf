@@ -15,6 +15,8 @@ module "vpc_tgw" {
   subnetwork_name                 = local.private_subnets[0].subnet_name
   network_name                    = local.network_name
 
+  labels = var.labels
+
   depends_on = [
     module.main
   ]
@@ -55,6 +57,8 @@ module "secure_web_proxy" {
   source_trusted_cidr_ranges      = var.internal_trusted_cidr_ranges
   subnetwork_name                 = local.private_subnets[0].subnet_name
   network_name                    = module.main.network_name
+
+  labels = var.labels
 
   depends_on = [
     module.main
