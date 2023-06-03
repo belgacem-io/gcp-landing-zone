@@ -27,8 +27,10 @@ runcmd:
   - apt update
   # Install Squid 5 with HTTPS Decryption
   -  cat /opt/scripts/squid.sh | bash
+%{if enable_antivirus }
   # Install clamav and clamav squid Adapter
   - cat /opt/scripts/clamav.sh | bash
+%{endif}
   # Restart services
   - systemctl restart squid
   - sysctl -p

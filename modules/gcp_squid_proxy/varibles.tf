@@ -13,6 +13,12 @@ variable "default_region" {
   description = "Default region 1 for subnets and Cloud Routers"
 }
 
+variable "enable_antivirus" {
+  description = "Active install and integration of ClamAV antivirus."
+  type        = bool
+  default = false
+}
+
 variable "network_name" {
   description = "The GCP VPC network name for the cluster to be built in."
   type        = string
