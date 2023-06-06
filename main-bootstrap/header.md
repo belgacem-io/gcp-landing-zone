@@ -1,7 +1,8 @@
 ## Purpose
 
-The purpose of this step is to bootstrap a Google cloud landing zone, creating all the required resources and
-permissions.
+This module essentially bootstraps an existing Google Cloud organization, setting up all the necessary Google Cloud resources and permissions to start utilizing a CFT. However, I've opted for a modification of the original version because it requires extensive permissions and access at the organizational level, which isn't always possible in some companies. The bootstrap step will use the current project for hosting two primary elements:
+- Terraform State Bucket: This is where the Terraform state files are stored. These files are essential as they map resources to the configuration, keep track of metadata, and improve performance for large infrastructures.
+- Custom Service Account: used by Terraform to create new resources in Google Cloud.
 
 ## Prerequisites
 
