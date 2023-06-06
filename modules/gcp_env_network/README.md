@@ -9,6 +9,7 @@
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | n/a | `string` | n/a | yes |
 | <a name="input_infra_nethub_networks"></a> [infra\_nethub\_networks](#input\_infra\_nethub\_networks) | Organization hub networks | <pre>map(object({<br>    self_link   = string<br>    has_private_dns = bool<br>  }))</pre> | n/a | yes |
 | <a name="input_infra_nethub_project_id"></a> [infra\_nethub\_project\_id](#input\_infra\_nethub\_project\_id) | Organization hub network project id | `string` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The network name. | `string` | n/a | yes |
 | <a name="input_org_id"></a> [org\_id](#input\_org\_id) | Organization ID | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |

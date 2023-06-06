@@ -57,6 +57,7 @@
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | Default region 1 for subnets and Cloud Routers | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | A short form of the folder level resources (environment) within the Google Cloud organization. | `string` | n/a | yes |
 | <a name="input_internal_trusted_cidr_ranges"></a> [internal\_trusted\_cidr\_ranges](#input\_internal\_trusted\_cidr\_ranges) | Internal trusted ip ranges. Must be set to private ip ranges | `list(string)` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The network name. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_private_domain"></a> [private\_domain](#input\_private\_domain) | The organization's private domain (DNS), for instance 'example.com.'. | `string` | n/a | yes |
@@ -95,6 +96,8 @@
 |------|-------------|
 | <a name="output_network_name"></a> [network\_name](#output\_network\_name) | The name of the VPC being created |
 | <a name="output_network_self_link"></a> [network\_self\_link](#output\_network\_self\_link) | The URI of the VPC being created |
+| <a name="output_private_zone_name"></a> [private\_zone\_name](#output\_private\_zone\_name) | The private DNS zone name. |
+| <a name="output_secure_web_proxy_ip_address"></a> [secure\_web\_proxy\_ip\_address](#output\_secure\_web\_proxy\_ip\_address) | The Secure web proxy IP address. |
 | <a name="output_subnets_ids"></a> [subnets\_ids](#output\_subnets\_ids) | The IDs of the subnets being created |
 | <a name="output_subnets_names"></a> [subnets\_names](#output\_subnets\_names) | The names of the subnets being created |
 | <a name="output_subnets_secondary_ranges"></a> [subnets\_secondary\_ranges](#output\_subnets\_secondary\_ranges) | The secondary ranges associated with these subnets |

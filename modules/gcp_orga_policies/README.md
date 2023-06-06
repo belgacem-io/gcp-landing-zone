@@ -49,6 +49,7 @@ To manage organization policies, the `orgpolicy.googleapis.com` service should b
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_domains_to_allow"></a> [domains\_to\_allow](#input\_domains\_to\_allow) | The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy. | `list(string)` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_resource_id"></a> [resource\_id](#input\_resource\_id) | Resource id where the policies must be applied | `string` | n/a | yes |
 | <a name="input_resource_type"></a> [resource\_type](#input\_resource\_type) | Resource type where the policies must be applied. Possible values: organization, folder and project | `string` | n/a | yes |
 | <a name="input_create_access_context_manager_access_policy"></a> [create\_access\_context\_manager\_access\_policy](#input\_create\_access\_context\_manager\_access\_policy) | Whether to create access context manager access policy | `bool` | `false` | no |

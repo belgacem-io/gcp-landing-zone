@@ -1,8 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
 ## Purpose
 
-The purpose of this step is to bootstrap a Google cloud landing zone, creating all the required resources and
-permissions.
+This module essentially bootstraps an existing Google Cloud organization, setting up all the necessary Google Cloud resources and permissions to start utilizing a CFT. However, I've opted for a modification of the original version because it requires extensive permissions and access at the organizational level, which isn't always possible in some companies. The bootstrap step will use the current project for hosting two primary elements:
+- Terraform State Bucket: This is where the Terraform state files are stored. These files are essential as they map resources to the configuration, keep track of metadata, and improve performance for large infrastructures.
+- Custom Service Account: used by Terraform to create new resources in Google Cloud.
 
 ## Prerequisites
 
@@ -40,6 +41,7 @@ Before stating, make sure that you've done the following:
 | <a name="input_gcp_billing_account"></a> [gcp\_billing\_account](#input\_gcp\_billing\_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
 | <a name="input_gcp_bootstrap_project_id"></a> [gcp\_bootstrap\_project\_id](#input\_gcp\_bootstrap\_project\_id) | The bootstrap project id. | `string` | n/a | yes |
 | <a name="input_gcp_default_region"></a> [gcp\_default\_region](#input\_gcp\_default\_region) | Default region for resources. | `string` | n/a | yes |
+| <a name="input_gcp_labels"></a> [gcp\_labels](#input\_gcp\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_gcp_org_id"></a> [gcp\_org\_id](#input\_gcp\_org\_id) | The organization id for the associated services | `string` | n/a | yes |
 | <a name="input_gcp_org_name"></a> [gcp\_org\_name](#input\_gcp\_org\_name) | The organization name, will be used for resources naming. | `string` | n/a | yes |
 | <a name="input_gcp_org_private_domain"></a> [gcp\_org\_private\_domain](#input\_gcp\_org\_private\_domain) | The private domain of the current organization. Can be different from the organization name. exp:  company.local, cloud.company.local | `string` | n/a | yes |
