@@ -19,12 +19,11 @@ module "security_project" {
   budget_alert_spent_percents = var.budget_alert_spent_percents
   budget_amount               = var.gcp_infra_projects.security.budget.amount
 
-  labels = {
+  labels = merge(var.gcp_labels,{
     environment_code = "prod"
     project_role = "security"
     application_name = var.gcp_infra_projects.security.name
-  }
-
+  })
 }
 
 /******************************************

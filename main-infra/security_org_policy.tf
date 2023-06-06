@@ -9,4 +9,8 @@ module "orga_policies" {
   # FIXME must be enabled
   skip_default_network_policy = false
 
+  labels = merge(var.gcp_labels,{
+    environment_code = "prod"
+  })
+
 }

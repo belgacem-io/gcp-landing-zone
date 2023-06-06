@@ -35,11 +35,6 @@ variable "gcp_terraform_sa_email" {
   type        = string
 }
 
-variable "gcp_terraform_sa_id" {
-  description = "Service account id of the account to impersonate to run Terraform."
-  type        = string
-}
-
 variable "gcp_group_org_admins" {
   description = "Google Group for GCP Organization Administrators"
   type        = string
@@ -91,11 +86,6 @@ variable "gcp_default_region" {
   type        = string
 }
 
-variable "gcp_default_region_azs" {
-  description = "Default availability zones for region 1."
-  type        = list(string)
-}
-
 variable "gcp_org_environments" {
   type = map(object({
     environment_code = string,
@@ -137,11 +127,6 @@ variable "gcp_business_projects" {
   }))
   default     = []
   description = "The set of projects to create. Defaults to an empty list."
-}
-
-variable "gcp_labels" {
-  type        = map(string)
-  description = "Map of tags"
 }
 
 variable "gcp_infra_projects" {
@@ -307,4 +292,9 @@ variable "scc_notification_filter" {
   description = "Filter used to create the Security Command Center Notification, you can see more details on how to create filters in https://cloud.google.com/security-command-center/docs/how-to-api-filter-notifications#create-filter"
   type        = string
   default     = "state = \"ACTIVE\""
+}
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

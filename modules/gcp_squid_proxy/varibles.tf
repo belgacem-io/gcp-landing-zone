@@ -46,7 +46,6 @@ variable "instance_image" {
   default     = "ubuntu-os-cloud/ubuntu-minimal-2004-lts"
 }
 
-
 variable "max_replicas" {
   description = "The maximum number of instances that the autoscaler can scale up to. This is required when creating or updating an autoscaler. The maximum number of replicas should not be lower than minimal number of replicas."
   default     = 1
@@ -152,4 +151,9 @@ variable "authorized_members" {
 variable "source_trusted_cidr_ranges" {
   description = "Your internal CIDR range requiring access to this proxy."
   type        = list(string)
+}
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

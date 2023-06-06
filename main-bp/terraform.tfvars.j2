@@ -5,15 +5,9 @@ gcp_org_public_domain   = "{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
 gcp_org_private_domain   = "{{ env("ORGANISATION_PRIVATE_DOMAIN") }}"
 gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
 gcp_default_region     = "{{ env("REGION") }}"
-gcp_default_region_azs = [
-  "{{ env("REGION") }}-a",
-  "{{ env("REGION") }}-b",
-  "{{ env("REGION") }}-c"
-]
 
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
-gcp_terraform_sa_id              = "projects/{{ env("PROJECT_ID") }}/serviceAccounts/{{ env("IAC_SERVICE_ACCOUNT") }}"
 #gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
 #gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
 #gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
@@ -124,10 +118,6 @@ gcp_business_projects            = [
   }
 ]
 
-gcp_labels = {
-  "managed-by" = "Cloud-Center"
-}
-
 gcp_infra_projects = {
   folder = "Infrastructure"
   security = {
@@ -175,4 +165,9 @@ gcp_infra_projects = {
         }
     }
   }
+}
+
+gcp_labels = {
+  "created_by" = "lz-team"
+  "managed_by" = "lz-team"
 }

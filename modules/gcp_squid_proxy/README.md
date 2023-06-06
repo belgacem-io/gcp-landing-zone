@@ -5,6 +5,7 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | Default region 1 for subnets and Cloud Routers | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | The environment the single project belongs to | `string` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The GCP VPC network name for the cluster to be built in. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project id of your GCP project | `string` | n/a | yes |
@@ -17,6 +18,7 @@
 | <a name="input_autoscaling_metric"></a> [autoscaling\_metric](#input\_autoscaling\_metric) | Autoscaling, metric policy block as single element array. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#metric | <pre>list(object({<br>    name   = string<br>    target = number<br>    type   = string<br>  }))</pre> | `[]` | no |
 | <a name="input_autoscaling_scale_in_control"></a> [autoscaling\_scale\_in\_control](#input\_autoscaling\_scale\_in\_control) | Autoscaling, scale-in control block. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#scale_in_control | <pre>object({<br>    fixed_replicas   = number<br>    percent_replicas = number<br>    time_window_sec  = number<br>  })</pre> | <pre>{<br>  "fixed_replicas": 0,<br>  "percent_replicas": 30,<br>  "time_window_sec": 600<br>}</pre> | no |
 | <a name="input_cooldown_period"></a> [cooldown\_period](#input\_cooldown\_period) | The number of seconds that the autoscaler should wait before it starts collecting information from a new instance. | `number` | `60` | no |
+| <a name="input_enable_antivirus"></a> [enable\_antivirus](#input\_enable\_antivirus) | Active install and integration of ClamAV antivirus. | `bool` | `false` | no |
 | <a name="input_firewall_enable_logging"></a> [firewall\_enable\_logging](#input\_firewall\_enable\_logging) | Toggle firewall logging for VPC Firewalls. | `bool` | `true` | no |
 | <a name="input_instance_image"></a> [instance\_image](#input\_instance\_image) | The instance image. Must be debian base. | `string` | `"ubuntu-os-cloud/ubuntu-minimal-2004-lts"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The instance type | `string` | `"e2-medium"` | no |

@@ -34,19 +34,9 @@ variable "gcp_terraform_sa_email" {
   type        = string
 }
 
-variable "gcp_terraform_sa_id" {
-  description = "Service account id of the account to impersonate to run Terraform."
-  type        = string
-}
-
 variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
-}
-
-variable "gcp_default_region_azs" {
-  description = "Default availability zones for region 1."
-  type        = list(string)
 }
 
 variable "gcp_org_environments" {
@@ -90,11 +80,6 @@ variable "gcp_business_projects" {
   }))
   default     = []
   description = "The set of projects to create. Defaults to an empty list."
-}
-
-variable "gcp_labels" {
-  type        = map(string)
-  description = "Map of tags"
 }
 
 variable "gcp_infra_projects" {
@@ -165,4 +150,9 @@ variable "trusted_ingress_ranges" {
 variable "trusted_private_ranges" {
   type        = list(string)
   description = "List of network ranges from which internal traffic will be allowed"
+}
+
+variable "gcp_labels" {
+  type        = map(string)
+  description = "Map of labels"
 }

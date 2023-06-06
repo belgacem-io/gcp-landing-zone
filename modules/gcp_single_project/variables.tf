@@ -73,3 +73,8 @@ variable "monitoring_project_id" {
   type        = string
   description = "Monitoring project id"
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

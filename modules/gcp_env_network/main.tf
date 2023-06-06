@@ -71,4 +71,6 @@ module "netenv" {
   allow_egress_ranges           = var.trusted_egress_ranges
   allow_ingress_ranges          = var.trusted_ingress_ranges
   internal_trusted_cidr_ranges  = var.trusted_private_ranges
+
+  labels = var.labels
 }

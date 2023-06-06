@@ -6,6 +6,7 @@
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | Default region 1 for subnets and Cloud Routers | `string` | n/a | yes |
 | <a name="input_destination_trusted_cidr_ranges"></a> [destination\_trusted\_cidr\_ranges](#input\_destination\_trusted\_cidr\_ranges) | Your internal/external CIDR range requiring access from this proxy. | `list(string)` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | The environment the single project belongs to | `string` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Map of labels | `map(string)` | n/a | yes |
 | <a name="input_network_name"></a> [network\_name](#input\_network\_name) | The GCP VPC network name for the cluster to be built in. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix applied to service to all resources. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project id of your GCP project | `string` | n/a | yes |

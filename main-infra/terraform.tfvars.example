@@ -1,20 +1,20 @@
-gcp_org_id       = "{{ env("ORGANISATION_ID") }}"
-gcp_org_name   = "{{ env("ORGANIZATION_NAME") }}"
-gcp_parent_container_id   = "{{ env("CONTAINER_ID") }}"
-gcp_org_public_domain   = "{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-gcp_org_private_domain   = "{{ env("ORGANISATION_PRIVATE_DOMAIN") }}"
-gcp_billing_account       = "{{ env("BILLING_ACCOUNT_ID") }}"
-gcp_default_region        = "{{ env("REGION") }}"
+gcp_org_id       = "123456798101"
+gcp_org_name   = "ex"
+gcp_parent_container_id   = "folders/203040506070"
+gcp_org_public_domain   = "example.com"
+gcp_org_private_domain   = "example.local"
+gcp_billing_account       = "01023E-01023E-01023E"
+gcp_default_region        = "europe-west9"
 
 ##################################### Terraform SA ###################
-gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
-#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+gcp_terraform_sa_email           = "lz-sa@ex-bootstrap-388010.iam.gserviceaccount.com"
+#gcp_group_org_admins             = "gcp-organization-admins@example.com"
+#gcp_group_org_security_admins    = "gcp-security-admins@example.com"
+#gcp_group_org_security_reviewers = "gcp-security-reviewers@example.com"
+#gcp_group_org_billing_admins     = "gcp-billing-admins@example.com"
+#gcp_group_org_viewers            = "gcp-organization-viewers@example.com"
+#gcp_group_org_network_admins     = "gcp-network-admins@example.com"
+#gcp_group_org_network_viewers    = "gcp-network-viewers@example.com"
 
 ##################################### Network ###################
 trusted_egress_ranges           = ["0.0.0.0/0"]
@@ -26,7 +26,7 @@ trusted_private_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/1
 gcp_org_environments    = {
   experiment  = {
     environment_code = "dev"
-    name             = "{{ env("ORGANIZATION_NAME") }}-netenv"
+    name             = "ex-netenv"
     network          = {
       name      = "netenv",
       cidr_blocks = {
@@ -122,7 +122,7 @@ gcp_business_projects            = [
 gcp_infra_projects = {
   folder = "Infrastructure"
   security = {
-    name   = "{{ env("ORGANIZATION_NAME") }}-security-prod"
+    name   = "ex-security-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -131,7 +131,7 @@ gcp_infra_projects = {
   }
 
   observability = {
-    name   = "{{ env("ORGANIZATION_NAME") }}-observability-prod"
+    name   = "ex-observability-prod"
     budget = {
       amount                    = 100,
       time_unit                 = "MONTHLY",
@@ -141,7 +141,7 @@ gcp_infra_projects = {
   }
 
   nethub = {
-    name    = "{{ env("ORGANIZATION_NAME") }}-nethub-prod"
+    name    = "ex-nethub-prod"
     budget  = {
       amount                    = 100,
       time_unit                 = "MONTHLY",

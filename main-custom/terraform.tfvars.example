@@ -2,15 +2,9 @@ gcp_org_id     = "983256491121"
 gcp_org_public_domain   = "company.cloud"
 gcp_billing_account     = "01A47A-F9BAF1-1EE048"
 gcp_default_region     = "europe-west4"
-gcp_default_region_azs = [
-  "europe-west4-a",
-  "europe-west4-b",
-  "europe-west4-c"
-]
 
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "landing-zone-automation@shared-svc-340608.iam.gserviceaccount.com"
-gcp_terraform_sa_id              = "projects/shared-svc-340608/serviceAccounts/landing-zone-automation@shared-services-340608.iam.gserviceaccount.com"
 gcp_group_org_admins             = "gcp-organization-admins@company.cloud"
 gcp_group_org_security_admins    = "gcp-security-admins@company.cloud"
 gcp_group_org_security_reviewers = "gcp-security-admins@company.cloud"

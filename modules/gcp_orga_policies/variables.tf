@@ -90,3 +90,8 @@ variable "domains_to_allow" {
   description = "The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy."
   type        = list(string)
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

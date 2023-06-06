@@ -80,6 +80,8 @@ module "dns-private-zone" {
     }
   ] : []
 
+  labels = var.labels
+
   depends_on = [
     module.secure_web_proxy
   ]

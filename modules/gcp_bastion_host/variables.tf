@@ -99,3 +99,8 @@ variable "autoscaling_enabled" {
   type        = bool
   default     = false
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

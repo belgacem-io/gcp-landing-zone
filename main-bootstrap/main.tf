@@ -12,4 +12,5 @@ module "bootstrap" {
   default_region                 = var.gcp_default_region
   iac_service_account_email      = var.gcp_terraform_sa_email
   grant_billing_user             = false
+  labels                         = var.gcp_labels
 }

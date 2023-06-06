@@ -209,3 +209,8 @@ variable "enable_secure_web_proxy" {
   default     = true
   description = "In hub mode, if enabled, a secure web proxy will be installed."
 }
+
+variable "labels" {
+  type        = map(string)
+  description = "Map of labels"
+}

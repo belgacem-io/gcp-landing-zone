@@ -3,10 +3,10 @@
 *****************************************/
 
 module "fetch" {
-  source                    = "../modules/gcp_fetch_organization"
-  organization_name         = var.gcp_org_name
-  default_region            = var.gcp_default_region
-  parent_container_id       = var.gcp_parent_container_id
+  source              = "../modules/gcp_fetch_organization"
+  organization_name   = var.gcp_org_name
+  default_region      = var.gcp_default_region
+  parent_container_id = var.gcp_parent_container_id
 }
 
 /******************************************
@@ -38,6 +38,10 @@ module "business_project" {
     "sqladmin.googleapis.com"
   ]
   monitoring_project_id = module.fetch.projects_by_name[var.gcp_infra_projects.observability.name].project_id
+
+  labels = merge(var.gcp_labels,{
+    environment_code = each.value.environment_code
+  })
 
   depends_on = [
     module.fetch
