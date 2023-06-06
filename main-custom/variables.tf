@@ -20,11 +20,6 @@ variable "gcp_terraform_sa_email" {
   type        = string
 }
 
-variable "gcp_terraform_sa_id" {
-  description = "Service account id of the account to impersonate to run Terraform."
-  type        = string
-}
-
 variable "gcp_group_org_admins" {
   description = "Google Group for GCP Organization Administrators"
   type        = string
@@ -77,11 +72,6 @@ variable "gcp_terraform_sa_org_iam_permissions" {
 variable "gcp_default_region" {
   description = "Default region for resources."
   type        = string
-}
-
-variable "gcp_default_region_azs" {
-  description = "Default availability zones for region 1."
-  type        = list(string)
 }
 
 variable "gcp_org_environments" {

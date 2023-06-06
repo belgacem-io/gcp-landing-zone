@@ -7,6 +7,9 @@ build:
 gen:
 	docker compose exec -w /wks terraform bash -c '. /wks/.auth/env && for f in $$(find /wks -maxdepth 3 -type f -name "*.j2"); do j2 $${f} > $${f/.j2/} ; done'
 
+example:
+	docker compose exec -w /wks terraform bash -c '. /wks/env.example && for f in $$(find /wks -maxdepth 3 -type f -name "*.j2"); do j2 $${f} > $${f/.j2/.example} ; done'
+
 init:
 	docker compose exec terraform bash -c '. /wks/.auth/env && terraform -chdir=/wks/main-$(filter-out $@,$(MAKECMDGOALS)) init -upgrade'
 

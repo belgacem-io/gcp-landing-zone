@@ -46,7 +46,6 @@ Before stating, make sure that you've done the following:
 | <a name="input_gcp_org_public_domain"></a> [gcp\_org\_public\_domain](#input\_gcp\_org\_public\_domain) | The public domain of the current organization. Can be different from the organization name. exp:  company.com, cloud.company.com | `string` | n/a | yes |
 | <a name="input_gcp_parent_container_id"></a> [gcp\_parent\_container\_id](#input\_gcp\_parent\_container\_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 | <a name="input_gcp_terraform_sa_email"></a> [gcp\_terraform\_sa\_email](#input\_gcp\_terraform\_sa\_email) | Service account email of the account to impersonate to run Terraform. | `string` | n/a | yes |
-| <a name="input_gcp_terraform_sa_id"></a> [gcp\_terraform\_sa\_id](#input\_gcp\_terraform\_sa\_id) | Service account id of the account to impersonate to run Terraform. | `string` | n/a | yes |
 | <a name="input_gcp_group_org_admins"></a> [gcp\_group\_org\_admins](#input\_gcp\_group\_org\_admins) | Google Group for GCP Organization Administrators | `string` | `null` | no |
 | <a name="input_gcp_group_org_billing_admins"></a> [gcp\_group\_org\_billing\_admins](#input\_gcp\_group\_org\_billing\_admins) | Google Group for GCP Organization Billing Administrators | `string` | `null` | no |
 | <a name="input_gcp_group_org_network_admins"></a> [gcp\_group\_org\_network\_admins](#input\_gcp\_group\_org\_network\_admins) | Google Group for GCP Organization Network Administrators | `string` | `null` | no |
