@@ -1,6 +1,0 @@
-terraform {
-  backend "gcs" {
-    bucket  = "ex-prod-bkt-europe-west9-tfstate-3e26"
-    prefix  = "terraform/main-custom/state"
-  }
-}

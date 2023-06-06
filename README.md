@@ -18,8 +18,8 @@
 <td>Set up a folder structure, projects for applications, which are connected as service projects to the shared VPC created in the previous stage.</td>
 </tr>
 <tr>
-<td><a href="./main-custom/README.md">Step 4 - custom</a></td>
-<td>Set up custom services for application.</td>
+<td><a href="./main-hybrid/README.md">Step 4 - hybrid</a></td>
+<td>Set up hybrid connectivity to your existing sites.</td>
 </tr>
 </tbody>
 </table>
