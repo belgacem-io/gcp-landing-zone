@@ -4,7 +4,7 @@
 The purpose of this stage is to set up the common folder used to house projects that contain shared resources such as DNS Hub, Interconnect, Security Command Center notification, org level secrets, network hub and org level logging. This will create the following folder and project structure:
    ```text
    example-organization
-        └── xx-infra (folder)
+     └── xx-infra (folder)
         ├── xx-logging-prod
         ├── xx-security-prod
         └── xx-nethub-prod

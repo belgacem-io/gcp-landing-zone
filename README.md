@@ -89,7 +89,6 @@ Before stating, make sure that you've done the following:
    ```sh
     terraform -chdir=main-infra init
     terraform -chdir=main-infra apply
-    terraform -chdir=main-infra apply
    ```
 9. Create and configure [environments projects](./main-env/README.md)
    ```sh
