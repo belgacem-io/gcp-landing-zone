@@ -3,28 +3,28 @@ This landing zone is maint to be used for small/medium companies, this is why i 
    ```text
       example-organization(<org_domain>)
       |
-      ├── <org_prefix>-bootstrap-prod (1)
+      ├── <org_prefix>-bootstrap-prod   (1)
       |
       └── <org_prefix>-infra (2)
-      ├── <org_prefix>-logging-prod  (3)
-      ├── <org_prefix>-security-prod (4)
-      └── <org_prefix>-nethub-prod   (5)
+         ├── <org_prefix>-logging-prod  (3)
+         ├── <org_prefix>-security-prod (4)
+         └── <org_prefix>-nethub-prod   (5)
       
       └── dev-Environment (6)
-      └── <org_prefix>-netenv-dev   (7)
-      └── <org_prefix>-business-dev (8)
-      ├── <org_prefix>-prj1-dev   (9)
-      ├── <org_prefix>-prj2-dev   (9)
-      └── <org_prefix>-prj3-dev   (9)
+         └── <org_prefix>-netenv-dev    (7)
+         └── <org_prefix>-business-dev  (8)
+            ├── <org_prefix>-prj1-dev   (9)
+            ├── <org_prefix>-prj2-dev   (9)
+            └── <org_prefix>-prj3-dev   (9)
       
       └── ...
       
       └── prod-Environment (6)
-      └── <org_prefix>-netenv-prod   (7)
-      └── <org_prefix>-business-prod (8)
-      ├── <org_prefix>-prj1-prod   (9)
-      ├── <org_prefix>-prj2-prod   (9)
-└── <org_prefix>-prj3-prod   (9)
+         └── <org_prefix>-netenv-prod    (7)
+         └── <org_prefix>-business-prod  (8)
+            ├── <org_prefix>-prj1-prod   (9)
+            ├── <org_prefix>-prj2-prod   (9)
+            └── <org_prefix>-prj3-prod   (9)
    ```
 - **Bootstrap project (1)** : This project serves as IAC main repository as it used for hosting terraform service account and the bucket for storing its state.
 - **Infrastructure folder (2)**: Infrastructure, often referred to as the “common” or “platform” , folder this is the compartment where projects with shared resources reside. It plays a crucial role in hosting various projects that encapsulate organization-level elements like the Network Hub, secrets, logging, and more. It is designed to store the following projects: Logging, Nethub and Security
