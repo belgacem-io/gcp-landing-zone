@@ -26,14 +26,22 @@ This landing zone is maint to be used for small/medium companies, this is why i 
             ├── <org_prefix>-prj2-prod   (9)
             └── <org_prefix>-prj3-prod   (9)
    ```
-- **Bootstrap project (1)** : This project serves as IAC main repository as it used for hosting terraform service account and the bucket for storing its state.
-- **Infrastructure folder (2)**: Infrastructure, often referred to as the “common” or “platform” , folder this is the compartment where projects with shared resources reside. It plays a crucial role in hosting various projects that encapsulate organization-level elements like the Network Hub, secrets, logging, and more. It is designed to store the following projects: Logging, Nethub and Security
-- **Logging project (3)**: This project is organization wide billing, applications and infra logs. The logs are collected into BigQuery datasets which you can then use for general querying, dashboarding, and reporting. Logs are also exported to Pub/Sub, a Cloud Storage bucket, and a log bucket.
-- **Nethub project (4)**: This project is designed to serve as the hub for both the networks and DNS within the organization. It essentially contains two types of networks : DMZ and Internal Hub.
-- **Security project (5)**: This project, overseen by your organization’s security teams, forms the foundation for centralized audit logs and security alerts at the organization level. This secure hub will feature a Pub/Sub topic and subscription, along with a Security Command Center notification set up to broadcast all new findings to the established topic. Furthermore, it serves as a home for the Secret Manager, where your organization can safely store and share secrets.
-- **Environments folders (6)**: For the sake of enhanced security and streamlined management, our architecture includes a distinct folder for each environment, with the capacity to extend this division into individual security zones as well. Within each environment-specific folder, we create a series of projects intended to provide shared services across the various projects housed in the same folder. This organized approach is designed to facilitate effective cooperation and secure operation within each individual environment.
-- **NetEnv project (7)**: unlike the NetHub, this project is specifically designed to accommodate resources related to a single environment or security zone. It is charged with the task of ensuring secure communication among all projects within the same environment. Additionally, it provides common services, such as a Bastion Host, further enhancing its utility within the designated environment.
-- **Business projects (9)**: Here we create the service projects with a standard configuration that are attached to the Shared VPC created in the previous steps. Each project can be associated to an application or team.
+#### Bootstrap project (1)
+This project serves as IAC main repository as it used for hosting terraform service account and the bucket for storing its state.
+#### Infrastructure folder (2)
+Infrastructure, often referred to as the “common” or “platform” , folder this is the compartment where projects with shared resources reside. It plays a crucial role in hosting various projects that encapsulate organization-level elements like the Network Hub, secrets, logging, and more. It is designed to store the following projects: Logging, Nethub and Security
+#### Logging project (3)
+This project is organization wide billing, applications and infra logs. The logs are collected into BigQuery datasets which you can then use for general querying, dashboarding, and reporting. Logs are also exported to Pub/Sub, a Cloud Storage bucket, and a log bucket.
+#### Nethub project (4)
+This project is designed to serve as the hub for both the networks and DNS within the organization. It essentially contains two types of networks : DMZ and Internal Hub.
+#### Security project (5)
+This project, overseen by your organization’s security teams, forms the foundation for centralized audit logs and security alerts at the organization level. This secure hub will feature a Pub/Sub topic and subscription, along with a Security Command Center notification set up to broadcast all new findings to the established topic. Furthermore, it serves as a home for the Secret Manager, where your organization can safely store and share secrets. 
+#### Environments folders (6)
+For the sake of enhanced security and streamlined management, our architecture includes a distinct folder for each environment, with the capacity to extend this division into individual security zones as well. Within each environment-specific folder, we create a series of projects intended to provide shared services across the various projects housed in the same folder. This organized approach is designed to facilitate effective cooperation and secure operation within each individual environment.
+#### NetEnv project (7)
+unlike the NetHub, this project is specifically designed to accommodate resources related to a single environment or security zone. It is charged with the task of ensuring secure communication among all projects within the same environment. Additionally, it provides common services, such as a Bastion Host, further enhancing its utility within the designated environment.
+#### Business projects (9)
+Here we create the service projects with a standard configuration that are attached to the Shared VPC created in the previous steps. Each project can be associated to an application or team.
 
 ### Terraform modules structure
 <table>
