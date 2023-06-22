@@ -1,20 +1,20 @@
-gcp_org_id     = "{{ env("ORGANISATION_ID") }}"
+gcp_org_id     = "{{ env("ORGANIZATION_ID") }}"
 gcp_org_name   = "{{ env("ORGANIZATION_NAME") }}"
 gcp_parent_container_id  = "{{ env("CONTAINER_ID") }}"
-gcp_org_public_domain   = "{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-gcp_org_private_domain   = "{{ env("ORGANISATION_PRIVATE_DOMAIN") }}"
+gcp_org_public_domain   = "{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+gcp_org_private_domain   = "{{ env("ORGANIZATION_PRIVATE_DOMAIN") }}"
 gcp_billing_account     = "{{ env("BILLING_ACCOUNT_ID") }}"
 gcp_default_region     = "{{ env("REGION") }}"
 
 ##################################### Terraform SA ###################
 gcp_terraform_sa_email           = "{{ env("IAC_SERVICE_ACCOUNT") }}"
-#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
-#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANISATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_admins             = "gcp-organization-admins@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_security_admins    = "gcp-security-admins@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_security_reviewers = "gcp-security-reviewers@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_billing_admins     = "gcp-billing-admins@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_viewers            = "gcp-organization-viewers@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_network_admins     = "gcp-network-admins@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
+#gcp_group_org_network_viewers    = "gcp-network-viewers@{{ env("ORGANIZATION_PUBLIC_DOMAIN") }}"
 ##################################### Network ###################
 trusted_egress_ranges           = ["0.0.0.0/0"]
 trusted_ingress_ranges          = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]

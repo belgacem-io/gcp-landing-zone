@@ -77,11 +77,11 @@ Before stating, make sure that you've done the following:
 1. Set up a Google Cloud [organization](https://cloud.google.com/resource-manager/docs/creating-managing-organization).
 2. Set up a Google Cloud [billing account](https://cloud.google.com/billing/docs/how-to/manage-billing-account).
 3. Create Cloud Identity or Google Workspace groups for organization and billing admins.
-4. Create a dedicated folder (optional, can use the organisation as container)
+4. Create a dedicated folder (optional, can use the organization as container)
 5. Create a bootstrap GCP project that will be used for running terraform scripts
 6. Create a service account with the following permissions
-    - organisation -> Billing Account Costs Manager
-    - organisation -> Billing Account User
+    - organization -> Billing Account Costs Manager
+    - organization -> Billing Account User
     - folder -> Owner
     - folder -> Project Creator
     - folder -> Security Admin
@@ -150,8 +150,8 @@ Before stating, make sure that you've done the following:
    ```sh 
    ##################################### tfvars generator ###################
    export REGION=europe-west9
-   export ORGANISATION_ID=25135412153
-   export ORGANISATION_PUBLIC_DOMAIN=example.com
+   export ORGANIZATION_ID=25135412153
+   export ORGANIZATION_PUBLIC_DOMAIN=example.com
    export ORGANIZATION_NAME=xx
    export CONTAINER_ID=folders/2565982345
    export BILLING_ACCOUNT_ID=AAAAA-BBBBB-CCCCC

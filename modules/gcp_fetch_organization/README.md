@@ -5,7 +5,7 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_default_region"></a> [default\_region](#input\_default\_region) | Default region 1 for subnets and Cloud Routers | `string` | n/a | yes |
 | <a name="input_organization_name"></a> [organization\_name](#input\_organization\_name) | The organization name, will be used for resources naming. | `string` | n/a | yes |
-| <a name="input_parent_container_id"></a> [parent\_container\_id](#input\_parent\_container\_id) | Can be either an organisation or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
+| <a name="input_parent_container_id"></a> [parent\_container\_id](#input\_parent\_container\_id) | Can be either an organization or a folder. Format : organizations/1235 or folders/12562. | `string` | n/a | yes |
 
 ## Outputs
 

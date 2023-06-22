@@ -60,7 +60,7 @@ module "log_export_to_biqquery" {
   #[prefix]-[resource]-[location]-[description]-[suffix]
   log_sink_name          = "${var.gcp_org_name}-prod-bq-${var.gcp_default_region}-orglogs"
   parent_resource_id     = split("/", var.gcp_parent_container_id )[1]
-  parent_resource_type   = startswith("organisations", var.gcp_parent_container_id) ? "organisation" : "folder"
+  parent_resource_type   = startswith("organizations", var.gcp_parent_container_id) ? "organization" : "folder"
   include_children       = true
   unique_writer_identity = true
   bigquery_options       = {
