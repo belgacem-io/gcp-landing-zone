@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SCRIPT_NAME=`basename "$0"`
+INSTALL_LOCATION="/usr/local/bin/$SCRIPT_NAME"
+
+function install_binary(){
+  echo "Installing $SCRIPT_NAME to $INSTALL_LOCATION..."
+  sudo cp "$0" "$INSTALL_LOCATION"
+  sudo chmod +x "$INSTALL_LOCATION"
+  echo "$SCRIPT_NAME has been installed to $INSTALL_LOCATION."
+}
+
+if [ "$1" == "--install" ]; then
+  install_binary
+else
+  echo "Running command : terraform $@."
+  ARGS=$@
+  docker compose exec -w /wks terraform bash -c ". /wks/.auth/env && terraform $ARGS"
+fi

@@ -1,0 +1,39 @@
+name: security-scan-commenter
+on:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  tfsec:
+    name: Security scanner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+
+      - name: Scan bootstrap module
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.3.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ./main-bootstrap
+
+      - name: Scan infrastructure module
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.3.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ./main-infra
+
+      - name: Scan environments module
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.3.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ./main-env
+
+      - name: Scan business projects module
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.3.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ./main-bp

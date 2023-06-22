@@ -1,0 +1,36 @@
+#cloud-config
+write_files:
+  # Squid Proxy installation script
+  - path: /opt/scripts/squid.sh
+    permissions: "0644"
+    owner: root
+    content: |
+      ${indent(6, squid_install_content)}
+
+  # CalmAV installation and integration script
+  - path: /opt/scripts/clamav.sh
+    permissions: "0644"
+    owner: root
+    content: |
+      ${indent(6, clamav_install_content)}
+
+  # Squidguard installation script, NOT used yet
+  - path: /opt/scripts/squidguard.sh
+    permissions: "0644"
+    owner: root
+    content: |
+      ${indent(6, squidguard_install_content)}
+
+#cloud-config
+runcmd:
+  - add-apt-repository universe
+  - apt update
+  # Install Squid 5 with HTTPS Decryption
+  -  cat /opt/scripts/squid.sh | bash
+%{if enable_antivirus }
+  # Install clamav and clamav squid Adapter
+  - cat /opt/scripts/clamav.sh | bash
+%{endif}
+  # Restart services
+  - systemctl restart squid
+  - sysctl -p
